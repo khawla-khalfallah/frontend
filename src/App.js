@@ -8,7 +8,6 @@ import Formateur from "./pages/Formateur";
 import Apprenant from "./pages/Apprenant";
 import Recruteur from "./pages/Recruteur";
 import Profile from "./pages/Profile"; 
-import Cours from "./pages/Cours";
 import Etudiants from "./pages/Etudiants";
 import Evaluations from "./pages/Evaluations";
 import Settings from "./pages/Settings";
@@ -21,6 +20,9 @@ import Entretiens from "./pages/Entretiens";
 import Exam from "./pages/Exam";  
 import ExamApprenant from "./pages/ExamApprenant";
 import TablesList from './pages/Test';
+import Formation from "./pages/Formation";
+import AdminDashboard from './pages/AdminDashboard';
+import UsersList from './pages/admin/UsersList';
 
 
 function App() {
@@ -36,8 +38,8 @@ function App() {
         <Route path="/recruteur" element={<Recruteur />} />
         <Route path="/formateur/profil" element={<Profile />} />
         <Route path="/apprenant/profil" element={<Profile />} />
-        <Route path="/formateur/cours" element={<Cours/>} />
-        <Route path="/apprenant/cours" element={<Cours/>} />
+        <Route path="/formateur/formations" element={<Formation/>} />
+        <Route path="/apprenant/formations" element={<Formation/>} />
         <Route path="/formateur/etudiants" element={<Etudiants/>} />
         <Route path="/formateur/evaluations" element={<Evaluations/>} />
         <Route path="/formateur/settings" element={<Settings/>} />
@@ -51,6 +53,10 @@ function App() {
         <Route  path="/formateur/examens" element={<Exam/>} />
         <Route path="/apprenant/examens" element={<ExamApprenant/>} />
         <Route path="/tables" element={<TablesList />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/users" element={<UsersList />} />
+
+
       </Routes>
     </Router>
     

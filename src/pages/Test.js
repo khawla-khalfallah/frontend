@@ -244,6 +244,7 @@ function Test() {
           <p><strong>Description :</strong> {formationRecherchee.description}</p>
           <p><strong>Prix :</strong> {formationRecherchee.prix} DT</p>
           <p><strong>Dates :</strong> Du {formationRecherchee.date_debut} au {formationRecherchee.date_fin}</p>
+          <p><strong>Formateur_id :</strong> {formationRecherchee.formateur_id}</p>
         </div>
       )}
     </div>

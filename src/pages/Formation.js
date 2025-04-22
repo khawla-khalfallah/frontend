@@ -1,9 +1,9 @@
 // import React from "react";
 // import { Link } from "react-router-dom";
-// import { FaBook,FaChartLine,FaVideo, FaCertificate, FaCog, FaUser } from "react-icons/fa";
+// import { FaBook, FaChartLine, FaVideo, FaCertificate, FaCog, FaUser } from "react-icons/fa";
 // import NavbarMinimal from "../components/NavbarMinimal";
 
-// function Profile() {
+// function Formation() {
 //   return (
 //     <div>
 //       <NavbarMinimal />
@@ -18,8 +18,8 @@
 //               </Link>
 //             </li>
 //             <li className="nav-item py-2">
-//               <Link className="nav-link text-white" to="/apprenant/cours">
-//                 <FaBook /> Mes Cours
+//               <Link className="nav-link text-white" to="/apprenant/formations">
+//                 <FaBook /> Mes Formations
 //               </Link>
 //             </li>
 //             <li className="nav-item py-2">
@@ -53,17 +53,28 @@
 //           </footer>
 //         </div>
 
-//         {/* Contenu Principal - Profil */}
+//         {/* Contenu Principal - Mes Cours */}
 //         <div className="p-5" style={{ flex: 1, backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
 //           <div className="bg-white shadow rounded p-4" style={{ maxWidth: "700px", margin: "0 auto" }}>
 //             <h2 className="text-primary mb-4 text-center" style={{ fontWeight: "bold" }}>
-//               👤 Mon Profil
+//               📚 Mes Formations
 //             </h2>
 //             <div className="border rounded p-4">
-//               <h5 className="text-dark mb-3">Nom : <span className="text-secondary">John Doe</span></h5>
-//               <h5 className="text-dark mb-3">Prénom : <span className="text-secondary">John Doe</span></h5>
-//               <p className="mb-2">📧 <strong>Email :</strong> johndoe@example.com</p>
-//               <p className="mb-2">🎓 <strong>Statut :</strong> Apprenant</p>
+//               <ul className="list-group">
+//                 <li className="list-group-item d-flex justify-content-between align-items-center">
+//                   Introduction à la programmation
+//                   {/* <span className="badge bg-success">Complété</span> */}
+//                 </li>
+//                 <li className="list-group-item d-flex justify-content-between align-items-center">
+//                   Développement web
+//                   {/* <span className="badge bg-warning text-dark">En cours</span> */}
+//                 </li>
+//                 <li className="list-group-item d-flex justify-content-between align-items-center">
+//                   Algorithmie
+//                   {/* <span className="badge bg-primary">Débuté</span> */}
+//                 </li>
+//                 {/* Ajouter dynamiquement ici */}
+//               </ul>
 //             </div>
 //           </div>
 //         </div>
@@ -72,32 +83,30 @@
 //   );
 // }
 
-// export default Profile;
+// export default Formation;
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaBook, FaChartLine, FaVideo, FaCertificate, FaCog, FaUser } from "react-icons/fa";
+import axios from "axios";
 import NavbarMinimal from "../components/NavbarMinimal";
 
-function Profile() {
-  const [user, setUser] = useState(null);
+function Formation() {
+  const [formations, setFormations] = useState([]);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const token = localStorage.getItem("token"); // ou sessionStorage
-        const response = await axios.get("http://localhost:8000/api/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(response.data);
-      } catch (error) {
-        console.error("Erreur lors du chargement du profil :", error);
-      }
-    };
-
-    fetchProfile();
+    axios.get("http://localhost:8000/api/inscrits", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Assure-toi que le token est stocké ici
+      },
+    })
+    .then((res) => {
+      // Extraire uniquement les objets formation
+      const formationsInscrites = res.data.map((inscrit) => inscrit.formation);
+      setFormations(formationsInscrites);
+    })
+    .catch((err) => {
+      console.error("Erreur lors du chargement des formations :", err);
+    });
   }, []);
 
   return (
@@ -109,25 +118,39 @@ function Profile() {
           <h2 className="text-center">Apprenant</h2>
           <ul className="nav flex-column">
             <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/profil"><FaUser /> Mon Profil</Link>
+              <Link className="nav-link text-white" to="/apprenant/profil">
+                <FaUser /> Mon Profil
+              </Link>
             </li>
             <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/formations"><FaBook /> Mes Formations</Link>
+              <Link className="nav-link text-white" to="/apprenant/formations">
+                <FaBook /> Mes Formations
+              </Link>
             </li>
             <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/examens"><FaCertificate /> Mes Examens</Link>
+              <Link className="nav-link text-white" to="/apprenant/examens">
+                <FaCertificate /> Mes Examens
+              </Link>
             </li>
             <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/progres"><FaChartLine /> Progrès</Link>
+              <Link className="nav-link text-white" to="/apprenant/progres">
+                <FaChartLine /> Progrès
+              </Link>
             </li>
             <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/visio"><FaVideo /> Visioconférences</Link>
+              <Link className="nav-link text-white" to="/apprenant/visio">
+                <FaVideo /> Visioconférences
+              </Link>
             </li>
             <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/certifications"><FaCertificate /> Certifications</Link>
+              <Link className="nav-link text-white" to="/apprenant/certifications">
+                <FaCertificate /> Certifications
+              </Link>
             </li>
             <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/settings"><FaCog /> Paramètres</Link>
+              <Link className="nav-link text-white" to="/apprenant/settings">
+                <FaCog /> Paramètres
+              </Link>
             </li>
           </ul>
           <footer className="mt-auto text-center">
@@ -135,29 +158,31 @@ function Profile() {
           </footer>
         </div>
 
-        {/* Contenu principal */}
+        {/* Contenu Principal - Mes Formations */}
         <div className="p-5" style={{ flex: 1, backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
           <div className="bg-white shadow rounded p-4" style={{ maxWidth: "700px", margin: "0 auto" }}>
             <h2 className="text-primary mb-4 text-center" style={{ fontWeight: "bold" }}>
-              👤 Mon Profil
+              📚 Mes Formations
             </h2>
-
-            {user ? (
-              <div className="border rounded p-4">
-                <h5 className="text-dark mb-3">Nom : <span className="text-secondary">{user.nom}</span></h5>
-                <h5 className="text-dark mb-3">Prénom : <span className="text-secondary">{user.prenom}</span></h5>
-                <p className="mb-2">📧 <strong>Email :</strong> {user.email}</p>
-                <p className="badge bg-info text-dark ms-2">🎓 <strong>Statut :</strong> {user.role}</p>
-                {/* Bouton Modifier */}
-                  <div className="mt-4 text-center">
-                    <Link to="/apprenant/settings" className="btn btn-primary">
-                      ✏️ Modifier le Profil
-                    </Link>
-                  </div>
-              </div>
-            ) : (
-              <p>Chargement du profil...</p>
-            )}
+            <div className="border rounded p-4">
+              <ul className="list-group">
+                {formations.length > 0 ? (
+                  formations.map((formation) => (
+                    <li
+                      key={formation.id}
+                      className="list-group-item d-flex justify-content-between align-items-center"
+                    >
+                      {formation.titre}
+                      <button className="btn btn-primary btn-sm">Accéder</button>
+                    </li>
+                  ))
+                ) : (
+                  <li className="list-group-item text-center">
+                    Aucune formation trouvée.
+                  </li>
+                )}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -165,4 +190,5 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Formation;
+

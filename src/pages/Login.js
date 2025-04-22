@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from '../api';
-import axiosInstance from '../config/axios';
+// import axiosInstance from '../config/axios';
 
 function Login() {
   const navigate = useNavigate();
