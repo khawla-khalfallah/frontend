@@ -5,6 +5,9 @@ import ApprenantsList from './admin/ApprenantsList';
 import FormateursList from './admin/FormateursList';
 import RecruteursList from './admin/RecruteursList';
 import FormationsList from './admin/FormationsList';
+import ExamensList from './admin/ExamensList';
+import CertificatsList from './admin/CertificatsList';
+import PdfsList from './admin/PdfsList';
 
 
 
@@ -26,7 +29,12 @@ function AdminDashboard() {
         return <RecruteursList />;
       case 'formations':
         return <FormationsList  />;
-        
+      case 'examens':
+        return <ExamensList  />;
+      case 'certificats':
+        return <CertificatsList  />;
+      case 'pdfs':
+        return <PdfsList  />;
       default:
         return <p>Choisissez une section depuis le menu.</p>;
     }
