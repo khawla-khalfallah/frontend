@@ -24,7 +24,19 @@ const FormateursList = () => {
   useEffect(() => {
     fetchFormateurs();
   }, []);
-
+  const handleDelete = async (id) => {
+    if (!window.confirm("Voulez-vous vraiment supprimer ce formateur ?")) return;
+  
+    try {
+      await axios.delete(`/api/formateurs/${id}`);
+      alert("Formateur supprimé !");
+      fetchFormateurs(); // 🔁 recharge la liste
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la suppression.");
+    }
+  };
+  
   return (
     <div>
       <h2>👨‍🏫 Liste des Formateurs</h2>
@@ -63,6 +75,12 @@ const FormateursList = () => {
                 >
                   ✏️ Modifier
                 </button>
+                <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDelete(f.user_id)}
+                    >
+                        🗑 Supprimer
+                    </button>
               </td>
             </tr>
           ))}
