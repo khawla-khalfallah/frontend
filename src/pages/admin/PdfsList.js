@@ -71,9 +71,13 @@ const PdfsList = () => {
               <td>{pdf.id}</td>
               <td>{pdf.titre}</td>
               <td>
-                <a href={`/storage/${pdf.fichier}`} target="_blank" rel="noreferrer">
+              <a
+                href={`http://dreamlearn.local/storage/${pdf.fichier}`}
+                download
+                className="btn btn-outline-primary btn-sm">
                   📥 Télécharger
-                </a>
+              </a>
+
               </td>
               <td>{pdf.formation?.titre}</td>
               <td>

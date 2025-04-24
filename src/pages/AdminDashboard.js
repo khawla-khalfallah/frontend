@@ -8,6 +8,9 @@ import FormationsList from './admin/FormationsList';
 import ExamensList from './admin/ExamensList';
 import CertificatsList from './admin/CertificatsList';
 import PdfsList from './admin/PdfsList';
+import SeancesList from './admin/SeancesList';
+import VideosList from './admin/VideosList';
+import InscritsList from './admin/InscritsList';
 
 
 
@@ -35,6 +38,13 @@ function AdminDashboard() {
         return <CertificatsList  />;
       case 'pdfs':
         return <PdfsList  />;
+      case 'seances':
+        return <SeancesList  />;
+      case 'videos':
+        return <VideosList  />;
+      case 'inscrits':
+        return <InscritsList />;
+        
       default:
         return <p>Choisissez une section depuis le menu.</p>;
     }

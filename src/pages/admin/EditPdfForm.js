@@ -4,7 +4,8 @@ import axios from '../../config/axios';
 const EditPdfForm = ({ pdf, onSuccess }) => {
   const [formData, setFormData] = useState({
     titre: pdf.titre || '',
-    formation_id: pdf.formation_id || ''
+    formation_id: pdf.formation_id || '',
+    fichier: null
   });
 
   const [formations, setFormations] = useState([]);
@@ -15,13 +16,32 @@ const EditPdfForm = ({ pdf, onSuccess }) => {
   }, []);
 
   const handleChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, files } = e.target;
+    if (name === 'fichier') {
+      setFormData({ ...formData, fichier: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
+
+    const data = new FormData();
+    data.append('titre', formData.titre);
+    data.append('formation_id', formData.formation_id);
+
+    // ✅ Ajouter le fichier SEULEMENT si l'utilisateur en a choisi un
+    if (formData.fichier && formData.fichier instanceof File) {
+      data.append('fichier', formData.fichier);
+    }
+
     try {
-      await axios.put(`/api/pdfs/${pdf.id}`, formData);
+      await axios.post(`/api/pdfs/${pdf.id}?_method=PUT`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       alert("PDF modifié !");
       setErrors({});
       onSuccess();
@@ -29,13 +49,14 @@ const EditPdfForm = ({ pdf, onSuccess }) => {
       if (err.response?.status === 422) {
         setErrors(err.response.data.errors);
       } else {
+        console.error(err);
         alert("Erreur lors de la modification.");
       }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
+    <form onSubmit={handleSubmit} className="mb-4" encType="multipart/form-data">
       <h5>✏️ Modifier le PDF #{pdf.id}</h5>
 
       <input
@@ -47,6 +68,23 @@ const EditPdfForm = ({ pdf, onSuccess }) => {
         required
       />
       {errors.titre && <div className="text-danger mb-2">{errors.titre[0]}</div>}
+      {pdf.fichier && (
+        <div className="mb-2">
+          📎 Fichier actuel : 
+          <a href={`http://dreamlearn.local/storage/${pdf.fichier}`} 
+          target="_blank" rel="noopener noreferrer">
+            Voir le PDF</a>
+        </div>
+      )}
+
+      <input
+        type="file"
+        name="fichier"
+        accept="application/pdf"
+        className="form-control mb-2"
+        onChange={handleChange}
+      />
+      {errors.fichier && <div className="text-danger mb-2">{errors.fichier[0]}</div>}
 
       <select
         name="formation_id"
@@ -62,8 +100,8 @@ const EditPdfForm = ({ pdf, onSuccess }) => {
       </select>
       {errors.formation_id && <div className="text-danger mb-2">{errors.formation_id[0]}</div>}
 
-      <button className="btn btn-warning me-2" type="submit">✅ Modifier</button>
-      <button className="btn btn-secondary" type="button" onClick={onSuccess}>❌ Annuler</button>
+      <button type="submit" className="btn btn-warning me-2">✅ Modifier</button>
+      <button type="button" className="btn btn-secondary" onClick={onSuccess}>❌ Annuler</button>
     </form>
   );
 };

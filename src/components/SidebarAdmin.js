@@ -25,6 +25,9 @@ const SidebarAdmin = ({ setActiveTab }) => {
           <button onClick={() => setActiveTab('certificats')} className="btn btn-link text-white">🏆 Certificats</button>
         </li>
         <li>
+          <button onClick={() => setActiveTab('inscrits')} className="btn btn-link text-white">📌 Inscriptions</button>
+        </li>
+        <li>
           <button onClick={() => setActiveTab('pdfs')} className="btn btn-link text-white">📄 PDFs</button>
         </li>
         <li>
