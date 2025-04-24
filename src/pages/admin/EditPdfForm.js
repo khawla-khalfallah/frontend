@@ -3,10 +3,17 @@ import axios from '../../config/axios';
 
 const EditPdfForm = ({ pdf, onSuccess }) => {
   const [formData, setFormData] = useState({
-    titre: pdf.titre || '',
-    formation_id: pdf.formation_id || '',
+    titre:'',
+    formation_id: '',
     fichier: null
   });
+ useEffect(() => {
+      setFormData({
+        titre: pdf.titre|| '',
+        formation_id: pdf.formation_id|| '',
+        fichier: pdf.fichier|| '',
+      });
+    }, [pdf]);
 
   const [formations, setFormations] = useState([]);
   const [errors, setErrors] = useState({});

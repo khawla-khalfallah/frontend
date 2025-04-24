@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../../config/axios';
 
 const EditExamenForm = ({ examen, onSuccess }) => {
   const [formData, setFormData] = useState({
-    date_examen: examen.date_examen || '',
-    note: examen.note || ''
+    date_examen:'',
+    note:''
   });
-
+ useEffect(() => {
+    setFormData({
+      date_examen: examen.date_examen || '',
+      note: examen.note|| ''
+    });
+  }, [examen]);
+    
   const [errors, setErrors] = useState({});
 
   const handleChange = e => {

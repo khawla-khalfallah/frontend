@@ -60,6 +60,7 @@ const FormationsList = () => {
           <tr>
             <th>ID</th>
             <th>Titre</th>
+            <th>Description</th>
             <th>Formateur</th>
             <th>Prix</th>
             <th>Date_Début</th>
@@ -72,6 +73,7 @@ const FormationsList = () => {
             <tr key={f.id}>
               <td>{f.id}</td>
               <td>{f.titre}</td>
+              <td>{f.description}</td>
               <td>{f.formateur?.user?.nom} {f.formateur?.user?.prenom}</td>
               <td>{f.prix} DT</td>
               <td>{f.date_debut}</td>

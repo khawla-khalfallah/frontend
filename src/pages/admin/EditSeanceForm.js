@@ -3,14 +3,23 @@ import axios from '../../config/axios';
 
 const EditSeanceForm = ({ seance, onSuccess }) => {
   const [formData, setFormData] = useState({
-    titreSeance: seance.titreSeance || '',
-    date: seance.date || '',
-    heureDebut: seance.heureDebut || '',
-    heureFin: seance.heureFin || '',
-    lienRoom: seance.lienRoom || '',
-    formation_id: seance.formation_id || ''
+    titreSeance:'',
+    date:'',
+    heureDebut:'',
+    heureFin:'',
+    lienRoom:'',
+    formation_id:''
   });
-
+   useEffect(() => {
+      setFormData({
+        titreSeance: seance.titreSeance|| '',
+        date: seance.date||'',
+        heureDebut: seance.heureDebut||'',
+        heureFin: seance.heureFin||'',
+        lienRoom: seance.lienRoom||'',
+        formation_id: seance.formation_id||'',
+      });
+    }, [seance]);
   const [formations, setFormations] = useState([]);
   const [errors, setErrors] = useState({});
 

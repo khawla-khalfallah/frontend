@@ -3,12 +3,19 @@ import axios from '../../config/axios';
 
 const EditVideoForm = ({ video, onSuccess }) => {
   const [formData, setFormData] = useState({
-    titre: video.titre || '',
-    url: video.url || '',
-    description: video.description || '',
-    formation_id: video.formation_id || ''
+    titre:'',
+    url:'',
+    description:'',
+    formation_id:''
   });
-
+  useEffect(() => {
+        setFormData({
+          titre: video.titre|| '',
+          url: video.url|| '',
+          description: video.description|| '',
+          formation_id: video.formation_id|| '',
+        });
+      }, [video]);
   const [formations, setFormations] = useState([]);
   const [errors, setErrors] = useState({});
 

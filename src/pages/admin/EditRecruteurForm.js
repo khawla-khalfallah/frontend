@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from '../../config/axios';
 
 const EditRecruteurForm = ({ recruteur, onSuccess }) => {
-  const [entreprise, setEntreprise] = useState(recruteur.entreprise || '');
+  const [entreprise, setEntreprise] = useState('');
+   useEffect(() => {
+      setEntreprise(recruteur.entreprise || '');
+    }, [recruteur]);
   const [error, setError] = useState('');
 
   const handleSubmit = async e => {

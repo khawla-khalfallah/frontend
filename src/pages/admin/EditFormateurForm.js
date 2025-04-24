@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import axios from '../../config/axios';
 
 const EditFormateurForm = ({ formateur, onSuccess }) => {
-  const [specialite, setSpecialite] = useState(formateur.specialite || '');
-  const [bio, setBio] = useState(formateur.bio || '');
+  const [specialite, setSpecialite] = useState('');
+  const [bio, setBio] = useState('');
+  useEffect(() => {
+    setSpecialite(formateur.specialite || '');
+    setBio(formateur.bio || '');
+  }, [formateur]);
+    
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {

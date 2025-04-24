@@ -9,6 +9,13 @@ const EditInscritForm = ({ inscrit, onSuccess }) => {
   const [apprenants, setApprenants] = useState([]);
   const [formations, setFormations] = useState([]);
   const [errors, setErrors] = useState({});
+  useEffect(() => {
+    setFormData({
+      apprenant_id: inscrit.apprenant_id,
+      formation_id: inscrit.formation_id
+    });
+  }, [inscrit]);
+  
 
   useEffect(() => {
     axios.get('/api/apprenants').then(res => setApprenants(res.data));

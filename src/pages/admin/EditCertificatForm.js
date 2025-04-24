@@ -3,9 +3,16 @@ import axios from '../../config/axios';
 
 const EditCertificatForm = ({ certificat, onSuccess }) => {
   const [formData, setFormData] = useState({
-    date_obtention: certificat.date_obtention || '',
-    apprenant_id: certificat.apprenant_id || ''
+    date_obtention: '',
+    apprenant_id: ''
   });
+  useEffect(() => {
+    setFormData({
+      date_obtention: certificat.date_obtention || '',
+      apprenant_id: certificat.apprenant_id || ''
+    });
+  }, [certificat]);
+    
 
   const [apprenants, setApprenants] = useState([]);
   const [errors, setErrors] = useState({});

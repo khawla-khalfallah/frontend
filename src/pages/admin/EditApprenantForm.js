@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import axios from '../../config/axios';
 
 const EditApprenantForm = ({ apprenant, onSuccess }) => {
   const [niveau, setNiveau] = useState(apprenant.niveau_etude || '');
   const [error, setError] = useState('');
+
+    // 🆕 Cette partie synchronise le champ à chaque changement d'apprenant
+    useEffect(() => {
+      setNiveau(apprenant.niveau_etude || '');
+    }, [apprenant]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

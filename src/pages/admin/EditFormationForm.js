@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../../config/axios';
 
 const EditFormationForm = ({ formation, onSuccess }) => {
   const [formData, setFormData] = useState({
-    titre: formation.titre || '',
-    description: formation.description || '',
-    prix: formation.prix || '',
-    date_debut: formation.date_debut || '',
-    date_fin: formation.date_fin || ''
+    titre: '',
+    description: '',
+    prix:  '',
+    date_debut:'',
+    date_fin: ''
   });
+   useEffect(() => {
+      setFormData({
+        titre: formation.titre|| '',
+        description : formation.description|| '',
+        prix : formation.prix|| '',
+        date_debut : formation.date_debut|| '',
+        date_fin: formation.date_fin|| '',
+      });
+    }, [formation]);
 
   const [errors, setErrors] = useState({});
 
