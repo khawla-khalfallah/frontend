@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaBook, FaChartLine, FaVideo, FaCertificate, FaCog, FaUser, FaEdit } from "react-icons/fa";
-import NavbarMinimal from "../components/NavbarMinimal";
+import NavbarMinimal from "../../components/NavbarMinimal";
 
-function ExamApprenant() {
+function MesExamens() {
   return (
     <div>
       <NavbarMinimal />
@@ -83,4 +83,4 @@ function ExamApprenant() {
   );
 }
 
-export default ExamApprenant;
+export default MesExamens;

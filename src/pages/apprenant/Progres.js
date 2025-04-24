@@ -8,14 +8,14 @@ import {
   FaCog,
   FaUser
 } from "react-icons/fa";
-import NavbarMinimal from "../components/NavbarMinimal";
+import NavbarMinimal from "../../components/NavbarMinimal";
 
-function Certifications() {
+function Progres() {
   return (
     <div>
       <NavbarMinimal />
       <div className="d-flex">
-        {/* Sidebar */}
+        {/* Sidebar identique */}
         <div
           className="bg-dark text-white p-3 vh-100 d-flex flex-column"
           style={{ width: "250px" }}
@@ -66,39 +66,63 @@ function Certifications() {
           </footer>
         </div>
 
-        {/* Contenu principal - Certifications */}
+        {/* Contenu principal - Progrès */}
         <div
           className="p-5"
           style={{ flex: 1, backgroundColor: "#f8f9fa", minHeight: "100vh" }}
         >
           <div className="bg-white shadow rounded p-4">
             <h2
-              className="text-success mb-4 text-center"
+              className="text-primary mb-4 text-center"
               style={{ fontWeight: "bold" }}
             >
-              🏅 Mes Certifications
+              📈 Mon Progrès
             </h2>
             <p className="text-center text-muted mb-5">
-              Voici les certifications que vous avez obtenues :
+              Suivez votre progression dans chaque cours :
             </p>
 
-            {/* Certification 1 */}
-            <div className="card mb-3">
+            {/* Carte 1 */}
+            <div className="card mb-4">
               <div className="card-body">
-                <h5 className="card-title">📜 Développement Web</h5>
-                <p className="card-text">Date d'obtention : 20/12/2024</p>
+                <h5 className="card-title">
+                  📘 Introduction à la programmation
+                </h5>
+                <div className="progress">
+                  <div
+                    className="progress-bar bg-success"
+                    role="progressbar"
+                    style={{ width: "80%" }}
+                    aria-valuenow="80"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    80%
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Certification 2 */}
-            <div className="card mb-3">
+            {/* Carte 2 */}
+            <div className="card mb-4">
               <div className="card-body">
-                <h5 className="card-title">📜 Algorithmie</h5>
-                <p className="card-text">Date d'obtention : 15/01/2025</p>
+                <h5 className="card-title">💻 Développement web</h5>
+                <div className="progress">
+                  <div
+                    className="progress-bar bg-info"
+                    role="progressbar"
+                    style={{ width: "60%" }}
+                    aria-valuenow="60"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    60%
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Tu pourras générer dynamiquement depuis l'API ici */}
+            {/* Tu pourras ajouter d'autres cours dynamiquement ici */}
           </div>
         </div>
       </div>
@@ -106,4 +130,4 @@ function Certifications() {
   );
 }
 
-export default Certifications;
+export default Progres;

@@ -1,26 +1,56 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Ajout de l'importation pour Link
-import { FaUser, FaBook, FaCertificate, FaChartLine, FaVideo, FaCog } from "react-icons/fa"; // Ajout des icônes
-import NavbarMinimal from "../components/NavbarMinimal"; // Ajout de l'importation de NavbarMinimal si tu l'as
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom"; 
+import { FaUser, FaBook, FaCertificate, FaChartLine, FaVideo, FaCog } from "react-icons/fa"; 
+import NavbarMinimal from "../../components/NavbarMinimal";
+
 
 function Settings() {
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState(null);
+  const [niveauEtude, setNiveauEtude] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    axios.get("http://localhost:8000/api/profile", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        setNom(res.data.nom);
+        setPrenom(res.data.prenom);
+        setUser(res.data);
+        setEmail(res.data.email);
+        setNiveauEtude(res.data.apprenant?.niveau_etude || "");
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (password !== confirmPassword) {
-      setMessage("Les mots de passe ne correspondent pas !");
-      return;
+    const token = localStorage.getItem("token");
+
+    try {
+      await axios.put(`http://localhost:8000/api/apprenants/${user.apprenant.id}`, {
+        nom,
+        prenom,
+        email,
+        password,
+        niveau_etude: niveauEtude
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      setMessage("✅ Profil mis à jour avec succès !");
+    } catch (error) {
+      console.error("Erreur mise à jour :", error);
+      setMessage("❌ Une erreur est survenue.");
     }
-
-    // Tu pourrais ici envoyer les données à ton API Laravel pour les mettre à jour
-
-    setMessage("Modifications enregistrées avec succès !");
   };
 
   return (
@@ -92,16 +122,26 @@ function Settings() {
             {message && <div className="alert alert-info text-center">{message}</div>}
 
             <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label className="form-label">Nom d'utilisateur</label>
+            <div className="mb-3">
+                <label className="form-label">Nom</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Nom d'utilisateur"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={nom}
+                  onChange={(e) => setNom(e.target.value)}
                 />
               </div>
+
+              <div className="mb-3">
+                <label className="form-label">Prénom</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={prenom}
+                  onChange={(e) => setPrenom(e.target.value)}
+                />
+              </div>
+
               <div className="mb-3">
                 <label className="form-label">Email</label>
                 <input
@@ -132,9 +172,18 @@ function Settings() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100">
-                Sauvegarder les modifications
-              </button>
+              <div className="mb-3">
+                <label className="form-label">Niveau d'étude</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={niveauEtude}
+                  onChange={(e) => setNiveauEtude(e.target.value)}
+                />
+              </div>
+              <div className="text-center mt-4">
+              <button className="btn btn-primary" type="submit">💾 Enregistrer</button>
+              </div>
             </form>
           </div>
         </div>
