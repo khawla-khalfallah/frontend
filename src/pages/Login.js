@@ -28,7 +28,9 @@ function Login() {
   
       // Redirection selon le rôle
       const role = user.role;
-      if (role === "formateur") {
+      if (role === "admin") {
+        navigate("/admin"); 
+      } else if (role === "formateur") {
         navigate("/formateur");
       } else if (role === "apprenant") {
         navigate("/apprenant");
@@ -37,6 +39,7 @@ function Login() {
       } else {
         navigate("/");
       }
+      
     } catch (error) {
       if (error.response) {
         alert(error.response.data.message || "Identifiants invalides.");
