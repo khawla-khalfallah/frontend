@@ -29,7 +29,9 @@ const EditInscritForm = ({ inscrit, onSuccess }) => {
     } catch (err) {
       if (err.response?.status === 422) {
         setErrors(err.response.data.errors);
-      } else {
+      }else if (err.response?.status === 409) {
+        alert("⚠️ L'apprenant est déjà inscrit à cette formation.");
+       } else {
         alert("Erreur lors de la modification.");
       }
     }
