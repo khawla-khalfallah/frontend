@@ -57,7 +57,7 @@ function FormationDetails() {
                   🎬 {video.titre}
                   <br />
                   <video width="100%" controls>
-                    <source src={`http://localhost:8000/storage/${video.chemin}`} type="video/mp4" />
+                    <source src={`http://localhost:8000/storage/${video.url}`} type="video/mp4" />
                     Votre navigateur ne supporte pas la lecture vidéo.
                   </video>
                 </li>
@@ -75,7 +75,7 @@ function FormationDetails() {
             <ul className="list-group">
               {formation.pdfs.map((pdf) => (
                 <li key={pdf.id} className="list-group-item">
-                  <a href={`http://localhost:8000/storage/${pdf.chemin}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`http://localhost:8000/storage/${pdf.fichier}`} target="_blank" rel="noopener noreferrer">
                     📂 {pdf.titre}
                   </a>
                 </li>
