@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import api from '../api';
+import api from '../../api';
 // import axiosInstance from '../config/axios';
 
 function Login() {
@@ -31,7 +31,7 @@ function Login() {
       if (role === "admin") {
         navigate("/admin"); 
       } else if (role === "formateur") {
-        navigate("/formateur");
+        navigate("/formateur/Formateur");
       } else if (role === "apprenant") {
         navigate("/apprenant");
       } else if (role === "recruteur") {

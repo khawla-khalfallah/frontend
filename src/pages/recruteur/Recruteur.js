@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaUsers, FaBriefcase, FaClipboardList } from "react-icons/fa";
-import NavbarMinimal from "../components/NavbarMinimal";
+import NavbarMinimal from "../../components/NavbarMinimal";
 
 
 function Recruteur() {

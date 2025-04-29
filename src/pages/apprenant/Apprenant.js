@@ -43,7 +43,7 @@ function Apprenant() {
             </Link>
           </li>
           <li className="nav-item py-2">
-            <Link className="nav-link text-white" to="/apprenant/settings">
+            <Link className="nav-link text-white" to="/apprenant/SettingsApprenant">
               <FaCog /> Paramètres
             </Link>
           </li>

@@ -5,7 +5,7 @@ import { FaUser, FaBook, FaCertificate, FaChartLine, FaVideo, FaCog } from "reac
 import NavbarMinimal from "../../components/NavbarMinimal";
 
 
-function Settings() {
+function SettingsApprenant() {
   const [user, setUser] = useState(null);
   const [niveauEtude, setNiveauEtude] = useState("");
   const [email, setEmail] = useState("");
@@ -33,6 +33,10 @@ function Settings() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password && password !== confirmPassword) {
+      setMessage("❌ Les mots de passe ne correspondent pas !");
+      return;
+    }
     const token = localStorage.getItem("token");
 
     try {
@@ -192,4 +196,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default SettingsApprenant;

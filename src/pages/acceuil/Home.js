@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Home.css"; // Pour les styles personnalisés
-import image from "../assets/imageacceuil.jpg";
+import image from "../../assets/imageacceuil.jpg";
 
 function Home() {
   return (

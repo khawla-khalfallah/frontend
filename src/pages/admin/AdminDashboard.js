@@ -1,18 +1,18 @@
 import React, { useState , useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import SidebarAdmin from '../components/SidebarAdmin';
-import AdminHome from './admin/AdminHome';
-import UsersList from './admin/UsersList';
-import ApprenantsList from './admin/ApprenantsList';
-import FormateursList from './admin/FormateursList';
-import RecruteursList from './admin/RecruteursList';
-import FormationsList from './admin/FormationsList';
-import ExamensList from './admin/ExamensList';
-import CertificatsList from './admin/CertificatsList';
-import PdfsList from './admin/PdfsList';
-import SeancesList from './admin/SeancesList';
-import VideosList from './admin/VideosList';
-import InscritsList from './admin/InscritsList';
+import SidebarAdmin from '../../components/SidebarAdmin';
+import AdminHome from './AdminHome';
+import UsersList from './UsersList';
+import ApprenantsList from './ApprenantsList';
+import FormateursList from './FormateursList';
+import RecruteursList from './RecruteursList';
+import FormationsList from './FormationsList';
+import ExamensList from './ExamensList';
+import CertificatsList from './CertificatsList';
+import PdfsList from './PdfsList';
+import SeancesList from './SeancesList';
+import VideosList from './VideosList';
+import InscritsList from './InscritsList';
 
 
 

@@ -72,16 +72,14 @@ function ProfilApprenant() {
                 <h5 className="text-dark mb-3">Nom : <span className="text-secondary">{user.nom}</span></h5>
                 <h5 className="text-dark mb-3">Prénom : <span className="text-secondary">{user.prenom}</span></h5>
                 {user.apprenant && (
-  <h5 className="text-dark mb-3">
-    Niveau d'étude : <span className="text-secondary">{user.apprenant.niveau_etude}</span>
-  </h5>
-)}
-
+                <h5 className="text-dark mb-3">
+                  Niveau d'étude : <span className="text-secondary">{user.apprenant.niveau_etude}</span>
+                </h5>)}
                 <p className="mb-2">📧 <strong>Email :</strong> {user.email}</p>
                 <p className="badge bg-info text-dark ms-2">🎓 <strong>Statut :</strong> {user.role}</p>
                 {/* Bouton Modifier */}
                   <div className="mt-4 text-center">
-                    <Link to="/apprenant/settings" className="btn btn-primary">
+                    <Link to="/apprenant/SettingsApprenant" className="btn btn-primary">
                       ✏️ Modifier le Profil
                     </Link>
                   </div>
