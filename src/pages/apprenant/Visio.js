@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import SidebarApprenant from "../../components/SidebarApprenant";
+import NavbarMinimal from "../../components/NavbarMinimal";
 
 function Visio() {
   const [visioconferences, setVisioconferences] = useState([]);
@@ -27,9 +29,13 @@ function Visio() {
 
   if (loading) {
     return (
-      <div className="container mt-4">
+      <div>
+      <NavbarMinimal />
+      <div className="d-flex">
+        <SidebarApprenant/>
         <h2>Visioconférences</h2>
         <p>Chargement des visioconférences...</p>
+      </div>
       </div>
     );
   }

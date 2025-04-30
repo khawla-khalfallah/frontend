@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import NavbarMinimal from "../../components/NavbarMinimal";
-import { FaVideo, FaCertificate, FaCog, FaUser, FaBook, FaChartLine } from "react-icons/fa";
+import SidebarApprenant from "../../components/SidebarApprenant";
 
 function FormationDetails() {
   const { id } = useParams();
@@ -24,51 +24,7 @@ function FormationDetails() {
     <div>
       <NavbarMinimal />
       <div className="d-flex">
-        {/* Sidebar identique à Apprenant */}
-        <div className="bg-dark text-white p-3 vh-100 d-flex flex-column" style={{ width: "250px" }}>
-          <h2 className="text-center">Apprenant</h2>
-          <ul className="nav flex-column">
-            <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/profil">
-                <FaUser /> Mon Profil
-              </Link>
-            </li>
-            <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/formations">
-                <FaBook /> Mes Formations
-              </Link>
-            </li>
-            <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/examens">
-                <FaCertificate /> Mes Examens
-              </Link>
-            </li>
-            <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/progres">
-                <FaChartLine /> Progrès
-              </Link>
-            </li>
-            <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/visio">
-                <FaVideo /> Visioconférences
-              </Link>
-            </li>
-            <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/certifications">
-                <FaCertificate /> Certifications
-              </Link>
-            </li>
-            <li className="nav-item py-2">
-              <Link className="nav-link text-white" to="/apprenant/settings">
-                <FaCog /> Paramètres
-              </Link>
-            </li>
-          </ul>
-          <footer className="mt-auto text-center">
-            <p className="mb-0">© 2025 DreamLearn. Tous droits réservés.</p>
-          </footer>
-        </div>
-
+       <SidebarApprenant/>
         {/* Contenu Principal */}
         <div className="p-5" style={{ flex: 1, backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
           <div className="bg-white shadow rounded p-4">
