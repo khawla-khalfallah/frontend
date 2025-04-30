@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Home.css"; // Pour les styles personnalisés
+import "./Home.css";
 import image from "../../assets/imageacceuil.jpg";
+import axios from "axios";
+import { FaStar } from "react-icons/fa";
+
+
+
 
 function Home() {
+  
+  const [formations, setFormations] = useState([]);
+useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/formations", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        
+  },
+      })
+      .then((response) => {
+        setFormations(response.data);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des formations :", error);
+      });
+  }, []);
+
   return (
     <div>
       {/* Navbar accessible */}
@@ -60,6 +83,39 @@ function Home() {
           <h1 className="fw-bold">Avec DreamLearn, le savoir est à portée de clic !</h1>
         </div>
       </header>
+      
+      <div className="container mt-5">
+        <h2 className="text-center mb-4">Nos Formations</h2>
+        <div className="row">
+          {formations.map((formation) => (
+            <div className="col-md-4 mb-4" key={formation.id}>
+              <div className="card h-100 shadow">
+                <div className="card-body">
+                  <h5 className="card-title">{formation.titre}</h5>
+                  <p className="card-text">💰 Prix : {formation.prix} DT</p>
+                  <p className="card-text">
+                    👨‍🏫 Formateur : {formation.formateur?.user?.nom}  {formation.formateur?.user?.prenom} 
+                  </p>
+                  <div className="mb-2">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <FaStar
+                        key={index}
+                        color={index < (formation.avis || 4) ? "#ffc107" : "#e4e5e9"}
+                      />
+                    ))}
+                  </div>
+                  <Link
+                    to={`/formation/${formation.id}`}
+                    className="btn btn-primary"
+                  >
+                    Accéder
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Pied de page accessible */}
       <footer className="footer bg-dark text-white text-center p-3 mt-5" role="contentinfo">

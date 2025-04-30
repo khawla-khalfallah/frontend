@@ -134,7 +134,7 @@ const MesFormationsFormateur = () => {
                       <p className="card-text">{formation.description}</p>
                       <div className="mb-2">
                         <span className="badge bg-success me-2">
-                          Prix : {formation.prix} D
+                          Prix : {formation.prix} DT
                         </span>
                         <span className="badge bg-secondary">
                           Du {formation.date_debut} au {formation.date_fin}
