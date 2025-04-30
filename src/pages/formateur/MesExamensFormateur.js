@@ -3,11 +3,15 @@ import axios from 'axios';
 import NavbarMinimal from '../../components/NavbarMinimal';
 import SidebarFormateur from '../../components/SidebarFormateur';
 import { Modal } from 'bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 
 const MesExamensFormateur = () => {
   const [examens, setExamens] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
+
 
   const storedUser = JSON.parse(localStorage.getItem('user'));
   const formateurId = storedUser?.id;
@@ -62,7 +66,11 @@ const MesExamensFormateur = () => {
       console.error("Erreur de mise à jour :", error);
     }
   };
-
+  const handleAddQuestion = (examenId) => {
+    // Redirige vers une nouvelle page ou affiche un formulaire dans une modal
+    navigate(`/formateur/AjouterQuestion/${examenId}`);
+  };
+  
   useEffect(() => {
     const fetchExamens = async () => {
       if (!formateurId) return;
@@ -133,8 +141,8 @@ const MesExamensFormateur = () => {
 
                         <button
                           className="btn btn-outline-success btn-sm"
-                          onClick={() => alert(`Ajouter des questions à l’examen ${examen.id}`)}
-                        >
+                          onClick={() => handleAddQuestion(examen.id)}
+                          >
                           ➕ Ajouter Questions
                         </button>
                       </div>

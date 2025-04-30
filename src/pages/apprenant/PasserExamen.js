@@ -14,19 +14,13 @@ function PasserExamen() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    // Charger les questions de l'examen
     axios.get(`http://localhost:8000/api/examens/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
-    })
-    .then(res => setExamen(res.data))
-    .catch(err => console.error("Erreur lors du chargement de l'examen", err));
-
-    // Exemple temporaire : charger des fausses questions
-    setQuestions([
-      { id: 1, texte: "Quelle est la capitale de la France ?", options: ["Paris", "Londres", "Berlin", "Madrid"] },
-      { id: 2, texte: "Combien font 5 + 7 ?", options: ["10", "11", "12", "13"] },
-      { id: 3, texte: "Quel est l'élément chimique H2O ?", options: ["Hydrogène", "Oxygène", "Eau", "Acide"] },
-    ]);
+    }).then(res => {
+      setExamen(res.data);
+      setQuestions(res.data.questions); // s'assurer que les relations sont chargées côté backend
+    });
+    
 
     // Démarrer le timer
     const interval = setInterval(() => {
@@ -55,27 +49,28 @@ function PasserExamen() {
     navigate("/apprenant/examens"); // Retourner à la liste après l'examen
   };
 
-  const formatTemps = (secondes) => {
-    const min = Math.floor(secondes / 60);
-    const sec = secondes % 60;
-    return `${min}:${sec < 10 ? "0" + sec : sec}`;
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   };
-  const handleSoumettre = async () => {
-    // Exemple de calcul : pour l'instant, fixons une note aléatoire pour tester
-    const note = Math.floor(Math.random() * 21); // entre 0 et 20
-    
-    try {
-      const token = localStorage.getItem("token");
   
-      await axios.put(`http://localhost:8000/api/examens/${id}`, 
-        { note }, 
-        { headers: { Authorization: `Bearer ${token}` } }
+  const handleSoumettre = async () => {
+    const token = localStorage.getItem("token");
+    console.log(reponses);
+    try {
+      const res = await axios.post(
+        `http://localhost:8000/api/examens/${id}/soumettre`,
+        { reponses:reponses },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
   
+      const note = res.data.note; // supposons que le backend retourne la note
       alert(`Examen terminé ! Votre note est ${note}/20`);
   
-      // Rediriger vers Mes Examens
-      window.location.href = "/apprenant/examens";
+      navigate("/apprenant/examens"); // redirection après soumission
     } catch (error) {
       console.error("Erreur en soumettant l'examen :", error);
       alert("Erreur lors de la soumission !");
@@ -97,31 +92,31 @@ function PasserExamen() {
           )}
 
           {/* Timer */}
-          <div className="text-center mb-4">
-            <span className="badge bg-danger fs-5">⏱️ Temps restant : {formatTemps(tempsRestant)}</span>
+          <div className="alert alert-info text-center fw-bold">
+            ⏳ Temps restant : {formatTime(tempsRestant)}
           </div>
 
+
           {/* Questions */}
-          {questions.map((q) => (
-            <div key={q.id} className="mb-4">
-              <h5>{q.texte}</h5>
-              <div className="form-group">
-                {q.options.map((option, index) => (
-                  <div key={index} className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name={`question-${q.id}`}
-                      value={option}
-                      checked={reponses[q.id] === option}
-                      onChange={() => handleChange(q.id, option)}
-                    />
-                    <label className="form-check-label">{option}</label>
-                  </div>
-                ))}
+          {questions.map((q, index) => (
+          <div key={q.id} className="mb-4">
+            <h5>Q{index + 1}. {q.question}</h5>
+            {q.options.map((opt, i) => (
+              <div key={i} className="form-check">
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  name={`question_${q.id}`}
+                  value={opt}
+                  checked={reponses[q.id] === opt}
+                  onChange={() => handleChange(q.id, opt)}
+                />
+                <label className="form-check-label">{opt}</label>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        ))}
+
 
           {/* Bouton Soumettre */}
           <div className="text-center">

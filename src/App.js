@@ -17,6 +17,7 @@ import SettingsApprenant from "./pages/apprenant/SettingsApprenant";
 import Formateur from "./pages/formateur/Formateur";
 import ProfilFormateur from "./pages/formateur/ProfilFormateur";
 import MesFormationsFormateur from "./pages/formateur/MesFormationsFormateur";
+import AjouterQuestion from "./pages/formateur/AjouterQuestion"
 import AjouterFormation from "./pages/formateur/AjouterFormation";
 import MesExamensFormateur from "./pages/formateur/MesExamensFormateur";
 import AjouterExamen from "./pages/formateur/AjouterExamen"
@@ -57,6 +58,7 @@ function App() {
         <Route path="/formateur/MesFormationsFormateur" element={<MesFormationsFormateur />} />
         <Route path="/formateur/AjouterFormation" element={<AjouterFormation />} />
         <Route path="/formateur/MesExamensFormateur" element={<MesExamensFormateur />} />
+        <Route path="/formateur/AjouterQuestion/:examenId" element={<AjouterQuestion />} />
         <Route path="/formateur/AjouterExamen" element={<AjouterExamen />} />
         <Route path="/formateur/MesEtudiants" element={<MesEtudiants />} />
         <Route path="/formateur/Evaluations" element={<Evaluations />} />
