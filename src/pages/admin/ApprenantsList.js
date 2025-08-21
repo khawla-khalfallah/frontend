@@ -1,65 +1,70 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../config/axios';
-import AjoutApprenantForm from './AjoutApprenantForm'; // ⬅️ on l'ajoute après
+import axios from 'axios';
+import AjoutApprenantForm from './AjoutApprenantForm';
 import EditApprenantForm from './EditApprenantForm';
-
 
 const ApprenantsList = () => {
   const [apprenants, setApprenants] = useState([]);
-  const [showForm, setShowForm] = useState(false); // ⬅️ pour afficher/masquer le formulaire
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   const [editingApprenant, setEditingApprenant] = useState(null);
 
-
-  const fetchApprenants = () => {
-    axios.get('/api/apprenants')
-      .then(res => setApprenants(res.data))
-      .catch(err => console.error(err));
-  };
-  const handleEdit = (apprenant) => {
-    setEditingApprenant(apprenant);
-  };
-  const handleDelete = async (id) => {
-    if (!window.confirm("Voulez-vous vraiment supprimer cet apprenant ?")) return;
-  
+  const fetchApprenants = async () => {
     try {
-      await axios.delete(`/api/apprenants/${id}`);
-      alert("Apprenant supprimé !");
-      fetchApprenants();
-    } catch (error) {
-      console.error("Erreur suppression :", error.response?.data);
-      alert("Erreur lors de la suppression : " + error.response?.data?.message);
+      const token = localStorage.getItem('token');
+      const response = await axios.get("http://localhost:8000/api/apprenants", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setApprenants(response.data);
+    } catch (err) {
+      console.error("Erreur lors de la récupération des apprenants:", err);
+      setError("Erreur lors du chargement des apprenants");
+    } finally {
+      setLoading(false);
     }
   };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Voulez-vous vraiment supprimer cet apprenant ?")) return;
+    
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:8000/api/apprenants/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      alert("Apprenant supprimé avec succès");
+      fetchApprenants();
+    } catch (error) {
+      console.error("Erreur lors de la suppression:", error);
+      alert(`Erreur lors de la suppression: ${error.response?.data?.message || error.message}`);
+    }
+  };
+
   useEffect(() => {
     fetchApprenants();
   }, []);
-  {editingApprenant && (
-    <EditApprenantForm
-      apprenant={editingApprenant}
-      onSuccess={() => {
-        setEditingApprenant(null);
-        fetchApprenants();
-      }}
-    />
-  )}
+
+  if (loading) return <div className="text-center mt-4">Chargement en cours...</div>;
+  if (error) return <div className="alert alert-danger mt-4">{error}</div>;
+
   return (
-    <div>
-      <h2>👶 Liste des Apprenants</h2>
-  
+    <div className="container mt-4">
+      <h2 className="mb-4">👶 Liste des Apprenants</h2>
+      
       <button className="btn btn-primary mb-3" onClick={() => setShowForm(!showForm)}>
-        ➕ Ajouter un apprenant
+        ➕ {showForm ? 'Annuler' : 'Ajouter un apprenant'}
       </button>
-  
+
       {showForm && (
-        <AjoutApprenantForm
+        <AjoutApprenantForm 
           onSuccess={() => {
             setShowForm(false);
             fetchApprenants();
           }}
         />
       )}
-  
-      {/* ✅ FORMULAIRE DE MODIFICATION */}
+
       {editingApprenant && (
         <EditApprenantForm
           apprenant={editingApprenant}
@@ -69,45 +74,52 @@ const ApprenantsList = () => {
           }}
         />
       )}
-  
-      <table className="table table-striped mt-4">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nom complet</th>
-            <th>Email</th>
-            <th>Niveau d'étude</th>
-            <th>Actions</th> {/* ✅ Ajout de colonne pour boutons */}
-          </tr>
-        </thead>
-        <tbody>
-          {apprenants.map((a) => (
-            <tr key={a.user_id}>
-              <td>{a.user_id}</td>
-              <td>{a.user?.nom} {a.user?.prenom}</td>
-              <td>{a.user?.email}</td>
-              <td>{a.niveau_etude}</td>
-              <td>
-                <button
-                  className="btn btn-warning btn-sm me-2"
-                  onClick={() => handleEdit(a)}
-                >
-                  ✏️ Modifier
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(a.id)}
-                >
-                  🗑 Supprimer
-                </button>
-              </td>
+
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead className="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Nom complet</th>
+              <th>Email</th>
+              <th>Niveau d'étude</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {apprenants.length > 0 ? (
+              apprenants.map((apprenant) => (
+                <tr key={apprenant.id}>
+                  <td>{apprenant.id}</td>
+                  <td>{apprenant.user?.nom} {apprenant.user?.prenom}</td>
+                  <td>{apprenant.user?.email}</td>
+                  <td>{apprenant.niveau_etude}</td>
+                  <td>
+                    <button
+                      className="btn btn-warning btn-sm me-2"
+                      onClick={() => setEditingApprenant(apprenant)}
+                    >
+                      ✏️ Modifier
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(apprenant.id)}
+                    >
+                      🗑 Supprimer
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center">Aucun apprenant trouvé</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-  
 };
 
 export default ApprenantsList;

@@ -20,7 +20,7 @@ const AjoutFormateurForm = ({ onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-        await axios.post('/api/formateurs', formData);
+        await axios.post('http://localhost:8000/api/formateurs', formData);
       alert("Formateur ajouté !");
       onSuccess();
     } catch (err) {

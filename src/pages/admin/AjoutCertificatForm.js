@@ -10,7 +10,7 @@ const AjoutCertificatForm = ({ onSuccess }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    axios.get('/api/apprenants')
+    axios.get('http://localhost:8000/api/apprenants')
       .then(res => setApprenants(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -22,7 +22,7 @@ const AjoutCertificatForm = ({ onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post('/api/certificats', formData);
+      await axios.post('http://localhost:8000/api/certificats', formData);
       alert("Certificat ajouté !");
       setErrors({});
       onSuccess(); // recharge la liste

@@ -20,7 +20,7 @@ const AjoutApprenantForm = ({ onSuccess }) => {
     e.preventDefault();
 
     try {
-      await axios.post('/api/apprenants', formData);
+      await axios.post('http://localhost:8000/api/apprenants', formData);
       alert("✅ Apprenant ajouté avec succès !");
       setFormData({
         nom: '',

@@ -14,7 +14,7 @@ const FormateursList = () => {
 
 
   const fetchFormateurs = () => {
-    axios.get('/api/formateurs')
+    axios.get('http://localhost:8000/api/formateurs')
       .then(res => setFormateurs(res.data))
       .catch(err => console.error(err));
   };
@@ -28,7 +28,7 @@ const FormateursList = () => {
     if (!window.confirm("Voulez-vous vraiment supprimer ce formateur ?")) return;
   
     try {
-      await axios.delete(`/api/formateurs/${id}`);
+      await axios.delete(`http://localhost:8000/api/formateurs/${id}`);
       alert("Formateur supprimé !");
       fetchFormateurs(); // 🔁 recharge la liste
     } catch (err) {

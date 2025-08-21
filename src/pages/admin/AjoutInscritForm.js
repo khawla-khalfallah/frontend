@@ -11,8 +11,8 @@ const AjoutInscritForm = ({ onSuccess }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    axios.get('/api/apprenants').then(res => setApprenants(res.data));
-    axios.get('/api/formations').then(res => setFormations(res.data));
+    axios.get('http://localhost:8000/api/apprenants').then(res => setApprenants(res.data));
+    axios.get('http://localhost:8000/api/formations').then(res => setFormations(res.data));
   }, []);
 
   const handleChange = (e) => {
@@ -22,7 +22,7 @@ const AjoutInscritForm = ({ onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post('/api/inscrits', formData);
+      await axios.post('http://localhost:8000/api/inscrits', formData);
       alert("Inscription ajoutée !");
       onSuccess();
     } catch (err) {

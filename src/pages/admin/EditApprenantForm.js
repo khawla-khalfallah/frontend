@@ -13,7 +13,7 @@ const EditApprenantForm = ({ apprenant, onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/apprenants/${apprenant.id}`, {
+      await axios.put(`http://localhost:8000/api/apprenants/${apprenant.id}`, {
         niveau_etude: niveau
       });
       alert("Apprenant modifié !");

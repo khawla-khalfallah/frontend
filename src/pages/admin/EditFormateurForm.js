@@ -14,7 +14,7 @@ const EditFormateurForm = ({ formateur, onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        await axios.put(`/api/formateurs/${formateur.user_id}`, {
+        await axios.put(`http://localhost:8000/api/formateurs/${formateur.user_id}`, {
         specialite,
         bio
       });

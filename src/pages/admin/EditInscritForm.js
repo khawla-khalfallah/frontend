@@ -9,17 +9,23 @@ const EditInscritForm = ({ inscrit, onSuccess }) => {
   const [apprenants, setApprenants] = useState([]);
   const [formations, setFormations] = useState([]);
   const [errors, setErrors] = useState({});
+
   useEffect(() => {
     setFormData({
       apprenant_id: inscrit.apprenant_id,
       formation_id: inscrit.formation_id
     });
   }, [inscrit]);
-  
 
   useEffect(() => {
-    axios.get('/api/apprenants').then(res => setApprenants(res.data));
-    axios.get('/api/formations').then(res => setFormations(res.data));
+    // Charger les apprenants avec les données utilisateur
+    axios.get('http://localhost:8000/api/apprenants?with_user=true')
+      .then(res => setApprenants(res.data))
+      .catch(err => console.error("Erreur chargement apprenants:", err));
+    
+    axios.get('http://localhost:8000/api/formations')
+      .then(res => setFormations(res.data))
+      .catch(err => console.error("Erreur chargement formations:", err));
   }, []);
 
   const handleChange = e => {
@@ -29,17 +35,18 @@ const EditInscritForm = ({ inscrit, onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.put(`/api/inscrits/${inscrit.id_inscrit}`, formData);
+      await axios.put(`http://localhost:8000/api/inscrits/${inscrit.id_inscrit}`, formData);
       alert("Inscription modifiée !");
       setErrors({});
       onSuccess();
     } catch (err) {
       if (err.response?.status === 422) {
         setErrors(err.response.data.errors);
-      }else if (err.response?.status === 409) {
+      } else if (err.response?.status === 409) {
         alert("⚠️ L'apprenant est déjà inscrit à cette formation.");
-       } else {
+      } else {
         alert("Erreur lors de la modification.");
+        console.error(err);
       }
     }
   };
@@ -57,9 +64,11 @@ const EditInscritForm = ({ inscrit, onSuccess }) => {
       >
         <option value="">👤 Choisir un apprenant</option>
         {apprenants.map(a => (
-          <option key={a.user_id} value={a.user_id}>
-            {a.user?.nom} {a.user?.prenom}
-          </option>
+          a.user && (
+            <option key={a.user_id} value={a.user_id}>
+              {a.user.nom} {a.user.prenom}
+            </option>
+          )
         ))}
       </select>
       {errors.apprenant_id && (

@@ -11,7 +11,7 @@ const EditRecruteurForm = ({ recruteur, onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.put(`/api/recruteurs/${recruteur.id}`, {
+      await axios.put(`http://localhost:8000/api/recruteurs/${recruteur.id}`, {
         entreprise
       });
       alert("Recruteur modifié !");

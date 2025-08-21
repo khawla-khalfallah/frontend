@@ -9,7 +9,7 @@ const CertificatsList = () => {
   const [editingCertificat, setEditingCertificat] = useState(null);
 
   const fetchCertificats = () => {
-    axios.get('/api/certificats')
+    axios.get('http://localhost:8000/api/certificats')
       .then(res =>{ setCertificats(res.data);   
         console.log('📦 certificats rechargés', res.data); // 🔍 tu dois y voir le nouveau apprenant
       })
@@ -23,7 +23,7 @@ const CertificatsList = () => {
   const handleDelete = async id => {
     if (!window.confirm("Supprimer ce certificat ?")) return;
     try {
-      await axios.delete(`/api/certificats/${id}`);
+      await axios.delete(`http://localhost:8000/api/certificats/${id}`);
       alert("Certificat supprimé !");
       fetchCertificats();
     } catch (err) {

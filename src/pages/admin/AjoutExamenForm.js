@@ -13,9 +13,9 @@ const AjoutExamenForm = ({ onSuccess }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    axios.get('/api/formations')
+    axios.get('http://localhost:8000/api/formations')
       .then(res => setFormations(res.data));
-    axios.get('/api/apprenants')
+    axios.get('http://localhost:8000/api/apprenants')
       .then(res => setApprenants(res.data));
   }, []);
 
@@ -26,7 +26,7 @@ const AjoutExamenForm = ({ onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post('/api/examens', formData);
+      await axios.post('http://localhost:8000/api/examens', formData);
       alert("Examen ajouté !");
       onSuccess();
     } catch (err) {

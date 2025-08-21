@@ -19,7 +19,7 @@ const AjoutRecruteurForm = ({ onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post('/api/recruteurs', formData);
+      await axios.post('http://localhost:8000/api/recruteurs', formData);
       alert("Recruteur ajouté !");
       setErrors({});
       onSuccess();

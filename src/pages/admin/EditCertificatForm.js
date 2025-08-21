@@ -18,7 +18,7 @@ const EditCertificatForm = ({ certificat, onSuccess }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    axios.get('/api/apprenants')
+    axios.get('http://localhost:8000/api/apprenants')
       .then(res => setApprenants(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -30,7 +30,7 @@ const EditCertificatForm = ({ certificat, onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.put(`/api/certificats/${certificat.id}`, formData);
+      await axios.put(`http://localhost:8000/api/certificats/${certificat.id}`, formData);
       alert("Certificat modifié !");
       setErrors({});
       onSuccess();

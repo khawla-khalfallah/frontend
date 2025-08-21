@@ -10,7 +10,7 @@ const RecruteursList = () => {
   
 
   const fetchRecruteurs = () => {
-    axios.get('/api/recruteurs')
+    axios.get('http://localhost:8000/api/recruteurs')
       .then(res => setRecruteurs(res.data))
       .catch(err => console.error(err));
   };
@@ -22,7 +22,7 @@ const RecruteursList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Supprimer ce recruteur ?")) return;
     try {
-      await axios.delete(`/api/recruteurs/${id}`);
+      await axios.delete(`http://localhost:8000/api/recruteurs/${id}`);
       alert("Recruteur supprimé !");
       fetchRecruteurs();
     } catch (err) {

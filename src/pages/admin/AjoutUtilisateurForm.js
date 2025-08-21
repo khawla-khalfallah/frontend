@@ -25,7 +25,7 @@ const AjoutUtilisateurForm = ({ onSuccess }) => {
     e.preventDefault();
 
     try {
-      await axios.post('/api/users', formData);
+      await axios.post('http://localhost:8000/api/users', formData);
       alert("Utilisateur ajouté !");
       setErrors({});
       onSuccess();

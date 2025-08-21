@@ -24,7 +24,7 @@ const EditSeanceForm = ({ seance, onSuccess }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    axios.get('/api/formations').then(res => setFormations(res.data));
+    axios.get('http://localhost:8000/api/formations').then(res => setFormations(res.data));
   }, []);
 
   const handleChange = e => {
@@ -34,7 +34,7 @@ const EditSeanceForm = ({ seance, onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.put(`/api/seances/${seance.id}`, formData);
+      await axios.put(`http://localhost:8000/api/seances/${seance.id}`, formData);
       alert("Séance modifiée !");
       setErrors({});
       onSuccess();

@@ -9,7 +9,7 @@ const VideosList = () => {
   const [editingVideo, setEditingVideo] = useState(null);
 
   const fetchVideos = () => {
-    axios.get('/api/videos')
+    axios.get('http://localhost:8000/api/videos')
       .then(res => setVideos(res.data))
       .catch(err => console.error(err));
   };
@@ -21,7 +21,7 @@ const VideosList = () => {
   const handleDelete = async id => {
     if (!window.confirm("Supprimer cette vidéo ?")) return;
     try {
-      await axios.delete(`/api/videos/${id}`);
+      await axios.delete(`http://localhost:8000/api/videos/${id}`);
       alert("Vidéo supprimée !");
       fetchVideos();
     } catch (err) {

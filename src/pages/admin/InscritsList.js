@@ -9,7 +9,7 @@ const InscritsList = () => {
   const [editingInscrit, setEditingInscrit] = useState(null);
 
   const fetchInscrits = () => {
-    axios.get('/api/inscrits')
+    axios.get('http://localhost:8000/api/inscrits')
       .then(res => setInscrits(res.data))
       .catch(err => console.error(err));
   };
@@ -21,7 +21,7 @@ const InscritsList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Supprimer cette inscription ?")) return;
     try {
-      await axios.delete(`/api/inscrits/${id}`);
+      await axios.delete(`http://localhost:8000/api/inscrits/${id}`);
       alert("Inscription supprimée !");
       fetchInscrits();
     } catch (err) {

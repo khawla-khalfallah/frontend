@@ -9,7 +9,7 @@ const ExamensList = () => {
   const [editingExamen, setEditingExamen] = useState(null);
 
   const fetchExamens = () => {
-    axios.get('/api/examens')
+    axios.get('http://localhost:8000/api/examens')
       .then(res => setExamens(res.data))
       .catch(err => console.error(err));
   };
@@ -21,7 +21,7 @@ const ExamensList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Supprimer cet examen ?")) return;
     try {
-      await axios.delete(`/api/examens/${id}`);
+      await axios.delete(`http://localhost:8000/api/examens/${id}`);
       alert("Examen supprimé !");
       fetchExamens();
     } catch (err) {

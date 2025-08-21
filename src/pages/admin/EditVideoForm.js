@@ -20,7 +20,7 @@ const EditVideoForm = ({ video, onSuccess }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    axios.get('/api/formations').then(res => setFormations(res.data));
+    axios.get('http://localhost:8000/api/formations').then(res => setFormations(res.data));
   }, []);
 
   const handleChange = e => {
@@ -30,7 +30,7 @@ const EditVideoForm = ({ video, onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.put(`/api/videos/${video.id}`, formData);
+      await axios.put(`http://localhost:8000/api/videos/${video.id}`, formData);
       alert('Vidéo modifiée !');
       onSuccess();
     } catch (err) {

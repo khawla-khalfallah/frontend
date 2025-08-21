@@ -22,7 +22,7 @@ const EditExamenForm = ({ examen, onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.put(`/api/examens/${examen.id}`, formData);
+      await axios.put(`http://localhost:8000/api/examens/${examen.id}`, formData);
       alert("Examen modifié !");
       onSuccess();
     } catch (err) {

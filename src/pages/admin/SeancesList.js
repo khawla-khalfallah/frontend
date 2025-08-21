@@ -9,7 +9,7 @@ const SeancesList = () => {
   const [editingSeance, setEditingSeance] = useState(null);
 
   const fetchSeances = () => {
-    axios.get('/api/seances')
+    axios.get('http://localhost:8000/api/seances')
       .then(res => setSeances(res.data))
       .catch(err => console.error(err));
   };
@@ -21,7 +21,7 @@ const SeancesList = () => {
   const handleDelete = async id => {
     if (!window.confirm("Supprimer cette séance ?")) return;
     try {
-      await axios.delete(`/api/seances/${id}`);
+      await axios.delete(`http://localhost:8000/api/seances/${id}`);
       alert("Séance supprimée !");
       fetchSeances();
     } catch (err) {

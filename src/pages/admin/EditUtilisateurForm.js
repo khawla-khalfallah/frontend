@@ -38,7 +38,7 @@ const EditUtilisateurForm = ({ user, onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.put(`/api/users/${user.id}`, formData);
+      await axios.put(`http://localhost:8000/api/users/${user.id}`, formData);
       alert("Utilisateur modifié !");
       setErrors({});
       onSuccess();

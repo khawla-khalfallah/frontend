@@ -13,7 +13,7 @@ const UsersList = () => {
 
 
   const fetchUsers = () => {
-    axios.get('/api/users')
+    axios.get('http://localhost:8000/api/users')
       .then(res => setUsers(res.data))
       .catch(err => console.error(err));
   };
@@ -25,7 +25,7 @@ const UsersList = () => {
     if (!window.confirm("Voulez-vous vraiment supprimer cet utilisateur ?")) return;
   
     try {
-      await axios.delete(`/api/users/${id}`);
+      await axios.delete(`http://localhost:8000/api/users/${id}`);
       alert("Utilisateur supprimé !");
       fetchUsers(); // 🔁 Recharge la liste après suppression
     } catch (err) {

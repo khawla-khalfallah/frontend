@@ -9,7 +9,7 @@ const FormationsList = () => {
   const [editingFormation, setEditingFormation] = useState(null);
 
   const fetchFormations = () => {
-    axios.get('/api/formations')
+    axios.get('http://localhost:8000/api/formations')
       .then(res => setFormations(res.data))
       .catch(err => console.error(err));
   };
@@ -21,7 +21,7 @@ const FormationsList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Supprimer cette formation ?")) return;
     try {
-      await axios.delete(`/api/formations/${id}`);
+      await axios.delete(`http://localhost:8000/api/formations/${id}`);
       alert("Formation supprimée !");
       fetchFormations();
     } catch (err) {

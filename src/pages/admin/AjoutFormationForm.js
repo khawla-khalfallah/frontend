@@ -15,7 +15,7 @@ const AjoutFormationForm = ({ onSuccess }) => {
 
   // Charger les formateurs
   useEffect(() => {
-    axios.get('/api/formateurs')
+    axios.get('http://localhost:8000/api/formateurs')
       .then(res => setFormateurs(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -27,7 +27,7 @@ const AjoutFormationForm = ({ onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post('/api/formations', formData);
+      await axios.post('http://localhost:8000/api/formations', formData);
       alert("Formation ajoutée !");
       setErrors({});
       onSuccess();

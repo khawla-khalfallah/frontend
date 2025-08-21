@@ -9,7 +9,7 @@ const PdfsList = () => {
   const [editingPdf, setEditingPdf] = useState(null);
 
   const fetchPdfs = () => {
-    axios.get('/api/pdfs')
+    axios.get('http://localhost:8000/api/pdfs')
       .then(res => setPdfs(res.data))
       .catch(err => console.error(err));
   };
@@ -21,7 +21,7 @@ const PdfsList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Supprimer ce PDF ?")) return;
     try {
-      await axios.delete(`/api/pdfs/${id}`);
+      await axios.delete(`http://localhost:8000/api/pdfs/${id}`);
       alert("PDF supprimé !");
       fetchPdfs();
     } catch (err) {

@@ -28,7 +28,7 @@ const EditFormationForm = ({ formation, onSuccess }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.put(`/api/formations/${formation.id}`, formData);
+      await axios.put(`http://localhost:8000/api/formations/${formation.id}`, formData);
       alert("Formation modifiée !");
       setErrors({});
       onSuccess(); // 🔁 recharge la liste

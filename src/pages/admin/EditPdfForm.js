@@ -19,7 +19,7 @@ const EditPdfForm = ({ pdf, onSuccess }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    axios.get('/api/formations').then(res => setFormations(res.data));
+    axios.get('http://localhost:8000/api/formations').then(res => setFormations(res.data));
   }, []);
 
   const handleChange = e => {
@@ -44,7 +44,7 @@ const EditPdfForm = ({ pdf, onSuccess }) => {
     }
 
     try {
-      await axios.post(`/api/pdfs/${pdf.id}?_method=PUT`, data, {
+      await axios.post(`http://localhost:8000/api/pdfs/${pdf.id}?_method=PUT`, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
