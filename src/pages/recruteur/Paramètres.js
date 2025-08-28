@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavbarMinimal from "../../components/NavbarMinimal";
-import SidebarApprenant from "../../components/SidebarApprenant";
+import SidebarRecruteur from "../../components/SidebarRecruteur";
 
-
-function SettingsApprenant() {
+function Parametres() {
   const [user, setUser] = useState(null);
-  const [niveauEtude, setNiveauEtude] = useState("");
+  const [entreprise, setEntreprise] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nom, setNom] = useState("");
@@ -14,18 +13,18 @@ function SettingsApprenant() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  
   useEffect(() => {
     const token = localStorage.getItem("token");
-    axios.get("http://localhost:8000/api/profile", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    axios
+      .get("http://localhost:8000/api/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         setNom(res.data.nom);
         setPrenom(res.data.prenom);
         setUser(res.data);
         setEmail(res.data.email);
-        setNiveauEtude(res.data.apprenant?.niveau_etude || "");
+        setEntreprise(res.data.recruteur?.entreprise || "");
       })
       .catch((err) => console.error(err));
   }, []);
@@ -36,18 +35,23 @@ function SettingsApprenant() {
       setMessage("❌ Les mots de passe ne correspondent pas !");
       return;
     }
+
     const token = localStorage.getItem("token");
 
     try {
-      await axios.put(`http://localhost:8000/api/apprenants/${user.apprenant.user_id}`, {
-        nom,
-        prenom,
-        email,
-        password,
-        niveau_etude: niveauEtude
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.put(
+        `http://localhost:8000/api/recruteurs/${user.recruteur.user_id}`,
+        {
+          nom,
+          prenom,
+          email,
+          password,
+          entreprise,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       setMessage("✅ Profil mis à jour avec succès !");
     } catch (error) {
@@ -60,22 +64,30 @@ function SettingsApprenant() {
     <div>
       <NavbarMinimal />
       <div className="d-flex">
-       <SidebarApprenant/>
+        <SidebarRecruteur />
         {/* Contenu principal - Paramètres */}
         <div
           className="p-5"
           style={{ flex: 1, backgroundColor: "#f8f9fa", minHeight: "100vh" }}
         >
-          <div className="bg-white shadow rounded p-4" style={{ maxWidth: "700px", margin: "0 auto" }}>
-            <h2 className="text-primary mb-4 text-center" style={{ fontWeight: "bold" }}>
+          <div
+            className="bg-white shadow rounded p-4"
+            style={{ maxWidth: "700px", margin: "0 auto" }}
+          >
+            <h2
+              className="text-primary mb-4 text-center"
+              style={{ fontWeight: "bold" }}
+            >
               ⚙️ Paramètres du compte
             </h2>
-            
+
             {/* Message de succès ou d'erreur */}
-            {message && <div className="alert alert-info text-center">{message}</div>}
+            {message && (
+              <div className="alert alert-info text-center">{message}</div>
+            )}
 
             <form onSubmit={handleSubmit}>
-            <div className="mb-3">
+              <div className="mb-3">
                 <label className="form-label">Nom</label>
                 <input
                   type="text"
@@ -105,6 +117,7 @@ function SettingsApprenant() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+
               <div className="mb-3">
                 <label className="form-label">Mot de passe</label>
                 <input
@@ -115,6 +128,7 @@ function SettingsApprenant() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+
               <div className="mb-3">
                 <label className="form-label">Confirmer le mot de passe</label>
                 <input
@@ -125,17 +139,21 @@ function SettingsApprenant() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
+
               <div className="mb-3">
-                <label className="form-label">Niveau d'étude</label>
+                <label className="form-label">Entreprise</label>
                 <input
                   type="text"
                   className="form-control"
-                  value={niveauEtude}
-                  onChange={(e) => setNiveauEtude(e.target.value)}
+                  value={entreprise}
+                  onChange={(e) => setEntreprise(e.target.value)}
                 />
               </div>
+
               <div className="text-center mt-4">
-              <button className="btn btn-primary" type="submit">💾 Enregistrer</button>
+                <button className="btn btn-primary" type="submit">
+                  💾 Enregistrer
+                </button>
               </div>
             </form>
           </div>
@@ -145,4 +163,4 @@ function SettingsApprenant() {
   );
 }
 
-export default SettingsApprenant;
+export default Parametres;

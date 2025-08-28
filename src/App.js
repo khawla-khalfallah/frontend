@@ -25,9 +25,9 @@ import MesEtudiants from "./pages/formateur/MesEtudiants";
 import Evaluations from "./pages/formateur/Evaluations";
 import SettingsFormateur from "./pages/formateur/SettingsFormateur"
 import Recruteur from "./pages/recruteur/Recruteur";
-import Offres from "./pages/recruteur/Offres";
+import Profil from "./pages/recruteur/Profil";
 import Candidatures from "./pages/recruteur/Candidatures";
-import Entretiens from "./pages/recruteur/Entretiens";
+import Paramètres from "./pages/recruteur/Paramètres";
 import TablesList from './pages/Test';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UsersList from './pages/admin/UsersList';
@@ -70,9 +70,9 @@ function App() {
         <Route path="/formateur/Evaluations" element={<Evaluations />} />
         <Route path="/formateur/SettingsFormateur" element={<SettingsFormateur />} />
         <Route path="/recruteur" element={<Recruteur />} />
-        <Route path="/recruteur/offres" element={<Offres />} />
+        <Route path="/recruteur/profil" element={<Profil />} />
         <Route path="/recruteur/candidatures" element={<Candidatures />} />
-        <Route path="/recruteur/entretiens" element={<Entretiens />} />
+        <Route path="/recruteur/paramètres" element={<Paramètres />} />
         <Route path="/tables" element={<TablesList />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/users" element={<UsersList />} />

@@ -16,8 +16,8 @@ function Recruteur() {
           <h3 className="text-center">Recruteur</h3>
           <ul className="nav flex-column flex-grow-1">
             <li className="nav-item my-2">
-              <Link className="nav-link text-white" to="/recruteur/offres">
-                <FaBriefcase className="me-2" /> Gérer les Offres
+              <Link className="nav-link text-white" to="/recruteur/profil">
+                <FaBriefcase className="me-2" /> Mon Profil
               </Link>
             </li>
             <li className="nav-item my-2">
@@ -26,8 +26,8 @@ function Recruteur() {
               </Link>
             </li>
             <li className="nav-item my-2">
-              <Link className="nav-link text-white" to="/recruteur/entretiens">
-                <FaUsers className="me-2" /> Planifier les Entretiens
+              <Link className="nav-link text-white" to="/recruteur/paramètres">
+                <FaUsers className="me-2" /> Paramètres
               </Link>
             </li>
           </ul>
