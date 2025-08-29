@@ -15,72 +15,99 @@ function Register() {
     niveau_etude: "",
     specialite: "",
     bio: "",
-    entreprise: ""
+    entreprise: "",
+    cv: null,
   });
+
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Gestion des inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  // ✅ handleSubmit avec commentaires explicatifs
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
-  
+
     if (!formData.role) {
       setErrorMessage("Veuillez sélectionner un rôle !");
       return;
     }
-  
-    // Préparation des données
-    const dataToSend = {
-      ...formData,
-      specialite: formData.role === 'formateur' ? formData.specialite : '',
-      bio: formData.role === 'formateur' ? formData.bio : '',
-      entreprise: formData.role === 'recruteur' ? formData.entreprise : '',
-      niveau_etude: formData.role === 'apprenant' ? formData.niveau_etude : ''
-    };
-  
+
     try {
       // 1. Configuration Axios
       axios.defaults.withCredentials = true;
-      
+
       // 2. Récupération CSRF Token
       await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
-      
-      // 3. Envoi inscription
-      const registerResponse = await axios.post("http://127.0.0.1:8000/api/users", dataToSend);
-  
-      if (registerResponse.status === 201) {
-        // 4. Connexion automatique
+
+      let response;
+
+      // 3. Préparation des données et envoi inscription
+      if (formData.role === "formateur") {
+        // Si Formateur → on utilise FormData pour inclure le CV
+        const formDataToSend = new FormData();
+        formDataToSend.append("nom", formData.nom);
+        formDataToSend.append("prenom", formData.prenom);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("password", formData.password);
+        formDataToSend.append("password_confirmation", formData.password_confirmation);
+        formDataToSend.append("role", formData.role);
+        formDataToSend.append("specialite", formData.specialite);
+        formDataToSend.append("bio", formData.bio);
+
+        if (formData.cv) {
+          formDataToSend.append("cv", formData.cv);
+        }
+
+        // 3. Envoi inscription (Formateur)
+        response = await axios.post("http://127.0.0.1:8000/api/users", formDataToSend, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      } else {
+        // Autres rôles → envoi JSON normal
+        const dataToSend = {
+          ...formData,
+          specialite: formData.role === "formateur" ? formData.specialite : "",
+          bio: formData.role === "formateur" ? formData.bio : "",
+          entreprise: formData.role === "recruteur" ? formData.entreprise : "",
+          niveau_etude: formData.role === "apprenant" ? formData.niveau_etude : "",
+        };
+
+        // 3. Envoi inscription (Autres rôles)
+        response = await axios.post("http://127.0.0.1:8000/api/users", dataToSend);
+      }
+
+      // 4. Connexion automatique
+      if (response.status === 201) {
         try {
           const loginResponse = await axios.post(
-            'http://127.0.0.1:8000/api/login',
-            {
-              email: dataToSend.email,
-              password: dataToSend.password // Utilisez le mot de passe non haché
-            },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              }
-            }
+            "http://127.0.0.1:8000/api/login",
+            { email: formData.email, password: formData.password },
+            { headers: { "Content-Type": "application/json", Accept: "application/json" } }
           );
-  
+
           // 5. Stockage des infos
-          localStorage.setItem('token', loginResponse.data.token);
-          localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
-          
+          localStorage.setItem("token", loginResponse.data.token);
+          localStorage.setItem("user", JSON.stringify(loginResponse.data.user));
+
           // 6. Redirection
-          navigate(loginResponse.data.user.role === 'formateur' ? '/formateur' : 
-                  loginResponse.data.user.role === 'apprenant' ? '/apprenant' : 
-                  loginResponse.data.user.role === 'recruteur' ? '/recruteur' : '/');
-          
+          navigate(
+            loginResponse.data.user.role === "formateur"
+              ? "/formateur/Formateur"
+              : loginResponse.data.user.role === "apprenant"
+              ? "/apprenant"
+              : loginResponse.data.user.role === "recruteur"
+              ? "/recruteur"
+              : "/"
+          );
         } catch (loginError) {
           console.error("Erreur connexion auto:", loginError);
           setMessage("Inscription réussie! Veuillez vous connecter");
-          navigate('/login');
+          navigate("/login");
         }
       }
     } catch (error) {
@@ -96,6 +123,7 @@ function Register() {
 
   return (
     <div>
+      {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <img src="/images/logo.jpg" alt="DreamLearn Logo" style={{ height: "50px" }} />
@@ -113,6 +141,7 @@ function Register() {
         </div>
       </nav>
 
+      {/* Formulaire */}
       <div className="container d-flex align-items-center justify-content-center vh-100">
         <div className="row shadow-lg p-4 rounded bg-light register-container">
           <div className="col-md-6 d-none d-md-flex align-items-center">
@@ -147,6 +176,7 @@ function Register() {
                 <input type="password" className="form-control" name="password_confirmation" onChange={handleChange} required />
               </div>
 
+              {/* Sélection rôle */}
               <div className="mb-3">
                 <label className="form-label">Votre rôle :</label><br />
                 <div className="form-check form-check-inline">
@@ -180,6 +210,16 @@ function Register() {
                     <label className="form-label">Biographie</label>
                     <textarea className="form-control" name="bio" rows="3" onChange={handleChange} required></textarea>
                   </div>
+                  <div className="mb-3 text-start">
+                    <label className="form-label">CV (PDF/DOC)</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      name="cv"
+                      accept=".pdf,.doc,.docx"
+                      onChange={(e) => setFormData({ ...formData, cv: e.target.files[0] })}
+                    />
+                  </div>
                 </>
               )}
 
@@ -200,6 +240,7 @@ function Register() {
         </div>
       </div>
 
+      {/* Footer */}
       <footer className="footer bg-dark text-white text-center p-3 mt-5">
         <div className="d-flex justify-content-between align-items-center">
           <p className="mb-0">© 2025 DreamLearn. Tous droits réservés.</p>
