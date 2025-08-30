@@ -212,13 +212,8 @@ function Register() {
                   </div>
                   <div className="mb-3 text-start">
                     <label className="form-label">CV (PDF/DOC)</label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      name="cv"
-                      accept=".pdf,.doc,.docx"
-                      onChange={(e) => setFormData({ ...formData, cv: e.target.files[0] })}
-                    />
+                    <input type="file"className="form-control"name="cv"accept=".pdf,.doc,.docx"
+                      onChange={(e) => setFormData({ ...formData, cv: e.target.files[0] })}/>
                   </div>
                 </>
               )}

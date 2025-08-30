@@ -8,26 +8,45 @@ const AjoutFormateurForm = ({ onSuccess }) => {
     email: '',
     password: '',
     specialite: '',
-    bio: ''
+    bio: '',
+    cv: null
   });
 
   const [errors, setErrors] = useState({});
 
-  const handleChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+   const handleChange = e => {
+    const { name, value, files } = e.target;
+    if (name === "cv") {
+      setFormData({ ...formData, cv: files[0] }); // récupérer le fichier
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-  const handleSubmit = async e => {
+    const handleSubmit = async e => {
     e.preventDefault();
     try {
-        await axios.post('http://localhost:8000/api/formateurs', formData);
+      const formDataToSend = new FormData();
+      formDataToSend.append("nom", formData.nom);
+      formDataToSend.append("prenom", formData.prenom);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("password", formData.password);
+      formDataToSend.append("specialite", formData.specialite);
+      formDataToSend.append("bio", formData.bio);
+      if (formData.cv) {
+        formDataToSend.append("cv", formData.cv);
+      }
+
+      await axios.post('http://localhost:8000/api/formateurs', formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+
       alert("Formateur ajouté !");
       onSuccess();
     } catch (err) {
       console.error(err);
       if (err.response?.status === 422) {
         setErrors(err.response.data.errors);
-        console.log(err.response.data.errors); // ⬅️ voir les messages exacts
       } else {
         alert("Erreur lors de l'ajout.");
       }
@@ -50,6 +69,9 @@ const AjoutFormateurForm = ({ onSuccess }) => {
       {errors.specialite && <div className="text-danger">{errors.specialite[0]}</div>}
       <textarea name="bio" className="form-control mb-2" placeholder="Bio" onChange={handleChange} required></textarea>
       {errors.bio && <div className="text-danger">{errors.bio[0]}</div>}
+       <input type="file" className="form-control mb-2" name="cv" onChange={handleChange} required />
+      {errors.cv && <div className="text-danger">{errors.cv[0]}</div>}
+      
       <button type="submit" className="btn btn-success">✅ Ajouter</button>
     </form>
   );

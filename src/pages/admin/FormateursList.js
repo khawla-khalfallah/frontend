@@ -57,6 +57,7 @@ const FormateursList = () => {
             <th>Email</th>
             <th>Spécialité</th>
             <th>Bio</th>
+            <th>CV</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -68,6 +69,14 @@ const FormateursList = () => {
               <td>{f.user?.email}</td>
               <td>{f.specialite}</td>
               <td>{f.bio}</td>
+              <td>
+                {f.cv_url ? (<a href={`http://127.0.0.1:8000${f.cv_url}`} target="_blank" rel="noopener noreferrer">
+                    📄 Voir CV
+                  </a>
+                ) : (
+                  "Pas de CV"
+                )}
+              </td>
               <td>
                 <button
                   className="btn btn-warning btn-sm me-2"

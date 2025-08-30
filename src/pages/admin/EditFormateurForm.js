@@ -4,6 +4,8 @@ import axios from '../../config/axios';
 const EditFormateurForm = ({ formateur, onSuccess }) => {
   const [specialite, setSpecialite] = useState('');
   const [bio, setBio] = useState('');
+  const [cv, setCv] = useState(null);
+
   useEffect(() => {
     setSpecialite(formateur.specialite || '');
     setBio(formateur.bio || '');
@@ -12,21 +14,29 @@ const EditFormateurForm = ({ formateur, onSuccess }) => {
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        await axios.put(`http://localhost:8000/api/formateurs/${formateur.user_id}`, {
-        specialite,
-        bio
-      });
-      alert("Formateur modifié !");
-      setError('');
-      onSuccess(); // 🔁 recharge la liste
-    } catch (err) {
-      console.error(err);
-      setError("Erreur lors de la modification");
+  e.preventDefault();
+  try {
+    const formDataToSend = new FormData();
+    formDataToSend.append('specialite', specialite);
+    formDataToSend.append('bio', bio);
+    if (cv) {
+      formDataToSend.append('cv', cv);
     }
-  };
-  
+    formDataToSend.append('_method', 'PUT');
+
+    await axios.post(`http://localhost:8000/api/formateurs/${formateur.user_id}`, formDataToSend, {
+      headers: { "Content-Type": "multipart/form-data" }
+    });
+
+    alert("Formateur modifié !");
+    setError('');
+    onSuccess(); // recharge la liste
+  } catch (err) {
+    console.error(err);
+    setError("Erreur lors de la modification");
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit} className="mb-4">
@@ -52,6 +62,21 @@ const EditFormateurForm = ({ formateur, onSuccess }) => {
           required
         />
       </div>
+
+      <div className="mb-2">
+        <label>CV :</label>
+        <input
+          type="file"
+          className="form-control"
+          onChange={(e) => setCv(e.target.files[0])}
+        />
+        {formateur.cv_url && (
+          <small>
+            CV actuel : <a href={`http://127.0.0.1:8000${formateur.cv_url}`} target="_blank" rel="noopener noreferrer">Voir CV</a>
+          </small>
+        )}
+      </div>
+
 
       {error && <div className="text-danger mb-2">{error}</div>}
 
