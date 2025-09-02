@@ -26,100 +26,106 @@ function Register() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+// ✅ handleSubmit avec commentaires explicatifs
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setErrorMessage("");
 
-  // ✅ handleSubmit avec commentaires explicatifs
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrorMessage("");
+  // 1. Vérifier que le rôle est bien choisi
+  if (!formData.role) {
+    setErrorMessage("Veuillez sélectionner un rôle !");
+    return;
+  }
 
-    if (!formData.role) {
-      setErrorMessage("Veuillez sélectionner un rôle !");
-      return;
-    }
+  try {
+    // 2. Configuration Axios pour CSRF
+    axios.defaults.withCredentials = true;
 
-    try {
-      // 1. Configuration Axios
-      axios.defaults.withCredentials = true;
+    // 3. Récupération du CSRF Token
+    await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
 
-      // 2. Récupération CSRF Token
-      await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
+    let response;
 
-      let response;
+    // 4. Cas FORMATEUR → création avec CV obligatoire
+    if (formData.role === "formateur") {
+      const formDataToSend = new FormData();
+      formDataToSend.append("nom", formData.nom);
+      formDataToSend.append("prenom", formData.prenom);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("password", formData.password);
+      formDataToSend.append("password_confirmation", formData.password_confirmation);
+      formDataToSend.append("role", formData.role);
+      formDataToSend.append("specialite", formData.specialite);
+      formDataToSend.append("bio", formData.bio);
 
-      // 3. Préparation des données et envoi inscription
-      if (formData.role === "formateur") {
-        // Si Formateur → on utilise FormData pour inclure le CV
-        const formDataToSend = new FormData();
-        formDataToSend.append("nom", formData.nom);
-        formDataToSend.append("prenom", formData.prenom);
-        formDataToSend.append("email", formData.email);
-        formDataToSend.append("password", formData.password);
-        formDataToSend.append("password_confirmation", formData.password_confirmation);
-        formDataToSend.append("role", formData.role);
-        formDataToSend.append("specialite", formData.specialite);
-        formDataToSend.append("bio", formData.bio);
-
-        if (formData.cv) {
-          formDataToSend.append("cv", formData.cv);
-        }
-
-        // 3. Envoi inscription (Formateur)
-        response = await axios.post("http://127.0.0.1:8000/api/users", formDataToSend, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-      } else {
-        // Autres rôles → envoi JSON normal
-        const dataToSend = {
-          ...formData,
-          specialite: formData.role === "formateur" ? formData.specialite : "",
-          bio: formData.role === "formateur" ? formData.bio : "",
-          entreprise: formData.role === "recruteur" ? formData.entreprise : "",
-          niveau_etude: formData.role === "apprenant" ? formData.niveau_etude : "",
-        };
-
-        // 3. Envoi inscription (Autres rôles)
-        response = await axios.post("http://127.0.0.1:8000/api/users", dataToSend);
+      if (formData.cv) {
+        formDataToSend.append("cv", formData.cv);
       }
 
-      // 4. Connexion automatique
-      if (response.status === 201) {
-        try {
-          const loginResponse = await axios.post(
-            "http://127.0.0.1:8000/api/login",
-            { email: formData.email, password: formData.password },
-            { headers: { "Content-Type": "application/json", Accept: "application/json" } }
-          );
+      // 5. Envoi inscription (Formateur)
+      response = await axios.post("http://127.0.0.1:8000/api/users", formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-          // 5. Stockage des infos
-          localStorage.setItem("token", loginResponse.data.token);
-          localStorage.setItem("user", JSON.stringify(loginResponse.data.user));
-
-          // 6. Redirection
-          navigate(
-            loginResponse.data.user.role === "formateur"
-              ? "/formateur/Formateur"
-              : loginResponse.data.user.role === "apprenant"
-              ? "/apprenant"
-              : loginResponse.data.user.role === "recruteur"
-              ? "/recruteur"
-              : "/"
-          );
-        } catch (loginError) {
-          console.error("Erreur connexion auto:", loginError);
-          setMessage("Inscription réussie! Veuillez vous connecter");
-          navigate("/login");
-        }
-      }
-    } catch (error) {
-      // Gestion erreurs
-      if (error.response?.data?.errors) {
-        const errors = Object.values(error.response.data.errors).flat();
-        setErrorMessage(errors.join("\n"));
-      } else {
-        setErrorMessage(error.response?.data?.message || "Erreur lors de l'inscription");
+      // 6. Pas de login auto → afficher un message + redirection
+     if (response.status === 201) {
+      if (window.confirm("✅ Votre compte formateur est créé ! ⏳ Il doit être validé par un administrateur avant connexion.\n\nCliquez sur OK pour retourner à l’accueil.")) {
+        navigate("/"); // redirection accueil
       }
     }
-  };
+
+
+      return; // ❌ On stoppe ici → pas de tentative de login auto
+    }
+
+    // 7. Cas APPRENANT ou RECRUTEUR
+    const dataToSend = {
+      ...formData,
+      specialite: formData.role === "formateur" ? formData.specialite : "",
+      bio: formData.role === "formateur" ? formData.bio : "",
+      entreprise: formData.role === "recruteur" ? formData.entreprise : "",
+      niveau_etude: formData.role === "apprenant" ? formData.niveau_etude : "",
+    };
+
+    response = await axios.post("http://127.0.0.1:8000/api/users", dataToSend);
+
+    // 8. Connexion automatique si inscription réussie
+    if (response.status === 201) {
+      try {
+        const loginResponse = await axios.post(
+          "http://127.0.0.1:8000/api/login",
+          { email: formData.email, password: formData.password },
+          { headers: { "Content-Type": "application/json", Accept: "application/json" } }
+        );
+
+        // 9. Sauvegarde token + user
+        localStorage.setItem("token", loginResponse.data.token);
+        localStorage.setItem("user", JSON.stringify(loginResponse.data.user));
+
+        // 10. Redirection selon rôle
+        navigate(
+          loginResponse.data.user.role === "apprenant"
+            ? "/apprenant"
+            : loginResponse.data.user.role === "recruteur"
+            ? "/recruteur"
+            : "/"
+        );
+      } catch (loginError) {
+        console.error("Erreur connexion auto:", loginError);
+        setMessage("Inscription réussie! Veuillez vous connecter");
+        navigate("/login");
+      }
+    }
+  } catch (error) {
+    // 11. Gestion des erreurs backend
+    if (error.response?.data?.errors) {
+      const errors = Object.values(error.response.data.errors).flat();
+      setErrorMessage(errors.join("\n"));
+    } else {
+      setErrorMessage(error.response?.data?.message || "Erreur lors de l'inscription");
+    }
+  }
+};
 
   return (
     <div>

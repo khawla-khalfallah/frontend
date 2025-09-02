@@ -14,14 +14,23 @@ const AjoutPdfForm = ({ onSuccess }) => {
     axios.get('http://localhost:8000/api/formations').then(res => setFormations(res.data));
   }, []);
 
-  const handleChange = e => {
-    const { name, value, files } = e.target;
-    if (name === 'fichier') {
-      setFormData({ ...formData, fichier: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
+  // const handleChange = e => {
+  //   const { name, value, files } = e.target;
+  //   if (name === 'fichier') {
+  //     setFormData({ ...formData, fichier: files[0] });
+  //   } else {
+  //     setFormData({ ...formData, [name]: value });
+  //   }
+  // };
+  const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file && file.size > 50 * 1024 * 1024) { // 50 Mo max
+    alert("⚠️ Taille maximale autorisée = 50 Mo");
+    return;
+  }
+  setFormData({ ...formData, fichier: file });
+};
+
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -58,7 +67,7 @@ const AjoutPdfForm = ({ onSuccess }) => {
         name="titre"
         placeholder="Titre"
         className="form-control mb-2"
-        onChange={handleChange}
+        onChange={(e) => setFormData({ ...formData, titre: e.target.value })} 
         required
       />
       {errors.titre && <div className="text-danger mb-2">{errors.titre[0]}</div>}
@@ -68,7 +77,7 @@ const AjoutPdfForm = ({ onSuccess }) => {
         name="fichier"
         accept="application/pdf"
         className="form-control mb-2"
-        onChange={(e) => setFormData({ ...formData, fichier: e.target.files[0] })}
+        onChange={handleFileChange}   
         required
       />
       {errors.fichier && <div className="text-danger mb-2">{errors.fichier[0]}</div>}
@@ -76,7 +85,7 @@ const AjoutPdfForm = ({ onSuccess }) => {
       <select
         name="formation_id"
         className="form-control mb-2"
-        onChange={handleChange}
+        onChange={(e) => setFormData({ ...formData, formation_id: e.target.value })} 
         required
       >
         <option value="">🎓 Choisir une formation</option>

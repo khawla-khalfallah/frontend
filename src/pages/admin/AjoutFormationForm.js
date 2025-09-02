@@ -14,9 +14,18 @@ const AjoutFormationForm = ({ onSuccess }) => {
   const [errors, setErrors] = useState({});
 
   // Charger les formateurs
+  // useEffect(() => {
+  //   axios.get('http://localhost:8000/api/formateurs')
+  //     .then(res => setFormateurs(res.data))
+  //     .catch(err => console.error(err));
+  // }, []);
   useEffect(() => {
-    axios.get('http://localhost:8000/api/formateurs')
-      .then(res => setFormateurs(res.data))
+    axios.get("http://localhost:8000/api/formateurs")
+      .then(res => {
+        // ✅ Ne garder que les formateurs acceptés
+        const formateursAcceptes = res.data.filter(f => f.status === "accepte");
+        setFormateurs(formateursAcceptes);
+      })
       .catch(err => console.error(err));
   }, []);
 

@@ -12,42 +12,57 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleLogin = async () => {
-    if (!formData.email || !formData.password) {
-      alert("Veuillez entrer votre email et mot de passe.");
-      return;
-    }
-  
-    try {
-      
-      // await axiosInstance.get('/sanctum/csrf-cookie');
-      const response = await api.post('/login', formData);
-      const { token, user } = response.data;
-  
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-  
-      // Redirection selon le rôle
-      const role = user.role;
-      if (role === "admin") {
-        navigate("/admin"); 
-      } else if (role === "formateur") {
-        navigate("/formateur/Formateur");
-      } else if (role === "apprenant") {
-        navigate("/apprenant");
-      } else if (role === "recruteur") {
-        navigate("/recruteur");
-      } else {
-        navigate("/");
+  if (!formData.email || !formData.password) {
+    alert("Veuillez entrer votre email et mot de passe.");
+    return;
+  }
+
+  try {
+    const response = await api.post('/login', formData);
+    const { token, user } = response.data;
+
+    // 🔹 Vérifier si c'est un formateur non validé
+    if (user.role === "formateur") {
+      if (user.status === "en attente") {
+        alert("⏳ Votre compte est en attente de validation par l’administrateur.");
+        return;
       }
-      
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data.message || "Identifiants invalides.");
-      } else {
-        alert("Erreur réseau ou serveur.");
+      if (user.status === "refuse") {
+        alert("❌ Votre compte formateur a été refusé. Contactez l’administrateur.");
+        return;
       }
     }
-  };
+
+    // ✅ Si validé → on continue la connexion
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    // Redirection selon le rôle
+    if (user.role === "admin") {
+      navigate("/admin");
+    } else if (user.role === "formateur") {
+      navigate("/formateur/Formateur");
+    } else if (user.role === "apprenant") {
+      navigate("/apprenant");
+    } else if (user.role === "recruteur") {
+      navigate("/recruteur");
+    } else {
+      navigate("/");
+    }
+  } catch (error) {
+  if (error.response) {
+    // 🔹 Cas refusé → afficher la remarque si dispo
+    if (error.response.data.remarque) {
+      alert(`❌ Votre inscription a été refusée.\n\nRaison : ${error.response.data.remarque}`);
+    } else {
+      alert(error.response.data.message || "Identifiants invalides.");
+    }
+  } else {
+    alert("Erreur réseau ou serveur.");
+  }
+}
+};
+
 
   return (
     <div>
