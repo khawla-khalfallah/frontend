@@ -49,9 +49,12 @@ const AjoutPdfForm = ({ onSuccess }) => {
       alert('PDF ajouté !');
       setErrors({});
       onSuccess();
-    } catch (err) {
+     } catch (err) {
+      console.error(err);
       if (err.response?.status === 422) {
         setErrors(err.response.data.errors);
+      } else if (err.response?.status === 413) {
+        alert("⚠️ Fichier trop volumineux pour le serveur !");
       } else {
         alert("Erreur lors de l'ajout.");
       }
