@@ -9,7 +9,7 @@ function MesFormations() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/inscrits", {
+    axios.get("http://localhost:8000/api/inscrits/mes", {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((res) => {

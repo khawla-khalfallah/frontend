@@ -7,6 +7,7 @@ import Apropos from "./pages/acceuil/Apropos";
 import Apprenant from "./pages/apprenant/Apprenant";
 import ProfilApprenant from "./pages/apprenant/ProfilApprenant";
 import MesFormations from "./pages/apprenant/MesFormations";
+import ToutesLesFormations from "./pages/apprenant/ToutesLesFormations";
 import FormationDetails from "./pages/apprenant/FormationDetails";
 import MesExamens from "./pages/apprenant/MesExamens";
 import PasserExamen from "./pages/apprenant/PasserExamen";
@@ -52,6 +53,7 @@ function App() {
         <Route path="/formations/ranking" element={<BayesianRankingDashboard />} />
         <Route path="/apprenant/profil" element={<ProfilApprenant />} />
         <Route path="/apprenant/formations" element={<MesFormations />} />
+        <Route path="/apprenant/lesformations" element={<ToutesLesFormations />} />
         <Route path="/apprenant/formations/:id" element={<FormationDetails />} />
         <Route path="/apprenant/examens" element={<MesExamens />} />
         <Route path="/apprenant/examens/:id/passer" element={<PasserExamen />} />

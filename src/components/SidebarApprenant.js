@@ -17,6 +17,11 @@ function SidebarApprenant() {
             <FaBook /> Mes Formations
           </Link>
         </li>
+          <li className="nav-item py-2">
+          <Link className="nav-link text-white" to="/apprenant/lesformations">
+            <FaBook /> Toute les Formations
+          </Link>
+        </li>
         <li className="nav-item py-2">
           <Link className="nav-link text-white" to="/formations/ranking">
             <FaTrophy /> Classement
