@@ -157,22 +157,7 @@ function SidebarFormateur() {
               <Link className="nav-link text-white" to="/formateur/GestionExamens">📂 Gestion Examens</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/formateur/CreerExamen">➕ Créer Examen</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/formateur/MesExamensFormateur">📑 Mes Examens</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/formateur/AjouterExamen">➕ Ajouter Examen</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/formateur/ListeQuestions">📋 Liste Questions</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/formateur/AjouterQuestion">➕ Ajouter Question</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/formateur/EditQuestion">✏️ Modifier Question</Link>
+              <Link className="nav-link text-white" to="/formateur/AjouterExamen">➕ Créer Examen</Link>
             </li>
           </ul>
         )}
