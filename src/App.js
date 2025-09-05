@@ -19,11 +19,8 @@ import Formateur from "./pages/formateur/Formateur";
 import ProfilFormateur from "./pages/formateur/ProfilFormateur";
 import MesFormationsFormateur from "./pages/formateur/MesFormationsFormateur";
 import GestionExamens from "./pages/formateur/GestionExamens";
-import CreerExamen from "./pages/formateur/CreerExamen";
-import AjouterQuestion from "./pages/formateur/AjouterQuestion"
-import AjouterFormation from "./pages/formateur/AjouterFormation";
-import MesExamensFormateur from "./pages/formateur/MesExamensFormateur";
 import AjouterExamen from "./pages/formateur/AjouterExamen"
+import AjouterFormation from "./pages/formateur/AjouterFormation";
 import MesEtudiants from "./pages/formateur/MesEtudiants";
 import Evaluations from "./pages/formateur/Evaluations";
 import SettingsFormateur from "./pages/formateur/SettingsFormateur"
@@ -37,8 +34,6 @@ import UsersList from './pages/admin/UsersList';
 import AjoutSeanceForm from './pages/admin/AjoutSeanceForm';
 import CreateSeancePage from './pages/admin/CreateSeancePage';
 import BayesianRankingDashboard from './components/BayesianRankingDashboard';
-import ListeQuestions from "./pages/formateur/ListeQuestions";
-import EditQuestion from "./pages/formateur/EditQuestion";
 
 
 
@@ -69,13 +64,8 @@ function App() {
         <Route path="/formateur/ProfilFormateur" element={<ProfilFormateur />} />
         <Route path="/formateur/MesFormationsFormateur" element={<MesFormationsFormateur />} />
         <Route path="/formateur/GestionExamens" element={<GestionExamens />} />
-        <Route path="/formateur/CreerExamen" element={<CreerExamen />} />
-        <Route path="/formateur/ListeQuestion" element={<ListeQuestions />} />
-        <Route path="/formateur/EditQuestion" element={<EditQuestion />} />
-        <Route path="/formateur/AjouterFormation" element={<AjouterFormation />} />
-        <Route path="/formateur/MesExamensFormateur" element={<MesExamensFormateur />} />
-        <Route path="/formateur/AjouterQuestion" element={<AjouterQuestion />} />
         <Route path="/formateur/AjouterExamen" element={<AjouterExamen />} />
+        <Route path="/formateur/AjouterFormation" element={<AjouterFormation />} />
         <Route path="/formateur/MesEtudiants" element={<MesEtudiants />} />
         <Route path="/formateur/Evaluations" element={<Evaluations />} />
         <Route path="/formateur/SettingsFormateur" element={<SettingsFormateur />} />
