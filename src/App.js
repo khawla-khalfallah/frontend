@@ -39,6 +39,8 @@ import CreateSeancePage from './pages/admin/CreateSeancePage';
 import BayesianRankingDashboard from './components/BayesianRankingDashboard';
 import ListeQuestions from "./pages/formateur/ListeQuestions";
 import EditQuestion from "./pages/formateur/EditQuestion";
+import GestionRessourcesFormateur from "./pages/formateur/GestionRessourcesFormateur";
+
 
 
 
@@ -59,6 +61,7 @@ function App() {
         <Route path="/apprenant/formations" element={<MesFormations />} />
         <Route path="/apprenant/lesformations" element={<ToutesLesFormations />} />
         <Route path="/apprenant/formations/:id" element={<FormationDetails />} />
+        <Route path="/formateur/gestionRessourcesFormateur" element={<GestionRessourcesFormateur/>}/>
         <Route path="/apprenant/examens" element={<MesExamens />} />
         <Route path="/apprenant/examens/:id/passer" element={<PasserExamen />} />
         <Route path="/apprenant/progres" element={<Progres />} />

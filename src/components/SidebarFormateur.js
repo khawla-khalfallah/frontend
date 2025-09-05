@@ -133,6 +133,9 @@ function SidebarFormateur() {
               <Link className="nav-link text-white" to="/formateur/MesFormationsFormateur">📘 Mes Formations</Link>
             </li>
             <li className="nav-item">
+              <Link className="nav-link text-white" to="/formateur/GestionRessourcesFormateur">📘 Gestion des Formations</Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link text-white" to="/formateur/AjouterFormation">➕ Ajouter Formation</Link>
             </li>
           </ul>
