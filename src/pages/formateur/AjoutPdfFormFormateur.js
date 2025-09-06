@@ -5,11 +5,14 @@ const AjoutPdfFormFormateur = ({ formateurId, token, onSuccess }) => {
   const [formData, setFormData] = useState({
     titre: "",
     fichier: null,
-    formation_id: ""
+    formation_id: "",
   });
-  const [formations, setFormations] = useState([]);
 
-  // Charger seulement les formations de ce formateur
+  const [formations, setFormations] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  // Charger les formations du formateur
   useEffect(() => {
     const fetchFormations = async () => {
       try {
@@ -19,22 +22,23 @@ const AjoutPdfFormFormateur = ({ formateurId, token, onSuccess }) => {
         );
         setFormations(res.data);
       } catch (err) {
-        console.error("Erreur chargement formations:", err);
+        console.error("❌ Erreur chargement formations:", err);
+        setMessage("❌ Erreur lors du chargement des formations.");
       }
     };
-    fetchFormations();
+    if (formateurId) fetchFormations();
   }, [formateurId, token]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: files ? files[0] : value,
-    });
+    setFormData({ ...formData, [name]: files ? files[0] : value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
     const data = new FormData();
     data.append("titre", formData.titre);
     data.append("fichier", formData.fichier);
@@ -47,24 +51,39 @@ const AjoutPdfFormFormateur = ({ formateurId, token, onSuccess }) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      onSuccess();
+
+      setMessage("✅ PDF ajouté avec succès !");
       setFormData({ titre: "", fichier: null, formation_id: "" });
+      onSuccess();
     } catch (err) {
-      console.error("Erreur ajout PDF:", err);
+      console.error("Erreur ajout PDF:", err.response || err.message);
+
+      if (err.response?.status === 422) {
+        setMessage("❌ Erreur validation : Vérifie les champs !");
+      } else if (err.response?.status === 403) {
+        setMessage("🚫 Vous n'êtes pas autorisé à ajouter ce PDF.");
+      } else {
+        setMessage("⚠️ Erreur serveur lors de l'ajout du PDF.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-2">
+    <form onSubmit={handleSubmit} className="mt-3">
+      {message && <p>{message}</p>}
+
       <input
         type="text"
         name="titre"
-        placeholder="Titre du PDF"
         className="form-control mb-2"
+        placeholder="Titre du PDF"
         value={formData.titre}
         onChange={handleChange}
         required
       />
+
       <input
         type="file"
         name="fichier"
@@ -72,6 +91,7 @@ const AjoutPdfFormFormateur = ({ formateurId, token, onSuccess }) => {
         onChange={handleChange}
         required
       />
+
       <select
         name="formation_id"
         className="form-control mb-2"
@@ -86,7 +106,10 @@ const AjoutPdfFormFormateur = ({ formateurId, token, onSuccess }) => {
           </option>
         ))}
       </select>
-      <button type="submit" className="btn btn-primary">Ajouter PDF</button>
+
+      <button type="submit" className="btn btn-success" disabled={loading}>
+        {loading ? "En cours..." : "Ajouter PDF"}
+      </button>
     </form>
   );
 };

@@ -34,6 +34,7 @@ import UsersList from './pages/admin/UsersList';
 import AjoutSeanceForm from './pages/admin/AjoutSeanceForm';
 import CreateSeancePage from './pages/admin/CreateSeancePage';
 import BayesianRankingDashboard from './components/BayesianRankingDashboard';
+import GestionFormations from "./pages/formateur/GestionFormations";
 
 
 
@@ -54,7 +55,6 @@ function App() {
         <Route path="/apprenant/formations" element={<MesFormations />} />
         <Route path="/apprenant/lesformations" element={<ToutesLesFormations />} />
         <Route path="/apprenant/formations/:id" element={<FormationDetails />} />
-        <Route path="/formateur/gestionRessourcesFormateur" element={<GestionRessourcesFormateur/>}/>
         <Route path="/apprenant/examens" element={<MesExamens />} />
         <Route path="/apprenant/examens/:id/passer" element={<PasserExamen />} />
         <Route path="/apprenant/progres" element={<Progres />} />
@@ -64,6 +64,7 @@ function App() {
         <Route path="/formateur/Formateur" element={<Formateur />} />
         <Route path="/formateur/ProfilFormateur" element={<ProfilFormateur />} />
         <Route path="/formateur/MesFormationsFormateur" element={<MesFormationsFormateur />} />
+        <Route path="/formateur/gestionFormations" element={<GestionFormations/>}/>
         <Route path="/formateur/GestionExamens" element={<GestionExamens />} />
         <Route path="/formateur/AjouterExamen" element={<AjouterExamen />} />
         <Route path="/formateur/AjouterFormation" element={<AjouterFormation />} />
@@ -79,7 +80,7 @@ function App() {
         <Route path="/admin/users" element={<UsersList />} />
         <Route path="/" element={<AjoutSeanceForm />} />
         <Route path="/create-seance" element={<CreateSeancePage />} />
-      <Route path="/formations/ranking" element={<BayesianRankingDashboard />} />
+      {/* <Route path="/formations/ranking" element={<BayesianRankingDashboard />} /> */}
 
 
       </Routes>

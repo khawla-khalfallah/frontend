@@ -1,65 +1,73 @@
-import React, { useEffect, useState } from 'react';
-import axios from '../../config/axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-const EditPdfFormFormateur = ({ pdf, onSuccess, onClose, formateurId }) => {
+const EditPdfFormFormateur = ({ pdf, token, formateurId, onSuccess, onCancel }) => {
+  // ✅ États manquants
   const [formData, setFormData] = useState({
-    titre: pdf?.titre || '',
+    titre: pdf.titre || "",
     fichier: null,
-    formation_id: pdf?.formation_id || ''
+    formation_id: pdf.formation_id || "",
   });
   const [formations, setFormations] = useState([]);
-  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
 
-  // Charger seulement les formations du formateur connecté
+  // Charger les formations du formateur
   useEffect(() => {
     const fetchFormations = async () => {
       try {
-        const res = await axios.get(`/formations?formateur_id=${formateurId}`);
-        setFormations(res.data); // adapter selon la structure de ton API
+        const res = await axios.get(
+          `http://localhost:8000/api/formateurs/${formateurId}/formations`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setFormations(res.data);
       } catch (err) {
-        console.error(err);
-        setMessage('Erreur lors du chargement des formations.');
+        console.error("❌ Erreur chargement formations:", err);
+        setMessage("❌ Impossible de charger les formations.");
       }
     };
-    fetchFormations();
-  }, [formateurId]);
 
-  const handleChange = e => {
+    if (formateurId) fetchFormations();
+  }, [formateurId, token]);
+
+  const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: files ? files[0] : value
-    }));
+    setFormData({ ...formData, [name]: files ? files[0] : value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrors({});
-    setMessage('');
+    setMessage("");
+
+    const data = new FormData();
+    data.append("titre", formData.titre);
+    if (formData.fichier) data.append("fichier", formData.fichier);
+    data.append("formation_id", formData.formation_id);
 
     try {
-      const data = new FormData();
-      data.append('titre', formData.titre);
-      data.append('formation_id', formData.formation_id);
-      if (formData.fichier) data.append('fichier', formData.fichier);
-      data.append('_method', 'PUT'); // ⚡ important pour la mise à jour
+      await axios.post(
+        `http://localhost:8000/api/pdfs/${pdf.id}?_method=PUT`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      await axios.post(`/pdfs/${pdf.id}`, data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-
-      setMessage('✅ PDF mis à jour avec succès !');
-      if (onSuccess) onSuccess();
+      setMessage("✅ PDF mis à jour avec succès !");
+      onSuccess(); // rafraîchir la liste
     } catch (err) {
-      console.error(err);
-      if (err.response) {
-        setErrors(err.response.data.errors || {});
-        setMessage(err.response.data.message || 'Erreur serveur.');
+      console.error("❌ Erreur mise à jour PDF:", err.response || err.message);
+
+      if (err.response?.status === 422) {
+        setMessage("❌ Vérifiez les champs, certains sont invalides.");
+      } else if (err.response?.status === 403) {
+        setMessage("🚫 Vous n'êtes pas autorisé à modifier ce PDF.");
       } else {
-        setMessage('Impossible de contacter le serveur.');
+        setMessage("⚠️ Erreur serveur lors de la mise à jour.");
       }
     } finally {
       setLoading(false);
@@ -67,50 +75,50 @@ const EditPdfFormFormateur = ({ pdf, onSuccess, onClose, formateurId }) => {
   };
 
   return (
-    <div className="edit-pdf-form">
-      <h2>Modifier PDF</h2>
-      {message && <p className={errors ? 'error' : 'success'}>{message}</p>}
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div>
-          <label>Titre :</label>
-          <input
-            type="text"
-            name="titre"
-            value={formData.titre}
-            onChange={handleChange}
-            required
-          />
-          {errors.titre && <span className="error">{errors.titre}</span>}
-        </div>
+    <form onSubmit={handleSubmit} className="mt-3">
+      {message && <p>{message}</p>}
 
-        <div>
-          <label>Fichier PDF :</label>
-          <input type="file" name="fichier" accept="application/pdf" onChange={handleChange} />
-          {errors.fichier && <span className="error">{errors.fichier}</span>}
-        </div>
+      <input
+        type="text"
+        name="titre"
+        className="form-control mb-2"
+        placeholder="Titre du PDF"
+        value={formData.titre}
+        onChange={handleChange}
+        required
+      />
 
-        <div>
-          <label>Formation :</label>
-          <select
-            name="formation_id"
-            value={formData.formation_id}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Sélectionner une formation</option>
-            {formations.map(f => (
-              <option key={f.id} value={f.id}>{f.titre}</option>
-            ))}
-          </select>
-          {errors.formation_id && <span className="error">{errors.formation_id}</span>}
-        </div>
+      <input
+        type="file"
+        name="fichier"
+        className="form-control mb-2"
+        onChange={handleChange}
+      />
 
-        <button type="submit" disabled={loading}>
-          {loading ? 'En cours...' : 'Mettre à jour'}
+      <select
+        name="formation_id"
+        className="form-control mb-2"
+        value={formData.formation_id}
+        onChange={handleChange}
+        required
+      >
+        <option value="">-- Choisir une formation --</option>
+        {formations.map((f) => (
+          <option key={f.id} value={f.id}>
+            {f.titre}
+          </option>
+        ))}
+      </select>
+
+      <div className="d-flex gap-2">
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? "En cours..." : "Modifier PDF"}
         </button>
-        {onClose && <button type="button" onClick={onClose}>Annuler</button>}
-      </form>
-    </div>
+        <button type="button" className="btn btn-secondary" onClick={onCancel}>
+          Annuler
+        </button>
+      </div>
+    </form>
   );
 };
 

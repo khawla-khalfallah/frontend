@@ -5,6 +5,7 @@ import SidebarFormateur from "../../components/SidebarFormateur";
 import * as bootstrap from 'bootstrap';
 
 
+
 const MesFormationsFormateur = () => {
   const [formations, setFormations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,29 +23,30 @@ const MesFormationsFormateur = () => {
   const formateurId = storedUser?.id;
 
   useEffect(() => {
-    const fetchFormations = async () => {
-      if (!formateurId) {
-        console.error('Aucun ID formateur trouvé dans le localStorage');
-        setLoading(false);
-        return;
-      }
+  const fetchFormations = async () => {
+    if (!formateurId) {
+      console.error('Aucun ID formateur trouvé dans le localStorage');
+      setLoading(false);
+      return;
+    }
 
-      try {
-        const response = await axios.get(`http://localhost:8000/api/formateurs/${formateurId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
-        });
-        setFormations(response.data.formations);
-      } catch (error) {
-        console.error('Erreur lors du chargement des formations', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    try {
+      const response = await axios.get(`http://localhost:8000/api/formateurs/${formateurId}/formations`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      setFormations(response.data);
+    } catch (error) {
+      console.error('Erreur lors du chargement des formations', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchFormations();
-  }, [formateurId]);
+  fetchFormations();
+}, [formateurId]);
+
 
   const handleEditClick = (formation) => {
     setSelectedFormation(formation);
