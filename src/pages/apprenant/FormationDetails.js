@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import NavbarMinimal from "../../components/NavbarMinimal";
 import SidebarApprenant from "../../components/SidebarApprenant";
+import { FaVideo } from "react-icons/fa";
+
 
 function FormationDetails() {
   const { id } = useParams();
@@ -53,32 +55,32 @@ function FormationDetails() {
     fetchData();
   }, [id]);
 
-const handleSubmitEvaluation = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("token");
+  const handleSubmitEvaluation = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
 
-  try {
-    const response = await axios.post(
-      `http://localhost:8000/api/formations/${id}/evaluations`,
-      { note, commentaire },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/formations/${id}/evaluations`,
+        { note, commentaire },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-    setMonEvaluation(response.data.evaluation);
+      setMonEvaluation(response.data.evaluation);
 
-    // Recharger les données
-    const formationResponse = await axios.get(
-      `http://localhost:8000/api/formations/${id}`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    setFormation(formationResponse.data);
-  } catch (err) {
-    console.error("Erreur lors de l'évaluation", err);
-    if (err.response?.data?.message) {
-      alert(err.response.data.message);
+      // Recharger les données
+      const formationResponse = await axios.get(
+        `http://localhost:8000/api/formations/${id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setFormation(formationResponse.data);
+    } catch (err) {
+      console.error("Erreur lors de l'évaluation", err);
+      if (err.response?.data?.message) {
+        alert(err.response.data.message);
+      }
     }
-  }
-};
+  };
 
   const renderStars = (note) => {
     const normalizedNote = note || 0;
@@ -90,8 +92,8 @@ const handleSubmitEvaluation = async (e) => {
         onClick={() => setNote(i + 1)}
         style={{ cursor: 'pointer' }}
       >
-        <span style={{ 
-          fontSize: '24px', 
+        <span style={{
+          fontSize: '24px',
           color: i < normalizedNote ? '#ffc107' : '#e4e5e9',
           transition: 'color 0.2s'
         }}>
@@ -130,11 +132,11 @@ const handleSubmitEvaluation = async (e) => {
             <p><strong>Formateur :</strong> {formation.formateur?.user?.nom} {formation.formateur?.user?.prenom}</p>
             <p><strong>Début :</strong> {new Date(formation.date_debut).toLocaleDateString()}</p>
             <p><strong>Fin :</strong> {new Date(formation.date_fin).toLocaleDateString()}</p>
-            
+
             {/* Section Évaluations */}
             <div className="mt-4 border-top pt-3">
               <h4>Évaluations</h4>
-              
+
               {/* Moyenne des évaluations */}
               <div className="mb-4 p-3 bg-light rounded">
                 <h5>Note moyenne</h5>
@@ -164,8 +166,8 @@ const handleSubmitEvaluation = async (e) => {
                           onClick={() => setNote(star)}
                           style={{ cursor: 'pointer' }}
                         >
-                          <span style={{ 
-                            fontSize: '28px', 
+                          <span style={{
+                            fontSize: '28px',
                             color: star <= note ? '#ffc107' : '#e4e5e9',
                             transition: 'color 0.2s'
                           }}>
@@ -196,87 +198,116 @@ const handleSubmitEvaluation = async (e) => {
             <hr />
 
             {/* Séances */}
-            <div className="mt-4">
-              <h4>📅 Séances</h4>
+            <div className="mt-8">
+              <h4 className="text-2xl font-semibold mb-6 text-indigo-700">Séances 📅</h4>
               {formation.seances && formation.seances.length > 0 ? (
-                <div className="list-group">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {formation.seances.map((seance) => (
-                    <div key={seance.id} className="list-group-item">
-                      <h5>{seance.titre}</h5>
-                      <p className="mb-1">
-                        <strong>Date :</strong> {new Date(seance.date).toLocaleString()}
+                    <div
+                      key={seance.id}
+                      className="bg-indigo-50 shadow-lg rounded-xl p-5 border-l-4 border-indigo-500 hover:shadow-xl transition"
+                    >
+                      <h5 className="text-lg font-bold text-indigo-800 mb-2">{seance.titreSeance}</h5>
+                      <p className="text-sm text-gray-700 mb-1">
+                        <strong>Date :</strong>{" "}
+                        {new Date(seance.date).toLocaleDateString("fr-FR", {
+                          weekday: "long",
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
                       </p>
-                      {seance.description && (
-                        <p className="mb-0"><strong>Description :</strong> {seance.description}</p>
+                      <p className="text-sm text-gray-700 mb-3">
+                        <strong>Horaire :</strong> {seance.heureDebut} → {seance.heureFin}
+                      </p>
+                      {seance.lienRoom && (
+                        <button
+                          onClick={() => window.open(seance.lienRoom, "_blank", "noopener,noreferrer")}
+                          className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition w-full"
+                        >
+                          <FaVideo /> Rejoindre la séance
+                        </button>
                       )}
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="alert alert-info">Aucune séance programmée pour le moment.</div>
+                <div className="p-4 bg-yellow-50 border border-yellow-300 text-yellow-800 rounded-lg">
+                  Aucune séance programmée pour le moment.
+                </div>
               )}
             </div>
 
             {/* Vidéos */}
-            <div className="mt-4">
-              <h4>🎥 Vidéos</h4>
+            <div className="mt-10">
+              <h4 className="text-2xl font-semibold mb-6 text-red-700">Vidéos 🎥</h4>
               {formation.videos && formation.videos.length > 0 ? (
-                <div className="row row-cols-1 row-cols-md-2 g-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {formation.videos.map((video) => (
-                    <div key={video.id} className="col">
-                      <div className="card h-100">
-                        <div className="card-body">
-                          <h5 className="card-title">🎬 {video.titre}</h5>
-                          {video.url.includes('youtube.com') || video.url.includes('youtu.be') ? (
-                            <a
-                              href={video.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="btn btn-primary mt-2"
-                            >
-                              Regarder sur YouTube
-                            </a>
-                          ) : (
-                            <div className="ratio ratio-16x9 mt-2">
-                              <video controls className="w-100">
-                                <source src={`http://localhost:8000/storage/${video.url}`} type="video/mp4" />
-                                Votre navigateur ne supporte pas la lecture vidéo.
-                              </video>
-                            </div>
-                          )}
+                    <div
+                      key={video.id}
+                      className="bg-red-50 shadow-lg rounded-xl p-4 border-l-4 border-red-500 hover:shadow-xl transition flex flex-col"
+                    >
+                      <h5 className="text-lg font-bold text-red-800 mb-3">{video.titre}</h5>
+                      {video.url.includes("youtube.com") || video.url.includes("youtu.be") ? (
+                        <a
+                          href={video.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-primary mt-2"
+                        >
+                          Regarder sur YouTube
+                        </a>
+                      ) : (
+                        <div className="mt-3">
+                          <video controls className="w-full rounded-lg border shadow-sm">
+                            <source src={`http://localhost:8000/storage/${video.url}`} type="video/mp4" />
+                            Votre navigateur ne supporte pas la lecture vidéo.
+                          </video>
                         </div>
-                      </div>
+                      )}
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="alert alert-info">Aucune vidéo disponible pour le moment.</div>
+                <div className="p-4 bg-blue-50 border border-blue-300 text-blue-700 rounded-lg">
+                  Aucune vidéo disponible pour le moment.
+                </div>
               )}
             </div>
 
             {/* PDFs */}
-            <div className="mt-4">
-              <h4>📄 Documents PDF</h4>
+            <div className="mt-10">
+              <h4 className="text-2xl font-semibold mb-6 text-green-700">Documents PDF 📄</h4>
               {formation.pdfs && formation.pdfs.length > 0 ? (
-                <div className="list-group">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {formation.pdfs.map((pdf) => (
-                    <a
+                    <div
                       key={pdf.id}
-                      href={`http://localhost:8000/storage/${pdf.fichier}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="list-group-item list-group-item-action d-flex align-items-center"
+                      className="bg-green-50 shadow-lg rounded-xl p-4 border-l-4 border-green-500 hover:shadow-xl transition flex flex-col"
                     >
-                      <span className="me-3">📄</span>
-                      <div>
-                        <h5 className="mb-1">{pdf.titre}</h5>
-                        {pdf.description && <small className="text-muted">{pdf.description}</small>}
-                      </div>
-                    </a>
+                      <h5 className="text-lg font-bold text-green-800 mb-2">{pdf.titre}</h5>
+                      {pdf.description && <p className="text-sm text-gray-600 mb-3">{pdf.description}</p>}
+                      <a
+                        key={pdf.id}
+                        href={`http://localhost:8000/storage/${pdf.fichier}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="list-group-item list-group-item-action d-flex align-items-center"
+                      >
+                        <span className="me-3">📄</span>
+                        <div>
+                          <h5 className="mb-1">{pdf.titre}</h5>
+                          {pdf.description && <small className="text-muted">{pdf.description}</small>}
+                        </div>
+                      </a>
+                    </div>
                   ))}
                 </div>
               ) : (
-                <div className="alert alert-info">Aucun document PDF disponible pour le moment.</div>
+                <div className="p-4 bg-gray-50 border border-gray-300 text-gray-700 rounded-lg">
+                  Aucun document PDF disponible pour le moment.
+                </div>
               )}
             </div>
           </div>
