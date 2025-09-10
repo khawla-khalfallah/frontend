@@ -35,6 +35,10 @@ import AjoutSeanceForm from './pages/admin/AjoutSeanceForm';
 import CreateSeancePage from './pages/admin/CreateSeancePage';
 import BayesianRankingDashboard from './components/BayesianRankingDashboard';
 import GestionFormations from "./pages/formateur/GestionFormations";
+import ForgotPassword from "./pages/acceuil/ForgotPassword";
+import ResetPassword from "./pages/acceuil/ResetPassword";
+
+
 
 
 
@@ -80,6 +84,8 @@ function App() {
         <Route path="/admin/users" element={<UsersList />} />
         <Route path="/" element={<AjoutSeanceForm />} />
         <Route path="/create-seance" element={<CreateSeancePage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       {/* <Route path="/formations/ranking" element={<BayesianRankingDashboard />} /> */}
 
 

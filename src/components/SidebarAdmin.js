@@ -13,6 +13,8 @@ const tabs = [
   { key: 'pdfs', label: 'PDFs', icon: '📄' },
   { key: 'seances', label: 'Séances', icon: '🎥' },
   { key: 'videos', label: 'Vidéos', icon: '🎬' },
+  { key: 'contacts', label: 'Contacts', icon: '📩' }, 
+
 ];
 
 const SidebarAdmin = ({ setActiveTab }) => {

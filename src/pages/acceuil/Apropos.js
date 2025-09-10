@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function Infos() {
   const [formData, setFormData] = useState({
     name: "",
+    prenom: "",
     email: "",
     message: ""
   });
@@ -29,7 +30,7 @@ function Infos() {
       setStatus({ type: "success", message: res.data.message });
 
       // vider le formulaire
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", prenom: "", email: "", message: "" });
     } catch (err) {
       setStatus({ type: "error", message: "Erreur lors de l’envoi. Réessayez." });
     }
@@ -93,6 +94,18 @@ function Infos() {
                   placeholder="Votre nom"
                   required
                 />
+                <div className="col-md-4 mb-3">
+                  <label htmlFor="prenom" className="form-label">Prénom</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="prenom"
+                    value={formData.prenom}
+                    onChange={handleChange}
+                    placeholder="Votre prénom"
+                    required
+                  />
+                </div>
               </div>
               <div className="col-md-6 mb-3">
                 <label htmlFor="email" className="form-label">Email</label>

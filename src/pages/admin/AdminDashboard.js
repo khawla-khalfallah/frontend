@@ -13,6 +13,7 @@ import PdfsList from './PdfsList';
 import SeancesList from './SeancesList';
 import VideosList from './VideosList';
 import InscritsList from './InscritsList';
+import ContactsList from './ContactsList';
 
 
 
@@ -53,6 +54,9 @@ function AdminDashboard() {
         return <VideosList  />;
       case 'inscrits':
         return <InscritsList />;
+      case 'contacts':
+        return <ContactsList />;
+
         
       default:
         return <AdminHome />; 
