@@ -11,8 +11,8 @@ import ToutesLesFormations from "./pages/apprenant/ToutesLesFormations";
 import FormationDetails from "./pages/apprenant/FormationDetails";
 import MesExamens from "./pages/apprenant/MesExamens";
 import PasserExamen from "./pages/apprenant/PasserExamen";
-import Progres from "./pages/apprenant/Progres";
-import Visio from "./pages/apprenant/Visio";
+// import Progres from "./pages/apprenant/Progres";
+// import Visio from "./pages/apprenant/Visio";
 import Certifications from "./pages/apprenant/Certifications";
 import SettingsApprenant from "./pages/apprenant/SettingsApprenant";
 import Formateur from "./pages/formateur/Formateur";
@@ -20,15 +20,15 @@ import ProfilFormateur from "./pages/formateur/ProfilFormateur";
 import MesFormationsFormateur from "./pages/formateur/MesFormationsFormateur";
 import GestionExamens from "./pages/formateur/GestionExamens";
 import AjouterExamen from "./pages/formateur/AjouterExamen"
-import AjouterFormation from "./pages/formateur/AjouterFormation";
-import MesEtudiants from "./pages/formateur/MesEtudiants";
-import Evaluations from "./pages/formateur/Evaluations";
+// import AjouterFormation from "./pages/formateur/AjouterFormation";
+// import MesEtudiants from "./pages/formateur/MesEtudiants";
+// import Evaluations from "./pages/formateur/Evaluations";
 import SettingsFormateur from "./pages/formateur/SettingsFormateur"
 import Recruteur from "./pages/recruteur/Recruteur";
 import Profil from "./pages/recruteur/Profil";
 import Candidatures from "./pages/recruteur/Candidatures";
 import Paramètres from "./pages/recruteur/Paramètres";
-import TablesList from './pages/Test';
+// import TablesList from './pages/Test';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UsersList from './pages/admin/UsersList';
 import AjoutSeanceForm from './pages/admin/AjoutSeanceForm';
@@ -37,6 +37,7 @@ import BayesianRankingDashboard from './components/BayesianRankingDashboard';
 import GestionFormations from "./pages/formateur/GestionFormations";
 import ForgotPassword from "./pages/acceuil/ForgotPassword";
 import ResetPassword from "./pages/acceuil/ResetPassword";
+import BayesianRanking from './pages/formateur/BayesianRanking';
 
 
 
@@ -61,8 +62,8 @@ function App() {
         <Route path="/apprenant/formations/:id" element={<FormationDetails />} />
         <Route path="/apprenant/examens" element={<MesExamens />} />
         <Route path="/apprenant/examens/:id/passer" element={<PasserExamen />} />
-        <Route path="/apprenant/progres" element={<Progres />} />
-        <Route path="/apprenant/visio" element={<Visio />} />
+        {/* <Route path="/apprenant/progres" element={<Progres />} />
+        <Route path="/apprenant/visio" element={<Visio />} /> */}
         <Route path="/apprenant/certifications" element={<Certifications />} />
         <Route path="/apprenant/settingsApprenant" element={<SettingsApprenant />} />
         <Route path="/formateur/Formateur" element={<Formateur />} />
@@ -71,22 +72,22 @@ function App() {
         <Route path="/formateur/gestionFormations" element={<GestionFormations/>}/>
         <Route path="/formateur/GestionExamens" element={<GestionExamens />} />
         <Route path="/formateur/AjouterExamen" element={<AjouterExamen />} />
-        <Route path="/formateur/AjouterFormation" element={<AjouterFormation />} />
+        {/* <Route path="/formateur/AjouterFormation" element={<AjouterFormation />} />
         <Route path="/formateur/MesEtudiants" element={<MesEtudiants />} />
-        <Route path="/formateur/Evaluations" element={<Evaluations />} />
+        <Route path="/formateur/Evaluations" element={<Evaluations />} /> */}
         <Route path="/formateur/SettingsFormateur" element={<SettingsFormateur />} />
         <Route path="/recruteur" element={<Recruteur />} />
         <Route path="/recruteur/profil" element={<Profil />} />
         <Route path="/recruteur/candidatures" element={<Candidatures />} />
         <Route path="/recruteur/paramètres" element={<Paramètres />} />
-        <Route path="/tables" element={<TablesList />} />
+        {/* <Route path="/tables" element={<TablesList />} /> */}
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/users" element={<UsersList />} />
         <Route path="/" element={<AjoutSeanceForm />} />
         <Route path="/create-seance" element={<CreateSeancePage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-      {/* <Route path="/formations/ranking" element={<BayesianRankingDashboard />} /> */}
+      <Route path="/formateur/BayesianRanking" element={<BayesianRanking />} />
 
 
       </Routes>

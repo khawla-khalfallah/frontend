@@ -5,6 +5,7 @@ import SidebarApprenant from "../../components/SidebarApprenant";
 
 function ToutesLesFormations() {
   const [formations, setFormations] = useState([]);
+  const [inscriptions, setInscriptions] = useState([]); // stocker les formations inscrites
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -17,8 +18,22 @@ function ToutesLesFormations() {
       }
     };
 
+    const fetchInscriptions = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/api/inscrits/moi", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        // extraire les IDs des formations
+        const inscritsIds = res.data.map((i) => i.formation.id);
+        setInscriptions(inscritsIds);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     fetchFormations();
-  }, []);
+    fetchInscriptions();
+  }, [token]);
 
   const handleInscription = async (formationId) => {
     try {
@@ -28,6 +43,7 @@ function ToutesLesFormations() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("Inscription réussie !");
+      setInscriptions([...inscriptions, formationId]); // ajouter formation à la liste
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Erreur d'inscription");
@@ -66,8 +82,11 @@ function ToutesLesFormations() {
                       <button
                         onClick={() => handleInscription(formation.id)}
                         className="btn btn-primary mt-3"
+                        disabled={inscriptions.includes(formation.id)} // désactiver si déjà inscrit
                       >
-                        S'inscrire
+                        {inscriptions.includes(formation.id)
+                          ? "Déjà inscrit"
+                          : "S'inscrire"}
                       </button>
                     </div>
                   </div>

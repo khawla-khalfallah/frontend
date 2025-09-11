@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaCertificate, FaCog, FaUser, FaBook, FaChartLine, FaVideo , FaTrophy} from "react-icons/fa";
+import { FaCertificate, FaCog, FaUser, FaBook, FaTrophy} from "react-icons/fa";
 
 function SidebarApprenant() {
   return (
@@ -32,7 +32,7 @@ function SidebarApprenant() {
             <FaCertificate /> Mes Examens
           </Link>
         </li>
-        <li className="nav-item py-2">
+        {/* <li className="nav-item py-2">
           <Link className="nav-link text-white" to="/apprenant/progres">
             <FaChartLine /> Progrès
           </Link>
@@ -41,7 +41,7 @@ function SidebarApprenant() {
           <Link className="nav-link text-white" to="/apprenant/visio">
             <FaVideo /> Visioconférences
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item py-2">
           <Link className="nav-link text-white" to="/apprenant/certifications">
             <FaCertificate /> Certifications

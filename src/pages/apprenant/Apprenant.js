@@ -24,9 +24,9 @@ function Apprenant() {
               <Link to="/apprenant/examens" className="btn btn-outline-success btn-lg">
                 📝 Mes Examens
               </Link>
-              <Link to="/apprenant/progres" className="btn btn-outline-info btn-lg">
+              {/* <Link to="/apprenant/progres" className="btn btn-outline-info btn-lg">
                 📈 Suivre mon Progrès
-              </Link>
+              </Link> */}
               <Link to="/formations/ranking" className="btn btn-outline-warning btn-lg">
                 🏆 Classement des Formations
               </Link>

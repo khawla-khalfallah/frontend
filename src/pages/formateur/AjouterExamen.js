@@ -387,7 +387,7 @@ const AjouterExamen = () => {
                           >
                             <option value="multiple_choice">QCM</option>
                             <option value="true_false">Vrai/Faux</option>
-                            <option value="text">Texte libre</option>
+                            {/* <option value="text">Texte libre</option> */}
                           </select>
                         </div>
                         <div className="col-md-2">

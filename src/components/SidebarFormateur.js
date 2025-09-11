@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
-  FaBook, FaUser, FaCog, FaChartLine, FaTrophy, FaList, FaPlus, FaChevronDown, FaChevronUp 
+  FaBook, FaUser, FaCog, FaTrophy, FaList, FaChevronDown, FaChevronUp 
 } from "react-icons/fa";
 
 function SidebarFormateur() {
@@ -39,9 +39,6 @@ function SidebarFormateur() {
             <li className="nav-item">
               <Link className="nav-link text-white" to="/formateur/GestionFormations">📘 Gestion des Formations</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/formateur/AjouterFormation">➕ Ajouter Formation</Link>
-            </li>
           </ul>
         )}
 
@@ -67,22 +64,22 @@ function SidebarFormateur() {
         )}
 
         {/* Étudiants */}
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link text-white" to="/formateur/MesEtudiants">
             <FaUser className="me-2"/> Mes Étudiants
           </Link>
-        </li>
+        </li> */}
 
         {/* Évaluations */}
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link text-white" to="/formateur/Evaluations">
             <FaChartLine className="me-2"/> Évaluations
           </Link>
-        </li>
+        </li> */}
 
         {/* Classement */}
         <li className="nav-item">
-          <Link className="nav-link text-white" to="/formations/ranking">
+          <Link className="nav-link text-white" to="/formateur/BayesianRanking">
             <FaTrophy className="me-2"/> Classement
           </Link>
         </li>

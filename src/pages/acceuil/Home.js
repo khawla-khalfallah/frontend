@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Home.css";
 import image from "../../assets/imageacceuil.jpg";
 import axios from "axios";
-import FormationCard from "../apprenant/FormationCard";
+// import FormationCard from "../apprenant/FormationCard";
 
 function Home() {
   const [formations, setFormations] = useState([]);
@@ -117,9 +117,6 @@ function Home() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/register" aria-label="Créer un compte">S'INSCRIRE</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/tables" aria-label="Créer un compte">TEST</Link>
               </li>
             </ul>
           </div>

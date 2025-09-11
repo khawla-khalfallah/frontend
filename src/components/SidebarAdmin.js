@@ -6,14 +6,15 @@ const tabs = [
   { key: 'apprenants', label: 'Apprenants', icon: '👶' },
   { key: 'formateurs', label: 'Formateurs', icon: '👨‍🏫' },
   { key: 'recruteurs', label: 'Recruteurs', icon: '👨‍💼' },
-  { key: 'formations', label: 'Formations', icon: '📚' },
-  { key: 'examens', label: 'Examens', icon: '📑' },
-  { key: 'certificats', label: 'Certificats', icon: '🏆' },
-  { key: 'inscrits', label: 'Inscriptions', icon: '📌' },
-  { key: 'pdfs', label: 'PDFs', icon: '📄' },
-  { key: 'seances', label: 'Séances', icon: '🎥' },
-  { key: 'videos', label: 'Vidéos', icon: '🎬' },
   { key: 'contacts', label: 'Contacts', icon: '📩' }, 
+  // { key: 'formations', label: 'Formations', icon: '📚' },
+  // { key: 'examens', label: 'Examens', icon: '📑' },
+  // { key: 'certificats', label: 'Certificats', icon: '🏆' },
+  // { key: 'inscrits', label: 'Inscriptions', icon: '📌' },
+  // { key: 'pdfs', label: 'PDFs', icon: '📄' },
+  // { key: 'seances', label: 'Séances', icon: '🎥' },
+  // { key: 'videos', label: 'Vidéos', icon: '🎬' },
+  
 
 ];
 
