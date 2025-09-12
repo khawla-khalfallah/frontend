@@ -26,106 +26,106 @@ function Register() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-// ✅ handleSubmit avec commentaires explicatifs
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setErrorMessage("");
+  // ✅ handleSubmit avec commentaires explicatifs
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
 
-  // 1. Vérifier que le rôle est bien choisi
-  if (!formData.role) {
-    setErrorMessage("Veuillez sélectionner un rôle !");
-    return;
-  }
+    // 1. Vérifier que le rôle est bien choisi
+    if (!formData.role) {
+      setErrorMessage("Veuillez sélectionner un rôle !");
+      return;
+    }
 
-  try {
-    // 2. Configuration Axios pour CSRF
-    axios.defaults.withCredentials = true;
+    try {
+      // 2. Configuration Axios pour CSRF
+      axios.defaults.withCredentials = true;
 
-    // 3. Récupération du CSRF Token
-    await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
+      // 3. Récupération du CSRF Token
+      await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
 
-    let response;
+      let response;
 
-    // 4. Cas FORMATEUR → création avec CV obligatoire
-    if (formData.role === "formateur") {
-      const formDataToSend = new FormData();
-      formDataToSend.append("nom", formData.nom);
-      formDataToSend.append("prenom", formData.prenom);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("password", formData.password);
-      formDataToSend.append("password_confirmation", formData.password_confirmation);
-      formDataToSend.append("role", formData.role);
-      formDataToSend.append("specialite", formData.specialite);
-      formDataToSend.append("bio", formData.bio);
+      // 4. Cas FORMATEUR → création avec CV obligatoire
+      if (formData.role === "formateur") {
+        const formDataToSend = new FormData();
+        formDataToSend.append("nom", formData.nom);
+        formDataToSend.append("prenom", formData.prenom);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("password", formData.password);
+        formDataToSend.append("password_confirmation", formData.password_confirmation);
+        formDataToSend.append("role", formData.role);
+        formDataToSend.append("specialite", formData.specialite);
+        formDataToSend.append("bio", formData.bio);
 
-      if (formData.cv) {
-        formDataToSend.append("cv", formData.cv);
+        if (formData.cv) {
+          formDataToSend.append("cv", formData.cv);
+        }
+
+        // 5. Envoi inscription (Formateur)
+        response = await axios.post("http://127.0.0.1:8000/api/users", formDataToSend, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        // 6. Pas de login auto → afficher un message + redirection
+        if (response.status === 201) {
+          if (window.confirm("✅ Votre compte formateur est créé ! ⏳ Il doit être validé par un administrateur avant connexion.\n\nCliquez sur OK pour retourner à l’accueil.")) {
+            navigate("/"); // redirection accueil
+          }
+        }
+
+
+        return; // ❌ On stoppe ici → pas de tentative de login auto
       }
 
-      // 5. Envoi inscription (Formateur)
-      response = await axios.post("http://127.0.0.1:8000/api/users", formDataToSend, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      // 7. Cas APPRENANT ou RECRUTEUR
+      const dataToSend = {
+        ...formData,
+        specialite: formData.role === "formateur" ? formData.specialite : "",
+        bio: formData.role === "formateur" ? formData.bio : "",
+        entreprise: formData.role === "recruteur" ? formData.entreprise : "",
+        niveau_etude: formData.role === "apprenant" ? formData.niveau_etude : "",
+      };
 
-      // 6. Pas de login auto → afficher un message + redirection
-     if (response.status === 201) {
-      if (window.confirm("✅ Votre compte formateur est créé ! ⏳ Il doit être validé par un administrateur avant connexion.\n\nCliquez sur OK pour retourner à l’accueil.")) {
-        navigate("/"); // redirection accueil
+      response = await axios.post("http://127.0.0.1:8000/api/users", dataToSend);
+
+      // 8. Connexion automatique si inscription réussie
+      if (response.status === 201) {
+        try {
+          const loginResponse = await axios.post(
+            "http://127.0.0.1:8000/api/login",
+            { email: formData.email, password: formData.password },
+            { headers: { "Content-Type": "application/json", Accept: "application/json" } }
+          );
+
+          // 9. Sauvegarde token + user
+          localStorage.setItem("token", loginResponse.data.token);
+          localStorage.setItem("user", JSON.stringify(loginResponse.data.user));
+
+          // 10. Redirection selon rôle
+          navigate(
+            loginResponse.data.user.role === "apprenant"
+              ? "/apprenant"
+              : loginResponse.data.user.role === "recruteur"
+                ? "/recruteur"
+                : "/"
+          );
+        } catch (loginError) {
+          console.error("Erreur connexion auto:", loginError);
+          setMessage("Inscription réussie! Veuillez vous connecter");
+          navigate("/login");
+        }
+      }
+    } catch (error) {
+      // 11. Gestion des erreurs backend
+      if (error.response?.data?.errors) {
+        const errors = Object.values(error.response.data.errors).flat();
+        setErrorMessage(errors.join("\n"));
+      } else {
+        setErrorMessage(error.response?.data?.message || "Erreur lors de l'inscription");
       }
     }
-
-
-      return; // ❌ On stoppe ici → pas de tentative de login auto
-    }
-
-    // 7. Cas APPRENANT ou RECRUTEUR
-    const dataToSend = {
-      ...formData,
-      specialite: formData.role === "formateur" ? formData.specialite : "",
-      bio: formData.role === "formateur" ? formData.bio : "",
-      entreprise: formData.role === "recruteur" ? formData.entreprise : "",
-      niveau_etude: formData.role === "apprenant" ? formData.niveau_etude : "",
-    };
-
-    response = await axios.post("http://127.0.0.1:8000/api/users", dataToSend);
-
-    // 8. Connexion automatique si inscription réussie
-    if (response.status === 201) {
-      try {
-        const loginResponse = await axios.post(
-          "http://127.0.0.1:8000/api/login",
-          { email: formData.email, password: formData.password },
-          { headers: { "Content-Type": "application/json", Accept: "application/json" } }
-        );
-
-        // 9. Sauvegarde token + user
-        localStorage.setItem("token", loginResponse.data.token);
-        localStorage.setItem("user", JSON.stringify(loginResponse.data.user));
-
-        // 10. Redirection selon rôle
-        navigate(
-          loginResponse.data.user.role === "apprenant"
-            ? "/apprenant"
-            : loginResponse.data.user.role === "recruteur"
-            ? "/recruteur"
-            : "/"
-        );
-      } catch (loginError) {
-        console.error("Erreur connexion auto:", loginError);
-        setMessage("Inscription réussie! Veuillez vous connecter");
-        navigate("/login");
-      }
-    }
-  } catch (error) {
-    // 11. Gestion des erreurs backend
-    if (error.response?.data?.errors) {
-      const errors = Object.values(error.response.data.errors).flat();
-      setErrorMessage(errors.join("\n"));
-    } else {
-      setErrorMessage(error.response?.data?.message || "Erreur lors de l'inscription");
-    }
-  }
-};
+  };
 
   return (
     <div>
@@ -163,23 +163,63 @@ const handleSubmit = async (e) => {
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label className="form-label">Prénom</label>
-                <input type="text" className="form-control" name="prenom" onChange={handleChange} required />
+                <input
+                  type="text"
+                  className="form-control"
+                  name="prenom"
+                  onChange={handleChange}
+                  required
+                  pattern="^[a-zA-ZÀ-ÿ\s]+$"
+                  title="Seulement des lettres et espaces"
+                />
               </div>
               <div className="mb-3">
                 <label className="form-label">Nom</label>
-                <input type="text" className="form-control" name="nom" onChange={handleChange} required />
+                <input
+                  type="text"
+                  className="form-control"
+                  name="nom"
+                  onChange={handleChange}
+                  required
+                  pattern="^[a-zA-ZÀ-ÿ\s]+$"
+                  title="Seulement des lettres et espaces"
+                />
               </div>
               <div className="mb-3">
                 <label className="form-label">Email</label>
-                <input type="email" className="form-control" name="email" onChange={handleChange} required />
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  onChange={handleChange}
+                  required
+                  pattern="^[\w\.-]+@([\w-]+\.)+[a-zA-Z]{2,}$"
+                  title="Veuillez entrer une adresse email valide"
+                />
               </div>
               <div className="mb-3">
                 <label className="form-label">Mot de passe</label>
-                <input type="password" className="form-control" name="password" onChange={handleChange} required />
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  onChange={handleChange}
+                  required
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+                  title="Min 8 caractères avec majuscule, minuscule, chiffre et caractère spécial"
+                />
               </div>
               <div className="mb-3">
                 <label className="form-label">Confirmer le mot de passe</label>
-                <input type="password" className="form-control" name="password_confirmation" onChange={handleChange} required />
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password_confirmation"
+                  onChange={handleChange}
+                  required
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+                  title="Doit correspondre au mot de passe"
+                />
               </div>
 
               {/* Sélection rôle */}
@@ -218,8 +258,8 @@ const handleSubmit = async (e) => {
                   </div>
                   <div className="mb-3 text-start">
                     <label className="form-label">CV (PDF/DOC)</label>
-                    <input type="file"className="form-control"name="cv"accept=".pdf,.doc,.docx"
-                      onChange={(e) => setFormData({ ...formData, cv: e.target.files[0] })}/>
+                    <input type="file" className="form-control" name="cv" accept=".pdf,.doc,.docx"
+                      onChange={(e) => setFormData({ ...formData, cv: e.target.files[0] })} />
                   </div>
                 </>
               )}

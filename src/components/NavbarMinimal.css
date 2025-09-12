@@ -1,0 +1,39 @@
+/* Navbar principale */
+.navbar-minimal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(15, 23, 42, 0.95); /* bleu foncé semi-transparent */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* ombre plus élégante */
+}
+
+/* Logo */
+.navbar-logo img {
+  height: 50px;
+  transition: transform 0.3s;
+}
+
+.navbar-logo img:hover {
+  transform: scale(1.1);
+}
+
+/* Bouton déconnexion */
+.navbar-logout-btn {
+  background-color: #3b82f6; /* bleu vif moderne */
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+}
+
+.navbar-logout-btn:hover {
+  background-color: #2563eb; /* bleu un peu plus foncé au hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+}

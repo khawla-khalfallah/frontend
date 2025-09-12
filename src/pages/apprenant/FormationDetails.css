@@ -1,0 +1,143 @@
+
+/* FormationDetails.css */
+
+/* Conteneur principal de la page */
+.formation-details-container {
+  flex: 1;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 2rem 1rem;
+}
+
+/* Titres des formations */
+.formation-header {
+  color: #2563eb; /* bleu primaire */
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Cartes principales */
+.formation-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.formation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Grid responsive pour séances, vidéos et PDFs */
+.formation-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .formation-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .formation-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Boutons personnalisés */
+.btn-indigo {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.btn-indigo:hover {
+  background-color: #1d4ed8;
+}
+
+/* Étoiles de notation */
+.star-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* Titres de sections */
+.formation-card h4 {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+/* Titres secondaires dans les cartes */
+.formation-card h5 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Paragraphes et textes */
+.formation-card p {
+  font-size: 0.95rem;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+/* Liens PDF */
+.formation-card a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.formation-card a:hover {
+  background-color: rgba(22, 163, 74, 0.1);
+}
+
+/* Vidéos intégrées */
+.formation-card video {
+  border-radius: 0.5rem;
+  width: 100%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Boutons YouTube et autres vidéos */
+.formation-card .btn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Section évaluation */
+.formation-card form .form-label {
+  font-weight: 500;
+}
+
+.formation-card form .btn {
+  margin-top: 0.5rem;
+}
+
+/* Couleurs de bordures selon type de contenu */
+.formation-card[style*="border-left: 4px solid #2563eb"] {
+  border-left-color: #2563eb;
+}
+.formation-card[style*="border-left: 4px solid #dc2626"] {
+  border-left-color: #dc2626;
+}
+.formation-card[style*="border-left: 4px solid #16a34a"] {
+  border-left-color: #16a34a;
+}

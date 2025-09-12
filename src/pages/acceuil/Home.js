@@ -98,14 +98,14 @@ function Home() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <input 
                   type="text" 
                   className="form-control" 
                   placeholder="Rechercher" 
                   aria-label="Champ de recherche" 
                 />
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link className="nav-link" to="/" aria-label="Page d'accueil">ACCUEIL</Link>
               </li>

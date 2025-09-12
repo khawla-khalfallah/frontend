@@ -1,9 +1,99 @@
-.btn-dark:hover {
-    background-color: #343a40 !important;
+/* Sidebar global */
+.sidebar-admin {
+  width: 250px;
+  background-color: #0f172a; /* bleu foncé pro */
+  color: #f8fafc; /* texte clair */
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+/* Titre */
+.sidebar-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #60a5fa; /* bleu clair pour contraste */
+}
+
+/* Liste des onglets */
+.sidebar-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Boutons onglets */
+.sidebar-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: transparent;
+  color: #f8fafc;
+  border: none;
+  padding: 0.65rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sidebar-btn:hover {
+  background-color: #1e293b; /* léger survol sombre */
+  transform: scale(1.02);
+}
+
+.sidebar-btn.active {
+  background-color: #2563eb; /* bleu vif pour onglet actif */
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+/* Icône dans bouton */
+.tab-icon {
+  margin-right: 12px;
+  font-size: 1.1rem;
+}
+
+/* Bouton logout */
+.sidebar-logout-btn {
+  background-color: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sidebar-logout-btn:hover {
+  background-color: #b91c1c;
+  transform: scale(1.05);
+}
+
+/* Responsive : sidebar se replie sur petits écrans */
+@media (max-width: 768px) {
+  .sidebar-admin {
+    width: 200px;
+    padding: 15px;
   }
-  
-  .btn-primary {
-    background-color: #0d6efd !important;
-    border: none;
+
+  .sidebar-title {
+    font-size: 1.2rem;
   }
-  
+
+  .sidebar-btn {
+    font-size: 0.9rem;
+    padding: 0.55rem 0.8rem;
+  }
+
+  .sidebar-logout-btn {
+    padding: 0.6rem;
+  }
+}
