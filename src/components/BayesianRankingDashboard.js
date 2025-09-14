@@ -314,8 +314,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Container, Card, Spinner, Table, Badge, Button, Form, Alert } from 'react-bootstrap';
-import NavbarMinimal from "../components/NavbarMinimal";
-import SidebarApprenant from "../components/SidebarApprenant";
+import LayoutApprenant from "../layouts/LayoutApprenant"; // ✅ Utilisation du layout
+import './BayesianRankingDashboard.css';
+
 
 const BayesianRankingDashboard = () => {
     const navigate = useNavigate();
@@ -376,24 +377,21 @@ const BayesianRankingDashboard = () => {
     if (loading) {
         return (
             <div>
-                <NavbarMinimal />
-                <div className="d-flex">
-                    <SidebarApprenant />
+                <LayoutApprenant>
                     <Container className="d-flex justify-content-center align-items-center"
                         style={{ flex: 1, backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
                         <Spinner animation="border" variant="primary" />
                     </Container>
-                </div>
+                </LayoutApprenant>
             </div>
+
         );
     }
 
     if (error) {
         return (
             <div>
-                <NavbarMinimal />
-                <div className="d-flex">
-                    <SidebarApprenant />
+                <LayoutApprenant>
                     <Container className="p-5" style={{ flex: 1, backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
                         <Alert variant="danger" className="text-center">
                             {error}
@@ -402,22 +400,20 @@ const BayesianRankingDashboard = () => {
                             </Button>
                         </Alert>
                     </Container>
-                </div>
+                </LayoutApprenant>
             </div>
+
         );
     }
 
     return (
         <div>
-            <NavbarMinimal />
-            <div className="d-flex">
-                <SidebarApprenant />
+            <LayoutApprenant>
                 <Container className="p-5" style={{ flex: 1, backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
                     <Card className="bg-white shadow rounded p-4">
                         <h2 className="text-primary mb-4 text-center" style={{ fontWeight: "bold" }}>
                             🏆 Classement des Formations
                         </h2>
-
                         <Table striped bordered hover responsive>
                             <thead className="table-dark text-center">
                                 <tr>
@@ -489,7 +485,6 @@ const BayesianRankingDashboard = () => {
                                 ))}
                             </tbody>
                         </Table>
-
                         {data.formations.length === 0 && (
                             <Alert variant="info" className="mt-4 text-center">
                                 Aucune formation disponible pour le moment.
@@ -497,8 +492,9 @@ const BayesianRankingDashboard = () => {
                         )}
                     </Card>
                 </Container>
-            </div>
+            </LayoutApprenant>
         </div>
+
     );
 };
 

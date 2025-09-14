@@ -97,61 +97,62 @@ function ProfilApprenant() {
     if (!prenom && !nom) return "U";
     return `${prenom?.charAt(0) || ""}${nom?.charAt(0) || ""}`.toUpperCase();
   };
-  
+
   return (
-  <LayoutApprenant>
-    <div className="profile-content">
-      <div className="profile-card">
-        <h2 className="profile-title">Mon Profil</h2>
+    <LayoutApprenant>
+      <div className="profile-content">
+        <div className="profile-card">
+          <h2 className="profile-title">Mon Profil</h2>
 
-        {user ? (
-          <div className="profile-details">
-            {/* ✅ Avatar avec initiales */}
-            <div className="avatar-container">
-              <div className="avatar">
-                {getInitials(user.prenom, user.nom)}
+          {user ? (
+            <div className="profile-details">
+              {/* ✅ Avatar avec initiales */}
+              <div className="avatar-container">
+                <div className="avatar">
+                  {getInitials(user.prenom, user.nom)}
+                </div>
               </div>
-            </div>
 
-            <div className="detail-row">
-              <span className="label">Nom :</span>
-              <span className="value">{user.nom}</span>
-            </div>
-
-            <div className="detail-row">
-              <span className="label">Prénom :</span>
-              <span className="value">{user.prenom}</span>
-            </div>
-
-            {user.apprenant && (
               <div className="detail-row">
-                <span className="label">Niveau d'étude :</span>
-                <span className="value">{user.apprenant.niveau_etude}</span>
+                <span className="label">Nom :</span>
+                <span className="value">{user.nom}</span>
               </div>
-            )}
 
-            <div className="detail-row">
-              <span className="label">📧 Email :</span>
-              <span className="value">{user.email}</span>
-            </div>
+              <div className="detail-row">
+                <span className="label">Prénom :</span>
+                <span className="value">{user.prenom}</span>
+              </div>
 
-            <div className="detail-row">
-              <span className="badge">🎓 {user.role}</span>
-            </div>
+              {user.apprenant && (
+                <div className="detail-row">
+                  <span className="label">Niveau d'étude :</span>
+                  <span className="value">{user.apprenant.niveau_etude}</span>
+                </div>
+              )}
 
-            <div className="btn-container">
-              <Link to="/apprenant/SettingsApprenant" className="btn-edit">
-                ✏️ Modifier le Profil
-              </Link>
+              <div className="detail-row">
+                <span className="label">📧 Email :</span>
+                <span className="value">{user.email}</span>
+              </div>
+
+              <div className="detail-row">
+                <span className="label">Statut :</span>
+                <span className="badge">{user.role}</span>
+              </div>
+
+              <div className="btn-container">
+                <Link to="/apprenant/SettingsApprenant" className="btn-edit">
+                  ✏️ Modifier le Profil
+                </Link>
+              </div>
             </div>
-          </div>
-        ) : (
-          <p className="loading">Chargement du profil...</p>
-        )}
+          ) : (
+            <p className="loading">Chargement du profil...</p>
+          )}
+        </div>
       </div>
-    </div>
-  </LayoutApprenant>
-);
+    </LayoutApprenant>
+  );
 
 }
 

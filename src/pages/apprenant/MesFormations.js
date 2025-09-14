@@ -84,6 +84,7 @@ function MesFormations() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
+         // L'API retourne déjà les formations filtrées pour l'apprenant connecté
         const formattedFormations = res.data.map((inscrit) => ({
           ...inscrit.formation,
           date_inscription: inscrit.date_inscription,

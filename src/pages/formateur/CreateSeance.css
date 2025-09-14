@@ -1,0 +1,77 @@
+/* Carte du formulaire */
+.seance-form-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 25px 30px;
+  max-width: 600px;
+  margin: 20px auto;
+  transition: 0.3s ease-in-out;
+}
+
+.seance-form-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Labels */
+.seance-form-card label {
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Champs de saisie et select */
+.seance-form-card input.form-control,
+.seance-form-card textarea.form-control,
+.seance-form-card select.form-select {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+
+.seance-form-card input.form-control:focus,
+.seance-form-card textarea.form-control:focus,
+.seance-form-card select.form-select:focus {
+  border-color: #ff7f50;
+  box-shadow: 0 0 5px rgba(255, 127, 80, 0.4);
+  outline: none;
+}
+
+/* Bouton ajouter (orange uniforme) */
+.btn-orange {
+  background-color: #ff7f50;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  transition: 0.3s ease-in-out;
+  width: 100%;
+}
+
+.btn-orange:hover {
+  background-color: #e6692e;
+  transform: scale(1.02);
+}
+
+/* Messages d'alerte */
+.seance-form-card .form-message {
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  margin-top: 10px;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .seance-form-card {
+    padding: 20px;
+    margin: 10px;
+  }
+}

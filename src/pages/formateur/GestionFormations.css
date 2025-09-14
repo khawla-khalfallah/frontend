@@ -1,0 +1,59 @@
+.dashboard-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1a237e;
+  margin-bottom: 20px;
+}
+
+.custom-tabs .nav-link {
+  border-radius: 8px 8px 0 0;
+  font-weight: 600;
+  color: #555;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.custom-tabs .nav-link.active {
+  background: #1a237e;
+  color: #fff !important;
+}
+
+.resource-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.resource-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid #eee;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+.btn {
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .custom-tabs .nav-link {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+  .resource-card {
+    padding: 15px;
+  }
+}

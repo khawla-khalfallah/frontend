@@ -1,0 +1,127 @@
+.toutes-formations-container {
+  padding: 2rem;
+  background-color: #f8f9fc;
+  min-height: 100vh;
+}
+
+/* Header */
+.toutes-formations-container .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.toutes-formations-container .title {
+  font-weight: 700;
+  color: #111827;
+  font-size: 1.8rem;
+}
+
+.toutes-formations-container .badge {
+  background: #3b82f6;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+/* Grille responsive */
+/* .formations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+} */
+.formations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+/* Carte formation */
+.formation-card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.formation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+/* Header de la carte */
+.formation-card .card-header {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  color: white;
+}
+
+/* Body */
+.formation-card .card-body {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #2563eb;
+  margin-bottom: 0.8rem;
+}
+
+.card-description {
+  flex-grow: 1;
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+/* Boutons */
+.btn {
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-inscrire {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-inscrire:hover {
+  background: #1e40af;
+}
+
+.btn-inscrit {
+  background: white;
+  color: #10b981;
+  border: 2px solid #10b981;
+}
+
+.btn-inscrit:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+/* Aucun résultat */
+.no-formation {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1rem;
+  padding: 2rem 0;
+}

@@ -1,0 +1,60 @@
+/* Card général */
+.card {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Hover lignes tableau */
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.08);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Cellules */
+.table th, .table td {
+    vertical-align: middle !important;
+    padding: 12px 10px;
+}
+
+/* Badge */
+.badge {
+    border-radius: 12px;
+    font-weight: 500;
+    padding: 0.4em 0.75em;
+}
+
+/* Score étoiles */
+.stars {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+/* Boutons */
+button {
+    transition: all 0.2s ease;
+}
+button:hover {
+    transform: scale(1.04);
+}
+
+/* Form Select pour score */
+.form-select {
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+    .table th, .table td {
+        font-size: 0.85rem;
+        padding: 8px 5px;
+    }
+    .form-select {
+        width: 120px !important;
+    }
+}

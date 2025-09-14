@@ -16,7 +16,7 @@ const AjouterExamen = () => {
     total_marks: 0,
     questions: []
   });
-  
+
   const [formations, setFormations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
@@ -27,7 +27,7 @@ const AjouterExamen = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        
+
         // Always fetch formations
         const formationsResponse = await axiosInstance.get('/api/formations');
         setFormations(formationsResponse.data);
@@ -36,7 +36,7 @@ const AjouterExamen = () => {
         if (isEditing) {
           const examResponse = await axiosInstance.get(`/api/examens/${editId}`);
           const examData = examResponse.data;
-          
+
           // Transform backend data to frontend format
           const transformedQuestions = (examData.questions || []).map(question => {
             // Map database enum types to frontend types
@@ -76,7 +76,7 @@ const AjouterExamen = () => {
               reponses: transformedReponses
             };
           });
-          
+
           setFormData({
             title: examData.title || examData.titre || '',
             description: examData.description || '',
@@ -116,7 +116,7 @@ const AjouterExamen = () => {
         { text: '', is_correct: false }
       ]
     };
-    
+
     setFormData(prev => ({
       ...prev,
       questions: [...prev.questions, newQuestion]
@@ -133,7 +133,7 @@ const AjouterExamen = () => {
   const handleQuestionChange = (questionIndex, field, value) => {
     setFormData(prev => ({
       ...prev,
-      questions: prev.questions.map((question, index) => 
+      questions: prev.questions.map((question, index) =>
         index === questionIndex ? { ...question, [field]: value } : question
       )
     }));
@@ -142,12 +142,12 @@ const AjouterExamen = () => {
   const addReponse = (questionIndex) => {
     setFormData(prev => ({
       ...prev,
-      questions: prev.questions.map((question, index) => 
-        index === questionIndex 
-          ? { 
-              ...question, 
-              reponses: [...question.reponses, { text: '', is_correct: false }]
-            }
+      questions: prev.questions.map((question, index) =>
+        index === questionIndex
+          ? {
+            ...question,
+            reponses: [...question.reponses, { text: '', is_correct: false }]
+          }
           : question
       )
     }));
@@ -156,12 +156,12 @@ const AjouterExamen = () => {
   const removeReponse = (questionIndex, reponseIndex) => {
     setFormData(prev => ({
       ...prev,
-      questions: prev.questions.map((question, index) => 
-        index === questionIndex 
-          ? { 
-              ...question, 
-              reponses: question.reponses.filter((_, i) => i !== reponseIndex)
-            }
+      questions: prev.questions.map((question, index) =>
+        index === questionIndex
+          ? {
+            ...question,
+            reponses: question.reponses.filter((_, i) => i !== reponseIndex)
+          }
           : question
       )
     }));
@@ -170,14 +170,14 @@ const AjouterExamen = () => {
   const handleReponseChange = (questionIndex, reponseIndex, field, value) => {
     setFormData(prev => ({
       ...prev,
-      questions: prev.questions.map((question, qIndex) => 
-        qIndex === questionIndex 
+      questions: prev.questions.map((question, qIndex) =>
+        qIndex === questionIndex
           ? {
-              ...question,
-              reponses: question.reponses.map((reponse, rIndex) => 
-                rIndex === reponseIndex ? { ...reponse, [field]: value } : reponse
-              )
-            }
+            ...question,
+            reponses: question.reponses.map((reponse, rIndex) =>
+              rIndex === reponseIndex ? { ...reponse, [field]: value } : reponse
+            )
+          }
           : question
       )
     }));
@@ -197,7 +197,7 @@ const AjouterExamen = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (formData.questions.length === 0) {
       setMessage({ text: '❌ Veuillez ajouter au moins une question', type: 'error' });
       return;
@@ -206,10 +206,10 @@ const AjouterExamen = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      
+
       console.log('Token:', token);
       console.log('Form Data:', formData);
-      
+
       let response;
       if (isEditing) {
         // Update existing exam
@@ -230,9 +230,9 @@ const AjouterExamen = () => {
       console.error('Error response:', error.response?.data);
       console.error('Error status:', error.response?.status);
       console.error('Error headers:', error.response?.headers);
-      setMessage({ 
-        text: error.response?.data?.message || error.response?.data?.error || '❌ Erreur lors de la création de l\'examen', 
-        type: 'error' 
+      setMessage({
+        text: error.response?.data?.message || error.response?.data?.error || '❌ Erreur lors de la création de l\'examen',
+        type: 'error'
       });
     } finally {
       setLoading(false);
@@ -294,7 +294,7 @@ const AjouterExamen = () => {
                     </select>
                   </div>
                 </div>
-                
+
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label className="form-label">Durée (en minutes) *</label>
@@ -320,7 +320,7 @@ const AjouterExamen = () => {
                     <small className="text-muted">Calculée automatiquement selon les points des questions</small>
                   </div>
                 </div>
-                
+
                 <div className="mb-3">
                   <label className="form-label">Description (optionnel)</label>
                   <textarea
@@ -339,8 +339,8 @@ const AjouterExamen = () => {
             <div className="card mb-4">
               <div className="card-header bg-success text-white d-flex justify-content-between align-items-center">
                 <h5 className="mb-0">❓ Questions ({formData.questions.length})</h5>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="btn btn-light btn-sm"
                   onClick={addQuestion}
                 >
@@ -365,7 +365,7 @@ const AjouterExamen = () => {
                           🗑️ Supprimer
                         </button>
                       </div>
-                      
+
                       <div className="row mb-3">
                         <div className="col-md-8">
                           <label className="form-label">Texte de la question *</label>
@@ -501,22 +501,35 @@ const AjouterExamen = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="d-flex justify-content-between">
-              <button 
-                type="button" 
+            <div className="d-flex justify-content-between" style={{ gap: '10px' }}>
+              <button
+                type="button"
                 className="btn btn-secondary"
                 onClick={() => navigate('/formateur/GestionExamens')}
+                style={{
+                  width: '100px',
+                  padding: '4px 8px',
+                  fontSize: '0.85rem',
+                  lineHeight: '1.2'
+                }}
               >
                 ← Annuler
               </button>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="btn btn-success"
                 disabled={loading || formData.questions.length === 0}
+                style={{
+                  width: '140px',
+                  padding: '6px 10px',
+                  fontSize: '0.9rem',
+                  lineHeight: '1.2'
+                }}
               >
-                {loading ? '🔄 En cours...' : (isEditing ? '✅ Modifier l\'Examen' : '✅ Créer l\'Examen')}
+                {loading ? '🔄 En cours...' : (isEditing ? '✅ Modifier' : '✅ Créer')}
               </button>
             </div>
+
           </form>
         </div>
       </div>

@@ -34,11 +34,11 @@
 }
 
 /* Grid responsive pour séances, vidéos et PDFs */
-.formation-grid {
+/* .formation-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
-}
+} */
 
 @media (min-width: 768px) {
   .formation-grid {
@@ -140,4 +140,18 @@
 }
 .formation-card[style*="border-left: 4px solid #16a34a"] {
   border-left-color: #16a34a;
+}
+/* Carte élargie pour sections principales */
+.formation-card-large {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  padding: 2rem; /* un peu plus de padding */
+  margin-bottom: 2rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.formation-card-large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }

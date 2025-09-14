@@ -158,6 +158,7 @@
 // export default EditSeanceForm;
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./EditSeanceForm.css";
 
 const EditSeanceForm = ({ seance, token, formations = [], onSuccess, onCancel }) => {
   const [titreSeance, setTitreSeance] = useState("");
@@ -261,98 +262,94 @@ const handleSubmit = async (e) => {
 
 
   return (
-    <form onSubmit={handleSubmit} className="p-3 bg-light rounded shadow-sm">
-      <h5>✏️ Modifier la séance</h5>
+   <form onSubmit={handleSubmit} className="edit-seance-card">
+  <h5>✏️ Modifier la séance</h5>
 
-      {message && <div className="alert alert-info">{message}</div>}
+  {message && <div className="alert alert-info">{message}</div>}
 
-      <div className="mb-2">
-        <label className="form-label">Titre</label>
-        <input
-          type="text"
-          className={`form-control ${errors.titreSeance ? "is-invalid" : ""}`}
-          value={titreSeance}
-          onChange={(e) => setTitreSeance(e.target.value)}
-          required
-        />
-        {errors.titreSeance && <div className="invalid-feedback">{errors.titreSeance[0]}</div>}
-      </div>
+  {/* Champs titre, date, heures, lien, formation */}
+  <div className="mb-2">
+    <label>Titre</label>
+    <input
+      type="text"
+      className={`form-control ${errors.titreSeance ? "is-invalid" : ""}`}
+      value={titreSeance}
+      onChange={(e) => setTitreSeance(e.target.value)}
+      required
+    />
+  </div>
 
-      <div className="mb-2">
-        <label className="form-label">Date</label>
-        <input
-          type="date"
-          className={`form-control ${errors.date ? "is-invalid" : ""}`}
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
-        {errors.date && <div className="invalid-feedback">{errors.date[0]}</div>}
-      </div>
+  <div className="mb-2">
+    <label>Date</label>
+    <input
+      type="date"
+      className={`form-control ${errors.date ? "is-invalid" : ""}`}
+      value={date}
+      onChange={(e) => setDate(e.target.value)}
+      required
+    />
+  </div>
 
-      <div className="mb-2">
-        <label className="form-label">Heure début</label>
-        <input
-          type="time"
-          className={`form-control ${errors.heureDebut ? "is-invalid" : ""}`}
-          value={heureDebut}
-          onChange={(e) => setHeureDebut(e.target.value)}
-          required
-        />
-        {errors.heureDebut && <div className="invalid-feedback">{errors.heureDebut[0]}</div>}
-      </div>
+  <div className="mb-2">
+    <label>Heure début</label>
+    <input
+      type="time"
+      className={`form-control ${errors.heureDebut ? "is-invalid" : ""}`}
+      value={heureDebut}
+      onChange={(e) => setHeureDebut(e.target.value)}
+      required
+    />
+  </div>
 
-      <div className="mb-2">
-        <label className="form-label">Heure fin</label>
-        <input
-          type="time"
-          className={`form-control ${errors.heureFin ? "is-invalid" : ""}`}
-          value={heureFin}
-          onChange={(e) => setHeureFin(e.target.value)}
-          required
-        />
-        {errors.heureFin && <div className="invalid-feedback">{errors.heureFin[0]}</div>}
-      </div>
+  <div className="mb-2">
+    <label>Heure fin</label>
+    <input
+      type="time"
+      className={`form-control ${errors.heureFin ? "is-invalid" : ""}`}
+      value={heureFin}
+      onChange={(e) => setHeureFin(e.target.value)}
+      required
+    />
+  </div>
 
-      <div className="mb-2">
-        <label className="form-label">Lien de la salle</label>
-        <input
-          type="url"
-          className={`form-control ${errors.lienRoom ? "is-invalid" : ""}`}
-          value={lienRoom}
-          onChange={(e) => setLienRoom(e.target.value)}
-          required
-        />
-        {errors.lienRoom && <div className="invalid-feedback">{errors.lienRoom[0]}</div>}
-      </div>
+  <div className="mb-2">
+    <label>Lien de la salle</label>
+    <input
+      type="url"
+      className={`form-control ${errors.lienRoom ? "is-invalid" : ""}`}
+      value={lienRoom}
+      onChange={(e) => setLienRoom(e.target.value)}
+      required
+    />
+  </div>
 
-      <div className="mb-2">
-        <label className="form-label">Formation associée</label>
-        <select
-          className={`form-select ${errors.formation_id ? "is-invalid" : ""}`}
-          value={formationId}
-          onChange={(e) => setFormationId(e.target.value)}
-          required
-        >
-          <option value="">Sélectionnez une formation</option>
-          {formationsList.map((f) => (
-            <option key={f.id} value={f.id}>
-              {f.titre}
-            </option>
-          ))}
-        </select>
-        {errors.formation_id && <div className="invalid-feedback">{errors.formation_id[0]}</div>}
-      </div>
+  <div className="mb-2">
+    <label>Formation associée</label>
+    <select
+      className={`form-select ${errors.formation_id ? "is-invalid" : ""}`}
+      value={formationId}
+      onChange={(e) => setFormationId(e.target.value)}
+      required
+    >
+      <option value="">Sélectionnez une formation</option>
+      {formationsList.map((f) => (
+        <option key={f.id} value={f.id}>
+          {f.titre}
+        </option>
+      ))}
+    </select>
+  </div>
 
-      <div className="d-flex gap-2 mt-3">
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? "Enregistrement..." : "💾 Sauvegarder"}
-        </button>
-        <button type="button" className="btn btn-secondary" onClick={onCancel}>
-          ❌ Annuler
-        </button>
-      </div>
-    </form>
+  <div className="d-flex gap-2 mt-3">
+    <button type="submit" className="btn-orange" disabled={loading}>
+      {loading ? "Enregistrement..." : "💾 Sauvegarder"}
+    </button>
+    <button type="button" className="btn-secondary-uniform" onClick={onCancel}>
+      ❌ Annuler
+    </button>
+  </div>
+</form>
+
   );
 };
 

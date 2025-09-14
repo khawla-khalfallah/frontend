@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./CreateSeance.css";
 
 const CreateSeance = ({ token, onSuccess }) => {
   const [titreSeance, setTitreSeance] = useState("");
@@ -63,9 +64,9 @@ const CreateSeance = ({ token, onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-3 border rounded bg-light">
+    <form onSubmit={handleSubmit} className="seance-form-card">
       <div className="mb-3">
-        <label className="form-label">Titre de la séance</label>
+        <label>Titre de la séance</label>
         <input
           type="text"
           className="form-control"
@@ -76,7 +77,7 @@ const CreateSeance = ({ token, onSuccess }) => {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Date</label>
+        <label>Date</label>
         <input
           type="date"
           className="form-control"
@@ -87,7 +88,7 @@ const CreateSeance = ({ token, onSuccess }) => {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Heure début</label>
+        <label>Heure début</label>
         <input
           type="time"
           className="form-control"
@@ -98,7 +99,7 @@ const CreateSeance = ({ token, onSuccess }) => {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Heure fin</label>
+        <label>Heure fin</label>
         <input
           type="time"
           className="form-control"
@@ -109,7 +110,7 @@ const CreateSeance = ({ token, onSuccess }) => {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Lien (Google Meet, Zoom...)</label>
+        <label>Lien (Google Meet, Zoom...)</label>
         <input
           type="url"
           className="form-control"
@@ -120,7 +121,7 @@ const CreateSeance = ({ token, onSuccess }) => {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Formation</label>
+        <label>Formation</label>
         <select
           className="form-select"
           value={formationId}
@@ -136,8 +137,11 @@ const CreateSeance = ({ token, onSuccess }) => {
         </select>
       </div>
 
-      <button type="submit" className="btn btn-primary">Ajouter</button>
-      {message && <p className="mt-2">{message}</p>}
+      <button type="submit" className="btn-orange">
+        Ajouter
+      </button>
+
+      {message && <p className="form-message">{message}</p>}
     </form>
   );
 };

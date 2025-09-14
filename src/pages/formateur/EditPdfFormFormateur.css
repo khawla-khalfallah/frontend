@@ -1,0 +1,100 @@
+.edit-pdf-form {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  max-width: 500px;
+  margin: auto;
+}
+
+.form-title {
+  font-weight: bold;
+  color: #fd7e14; /* Orange moderne */
+  border-left: 4px solid #fd7e14;
+  padding-left: 10px;
+}
+
+.form-message {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #f8f9fa;
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #fd7e14;
+  box-shadow: 0 0 4px rgba(253, 126, 20, 0.5);
+}
+
+.btn-warning {
+  border-radius: 8px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.btn-warning:hover {
+  background-color: #e8590c;
+}
+
+.btn-secondary {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Conteneur des boutons */
+.button-group {
+  display: flex;
+  justify-content: center; /* centre les boutons horizontalement */
+  gap: 15px; /* espace entre les boutons */
+  flex-wrap: wrap; /* passe à la ligne sur mobile si besoin */
+  margin-top: 15px;
+}
+
+/* CSS à ajouter dans ton fichier EditVideoFormFormateur.css ou global */
+.btn-uniform {
+      flex: 1; /* tous les boutons prennent la même largeur */
+  max-width: 160px; /* largeur maximale si tu veux */
+  width: 150px; /* largeur fixe pour tous les boutons */
+  padding: 10px 0; /* même padding vertical */
+  font-size: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px; /* espace entre icône et texte si tu en mets */
+}
+
+/* Couleurs spécifiques si tu veux garder warning et secondary */
+.btn-warning-uniform {
+  background-color: #ff7f50; /* orange */
+  color: #fff;
+  border: none;
+}
+
+.btn-warning-uniform:hover {
+  background-color: #e6692e;
+}
+
+.btn-secondary-uniform {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+}
+
+.btn-secondary-uniform:hover {
+  background-color: #5a6268;
+}
+/* ✅ Responsive */
+@media (max-width: 768px) {
+  .edit-pdf-form {
+    padding: 20px;
+    margin: 10px;
+  }
+}

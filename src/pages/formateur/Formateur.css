@@ -1,0 +1,59 @@
+.dashboard-layout {
+  position: relative;
+}
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle { display: block; }
+  .sidebar-wrapper { position: fixed; z-index: 999; height: 100%; top: 0; left: -300px; transition: 0.3s; }
+  .sidebar-wrapper.open { left: 0; }
+}
+
+.dashboard-container {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.dashboard-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+.dashboard-header p { font-size: 1rem; color: #6b7280; margin-bottom: 2rem; }
+
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  flex: 1 1 200px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  color: #111827;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.dashboard-card:hover { transform: translateY(-5px); }
+
+.card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+.card-blue { border-top: 4px solid #3b82f6; }
+.card-green { border-top: 4px solid #10b981; }
+.card-yellow { border-top: 4px solid #f59e0b; }
+.card-purple { border-top: 4px solid #8b5cf6; }

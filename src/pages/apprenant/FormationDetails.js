@@ -322,8 +322,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import NavbarMinimal from "../../components/NavbarMinimal";
-import SidebarApprenant from "../../components/SidebarApprenant";
+import LayoutApprenant from "../../layouts/LayoutApprenant"; // ✅ Utilisation du layout
 import { FaVideo } from "react-icons/fa";
 import "./FormationDetails.css";
 
@@ -341,12 +340,13 @@ function FormationDetails() {
 
     const fetchData = async () => {
       try {
+        // Charger les données de la formation
         const formationResponse = await axios.get(
           `http://localhost:8000/api/formations/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setFormation(formationResponse.data);
-
+        // Charger l'évaluation de l'apprenant si connecté
         try {
           const evaluationResponse = await axios.get(
             `http://localhost:8000/api/formations/${id}/evaluations/mon-evaluation`,
@@ -382,7 +382,7 @@ function FormationDetails() {
       );
 
       setMonEvaluation(response.data.evaluation);
-
+      // Recharger les données
       const formationResponse = await axios.get(
         `http://localhost:8000/api/formations/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -430,10 +430,7 @@ function FormationDetails() {
   const evaluationsCount = formation.evaluations?.length || 0;
 
   return (
-    <div>
-      <NavbarMinimal />
-      <div className="d-flex">
-        <SidebarApprenant />
+     <LayoutApprenant>
         <div className="formation-details-container">
           <div className="formation-card">
             <h2 className="formation-header">{formation.titre}</h2>
@@ -441,11 +438,80 @@ function FormationDetails() {
             <p><strong>Formateur :</strong> {formation.formateur?.user?.nom} {formation.formateur?.user?.prenom}</p>
             <p><strong>Début :</strong> {new Date(formation.date_debut).toLocaleDateString()}</p>
             <p><strong>Fin :</strong> {new Date(formation.date_fin).toLocaleDateString()}</p>
+            {/* Séances */}
+            <div className="mt-8">
+              <h4 className="section-title text-indigo-700">Séances 📅</h4>
+              {formation.seances && formation.seances.length > 0 ? (
+                <div className="formation-card-large border-indigo-500">
+                  {formation.seances.map(seance => (
+                    <div key={seance.id} className="formation-card border-indigo-500">
+                      <h5>{seance.titreSeance}</h5>
+                      <p><strong>Date :</strong> {new Date(seance.date).toLocaleDateString("fr-FR", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
+                      <p><strong>Horaire :</strong> {seance.heureDebut} → {seance.heureFin}</p>
+                      {seance.lienRoom && (
+                        <button
+                          onClick={() => window.open(seance.lienRoom, "_blank", "noopener,noreferrer")}
+                          className="btn btn-indigo w-100"
+                        >
+                          <FaVideo /> Rejoindre la séance
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="alert alert-warning">Aucune séance programmée pour le moment.</div>
+              )}
+            </div>
 
-            {/* Évaluations */}
+            {/* Vidéos */}
+            <div className="mt-10">
+              <h4 className="section-title text-red-700">Vidéos 🎥</h4>
+              {formation.videos && formation.videos.length > 0 ? (
+                <div className="formation-card-large border-indigo-500">
+                  {formation.videos.map(video => (
+                    <div key={video.id} className="formation-card border-red-500">
+                      <h5>{video.titre}</h5>
+                      {video.url.includes("youtube.com") || video.url.includes("youtu.be") ? (
+                        <a href={video.url} target="_blank" rel="noopener noreferrer" className="btn btn-indigo mt-2 w-100">
+                          Regarder sur YouTube
+                        </a>
+                      ) : (
+                        <video controls className="w-100">
+                          <source src={`http://localhost:8000/storage/${video.url}`} type="video/mp4" />
+                          Votre navigateur ne supporte pas la lecture vidéo.
+                        </video>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="alert alert-info">Aucune vidéo disponible pour le moment.</div>
+              )}
+            </div>
+            {/* PDFs */}
+            <div className="mt-10">
+              <h4 className="section-title text-green-700">Documents PDF 📄</h4>
+              {formation.pdfs && formation.pdfs.length > 0 ? (
+                <div className="formation-card-large border-indigo-500">
+                  {formation.pdfs.map(pdf => (
+                    <div key={pdf.id} className="formation-card border-green-500">
+                      <h5>{pdf.titre}</h5>
+                      {pdf.description && <p>{pdf.description}</p>}
+                      <a href={`http://localhost:8000/storage/${pdf.fichier}`} target="_blank" rel="noopener noreferrer">
+                        📄 {pdf.titre} {pdf.description && `- ${pdf.description}`}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="alert alert-secondary">Aucun document PDF disponible pour le moment.</div>
+              )}
+            </div>
+            {/* Section Évaluations */}
             <div className="mt-4 border-top pt-3">
               <h4>Évaluations</h4>
-
+              {/* Moyenne des évaluations */}
               <div className="formation-card mb-4">
                 <h5>Note moyenne</h5>
                 <div className="d-flex align-items-center">
@@ -456,14 +522,14 @@ function FormationDetails() {
                   {evaluationsCount} {evaluationsCount === 1 ? 'évaluation' : 'évaluations'}
                 </small>
               </div>
-
+              {/* Formulaire d'évaluation */}
               <div className="formation-card">
                 <h5>{monEvaluation ? 'Modifier votre évaluation' : 'Donner votre avis'}</h5>
                 <form onSubmit={handleSubmitEvaluation}>
                   <div className="mb-3">
                     <label className="form-label">Note</label>
                     <div className="d-flex align-items-center">
-                      {[1,2,3,4,5].map(star => (
+                      {[1, 2, 3, 4, 5].map(star => (
                         <button
                           key={star}
                           type="button"
@@ -492,85 +558,10 @@ function FormationDetails() {
                 </form>
               </div>
             </div>
-
             <hr />
-
-            {/* Séances */}
-            <div className="mt-8">
-              <h4 className="section-title text-indigo-700">Séances 📅</h4>
-              {formation.seances && formation.seances.length > 0 ? (
-                <div className="formation-grid">
-                  {formation.seances.map(seance => (
-                    <div key={seance.id} className="formation-card border-indigo-500">
-                      <h5>{seance.titreSeance}</h5>
-                      <p><strong>Date :</strong> {new Date(seance.date).toLocaleDateString("fr-FR", { weekday:"long", year:"numeric", month:"long", day:"numeric" })}</p>
-                      <p><strong>Horaire :</strong> {seance.heureDebut} → {seance.heureFin}</p>
-                      {seance.lienRoom && (
-                        <button
-                          onClick={() => window.open(seance.lienRoom, "_blank", "noopener,noreferrer")}
-                          className="btn btn-indigo w-100"
-                        >
-                          <FaVideo /> Rejoindre la séance
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="alert alert-warning">Aucune séance programmée pour le moment.</div>
-              )}
-            </div>
-
-            {/* Vidéos */}
-            <div className="mt-10">
-              <h4 className="section-title text-red-700">Vidéos 🎥</h4>
-              {formation.videos && formation.videos.length > 0 ? (
-                <div className="formation-grid">
-                  {formation.videos.map(video => (
-                    <div key={video.id} className="formation-card border-red-500">
-                      <h5>{video.titre}</h5>
-                      {video.url.includes("youtube.com") || video.url.includes("youtu.be") ? (
-                        <a href={video.url} target="_blank" rel="noopener noreferrer" className="btn btn-indigo mt-2 w-100">
-                          Regarder sur YouTube
-                        </a>
-                      ) : (
-                        <video controls className="w-100">
-                          <source src={`http://localhost:8000/storage/${video.url}`} type="video/mp4"/>
-                          Votre navigateur ne supporte pas la lecture vidéo.
-                        </video>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="alert alert-info">Aucune vidéo disponible pour le moment.</div>
-              )}
-            </div>
-
-            {/* PDFs */}
-            <div className="mt-10">
-              <h4 className="section-title text-green-700">Documents PDF 📄</h4>
-              {formation.pdfs && formation.pdfs.length > 0 ? (
-                <div className="formation-grid">
-                  {formation.pdfs.map(pdf => (
-                    <div key={pdf.id} className="formation-card border-green-500">
-                      <h5>{pdf.titre}</h5>
-                      {pdf.description && <p>{pdf.description}</p>}
-                      <a href={`http://localhost:8000/storage/${pdf.fichier}`} target="_blank" rel="noopener noreferrer">
-                        📄 {pdf.titre} {pdf.description && `- ${pdf.description}`}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="alert alert-secondary">Aucun document PDF disponible pour le moment.</div>
-              )}
-            </div>
-
           </div>
         </div>
-      </div>
-    </div>
+    </LayoutApprenant>
   );
 }
 

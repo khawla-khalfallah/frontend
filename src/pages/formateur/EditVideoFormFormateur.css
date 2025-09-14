@@ -1,0 +1,107 @@
+/* Carte du formulaire */
+.video-form-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 25px 30px;
+  margin-top: 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.video-form-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Titre du formulaire */
+.video-form-card h5 {
+  color: #ff7f50; /* orange */
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
+
+/* Labels */
+.video-form-card label {
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 5px;
+}
+
+/* Champs de saisie et textarea */
+.video-form-card input.form-control,
+.video-form-card textarea.form-control,
+.video-form-card select.form-select {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+
+.video-form-card input.form-control:focus,
+.video-form-card textarea.form-control:focus,
+.video-form-card select.form-select:focus {
+  border-color: #ff7f50;
+  box-shadow: 0 0 5px rgba(255, 127, 80, 0.4);
+  outline: none;
+}
+
+/* Boutons */
+.btn-orange {
+  background-color: #ff7f50;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  transition: 0.3s ease-in-out;
+  width: 100%;
+}
+
+.btn-orange:hover {
+  background-color: #e6692e;
+  transform: scale(1.02);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: scale(1.02);
+}
+
+/* Messages d'alerte */
+.video-form-card .alert {
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .video-form-card {
+    padding: 20px;
+  }
+
+  .btn-orange,
+  .btn-secondary {
+    font-size: 0.95rem;
+    padding: 8px 0;
+  }
+
+  .d-flex.gap-2 {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

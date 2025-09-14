@@ -1,0 +1,108 @@
+/* Conteneur principal */
+.settings-form-container {
+  flex: 1;
+  min-height: 100vh;
+  background-color: #f3f4f6; /* gris clair */
+  padding: 30px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Carte du formulaire */
+.settings-form-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  max-width: 700px;
+  width: 100%;
+  padding: 30px 25px;
+}
+
+/* Titre */
+.settings-form-card h2 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  color: #1d4ed8; /* bleu moderne */
+  text-align: center;
+}
+
+/* Messages */
+.settings-form-card .alert {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 12px 15px;
+  text-align: center;
+}
+
+/* Labels */
+.settings-form-card label.form-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #374151; /* gris foncé */
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+/* Inputs et textarea */
+.settings-form-card .form-control,
+.settings-form-card textarea.form-control {
+  border-radius: 10px;
+  border: 1px solid #d1d5db; /* gris clair */
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.settings-form-card .form-control:focus,
+.settings-form-card textarea.form-control:focus {
+  outline: none;
+  border-color: #2563eb; /* bleu plus vif */
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
+}
+
+/* Bouton */
+.settings-form-card .btn-primary {
+  background-color: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 180px;
+}
+
+.settings-form-card .btn-primary:hover {
+  background-color: #1e40af;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .settings-form-container {
+    padding: 20px 10px;
+  }
+
+  .settings-form-card {
+    padding: 20px 15px;
+  }
+
+  .settings-form-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .settings-form-card .btn-primary {
+    width: 100%;
+    padding: 12px 0;
+  }
+}

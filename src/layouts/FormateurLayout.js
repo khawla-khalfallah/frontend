@@ -1,17 +1,17 @@
-// src/layouts/FormateurLayout.js
 import React from "react";
 import NavbarMinimal from "../components/NavbarMinimal";
 import SidebarFormateur from "../components/SidebarFormateur";
+import "./FormateurLayout.css";
 
 function FormateurLayout({ children }) {
   return (
-    <div className="d-flex flex-column vh-100">
+    <div className="layout-container">
       <NavbarMinimal />
-      <div className="d-flex flex-grow-1">
+      <div className="layout-main">
         <SidebarFormateur />
-        <main className="flex-grow-1 p-4 bg-light overflow-auto">
+        <div className="layout-content">
           {children}
-        </main>
+        </div>
       </div>
     </div>
   );
