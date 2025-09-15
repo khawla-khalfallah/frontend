@@ -1,0 +1,113 @@
+/* Login.css */
+
+/* --- Container principal --- */
+.login-container {
+  max-width: 900px;
+  width: 100%;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* --- Image à gauche --- */
+.login-container img {
+  object-fit: cover;
+  height: 100%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+/* --- Formulaire --- */
+.login-container .form-label {
+  font-weight: 600;
+  color: #4f46e5;
+}
+
+.login-container input.form-control {
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+}
+
+.login-container input.form-control:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 10px rgba(79, 70, 229, 0.2);
+}
+
+/* --- Titres --- */
+.login-container h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #4f46e5;
+}
+
+.login-container p.text-muted {
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+/* --- Bouton principal --- */
+.login-container .btn-primary {
+  width: 100%;
+  padding: 12px 0;
+  font-weight: 600;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.login-container .btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(79,70,229,0.4);
+  background: linear-gradient(135deg, #9333ea, #4f46e5);
+}
+
+/* --- Liens --- */
+.login-container a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-container a.text-danger:hover {
+  text-decoration: underline;
+}
+
+.login-container a.text-primary:hover {
+  text-decoration: underline;
+}
+
+/* --- Responsive --- */
+@media (max-width: 992px) {
+  .login-container {
+    flex-direction: column;
+  }
+  .login-container img {
+    display: block;
+    width: 100%;
+    height: 200px;
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-container h1 {
+    font-size: 1.5rem;
+  }
+  .login-container .btn-primary {
+    padding: 10px 0;
+  }
+  .login-container p.text-muted {
+    font-size: 0.85rem;
+  }
+}

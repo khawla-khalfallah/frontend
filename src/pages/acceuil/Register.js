@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import LayoutPublic from "../../layouts/LayoutPublic"; // ✅ Import du layout
+import "./Register.css";
+
 
 function Register() {
   const navigate = useNavigate();
@@ -128,39 +131,166 @@ function Register() {
   };
 
   return (
-    <div>
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
-          <img src="/images/logo.jpg" alt="DreamLearn Logo" style={{ height: "50px" }} />
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item"><Link className="nav-link" to="/">ACCUEIL</Link></li>
-              <li className="nav-item"><Link className="nav-link" to="/apropos">À PROPOS</Link></li>
-              <li className="nav-item"><Link className="nav-link" to="/login">CONNEXION</Link></li>
-              <li className="nav-item"><Link className="nav-link" to="/register">S'INSCRIRE</Link></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+//    <LayoutPublic>
+//       {/* Formulaire */}
+//       <div className="container d-flex align-items-center justify-content-center vh-100">
+//         <div className="row shadow-lg p-4 rounded bg-light register-container">
+//           <div className="col-md-6 d-none d-md-flex align-items-center">
+//             <img src="/images/about.jpg" alt="Inscription DreamLearn" className="img-fluid rounded" />
+//           </div>
 
-      {/* Formulaire */}
-      <div className="container d-flex align-items-center justify-content-center vh-100">
-        <div className="row shadow-lg p-4 rounded bg-light register-container">
-          <div className="col-md-6 d-none d-md-flex align-items-center">
-            <img src="/images/about.jpg" alt="Inscription DreamLearn" className="img-fluid rounded" />
+//           <div className="col-md-6 p-4">
+//             <h1 className="text-primary fw-bold text-center">DreamLearn</h1>
+//             <p className="text-muted text-center">Inscrivez-vous et commencez à apprendre</p>
+//             {message && <div className="alert alert-success">{message}</div>}
+//             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+
+//             <form onSubmit={handleSubmit}>
+//               <div className="mb-3">
+//                 <label className="form-label">Prénom</label>
+//                 <input
+//                   type="text"
+//                   className="form-control"
+//                   name="prenom"
+//                   onChange={handleChange}
+//                   required
+//                   pattern="^[a-zA-ZÀ-ÿ\s]+$"
+//                   title="Seulement des lettres et espaces"
+//                 />
+//               </div>
+//               <div className="mb-3">
+//                 <label className="form-label">Nom</label>
+//                 <input
+//                   type="text"
+//                   className="form-control"
+//                   name="nom"
+//                   onChange={handleChange}
+//                   required
+//                   pattern="^[a-zA-ZÀ-ÿ\s]+$"
+//                   title="Seulement des lettres et espaces"
+//                 />
+//               </div>
+//               <div className="mb-3">
+//                 <label className="form-label">Email</label>
+//                 <input
+//                   type="email"
+//                   className="form-control"
+//                   name="email"
+//                   onChange={handleChange}
+//                   required
+//                   pattern="^[\w\.-]+@([\w-]+\.)+[a-zA-Z]{2,}$"
+//                   title="Veuillez entrer une adresse email valide"
+//                 />
+//               </div>
+//               <div className="mb-3">
+//                 <label className="form-label">Mot de passe</label>
+//                 <input
+//                   type="password"
+//                   className="form-control"
+//                   name="password"
+//                   onChange={handleChange}
+//                   required
+//                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+//                   title="Min 8 caractères avec majuscule, minuscule, chiffre et caractère spécial"
+//                 />
+//               </div>
+//               <div className="mb-3">
+//                 <label className="form-label">Confirmer le mot de passe</label>
+//                 <input
+//                   type="password"
+//                   className="form-control"
+//                   name="password_confirmation"
+//                   onChange={handleChange}
+//                   required
+//                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+//                   title="Doit correspondre au mot de passe"
+//                 />
+//               </div>
+
+//               {/* Sélection rôle */}
+//               <div className="mb-3">
+//                 <label className="form-label">Votre rôle :</label><br />
+//                 <div className="form-check form-check-inline">
+//                   <input className="form-check-input" type="radio" name="role" value="apprenant" onChange={handleChange} />
+//                   <label className="form-check-label">Apprenant</label>
+//                 </div>
+//                 <div className="form-check form-check-inline">
+//                   <input className="form-check-input" type="radio" name="role" value="formateur" onChange={handleChange} />
+//                   <label className="form-check-label">Formateur</label>
+//                 </div>
+//                 <div className="form-check form-check-inline">
+//                   <input className="form-check-input" type="radio" name="role" value="recruteur" onChange={handleChange} />
+//                   <label className="form-check-label">Recruteur</label>
+//                 </div>
+//               </div>
+
+//               {formData.role === "apprenant" && (
+//                 <div className="mb-3">
+//                   <label className="form-label">Niveau d'étude</label>
+//                   <input type="text" className="form-control" name="niveau_etude" onChange={handleChange} required />
+//                 </div>
+//               )}
+
+//               {formData.role === "formateur" && (
+//                 <>
+//                   <div className="mb-3">
+//                     <label className="form-label">Spécialité</label>
+//                     <input type="text" className="form-control" name="specialite" onChange={handleChange} required />
+//                   </div>
+//                   <div className="mb-3">
+//                     <label className="form-label">Biographie</label>
+//                     <textarea className="form-control" name="bio" rows="3" onChange={handleChange} required></textarea>
+//                   </div>
+//                   <div className="mb-3 text-start">
+//                     <label className="form-label">CV (PDF/DOC)</label>
+//                     <input type="file" className="form-control" name="cv" accept=".pdf,.doc,.docx"
+//                       onChange={(e) => setFormData({ ...formData, cv: e.target.files[0] })} />
+//                   </div>
+//                 </>
+//               )}
+
+//               {formData.role === "recruteur" && (
+//                 <div className="mb-3">
+//                   <label className="form-label">Entreprise</label>
+//                   <input type="text" className="form-control" name="entreprise" onChange={handleChange} required />
+//                 </div>
+//               )}
+
+//               <button type="submit" className="btn btn-primary w-100">S'inscrire</button>
+
+//               <p className="mt-3 text-center">
+//                 Déjà un compte ? <Link to="/login" className="text-primary">Connectez-vous</Link>
+//               </p>
+//             </form>
+//           </div>
+//         </div>
+//       </div>
+// </LayoutPublic>
+ <LayoutPublic>
+      <div className="container d-flex align-items-center justify-content-center min-vh-100">
+        <div className="register-wrapper row">
+
+          {/* ✅ Image à gauche */}
+          <div className="col-lg-6 d-none d-lg-flex p-0">
+            <img
+              src="/images/about.jpg"
+              alt="Inscription DreamLearn"
+              className="w-100 h-100"
+            />
           </div>
 
-          <div className="col-md-6 p-4">
-            <h1 className="text-primary fw-bold text-center">DreamLearn</h1>
-            <p className="text-muted text-center">Inscrivez-vous et commencez à apprendre</p>
+          {/* ✅ Formulaire */}
+          <div className="col-12 col-lg-6 p-5 d-flex flex-column justify-content-center">
+            <h1 className="text-primary fw-bold text-center mb-2">DreamLearn</h1>
+            <p className="text-muted text-center mb-4">
+              Inscrivez-vous et commencez à apprendre 🚀
+            </p>
+
             {message && <div className="alert alert-success">{message}</div>}
             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
             <form onSubmit={handleSubmit}>
+              {/* Prénom */}
               <div className="mb-3">
                 <label className="form-label">Prénom</label>
                 <input
@@ -173,6 +303,8 @@ function Register() {
                   title="Seulement des lettres et espaces"
                 />
               </div>
+
+              {/* Nom */}
               <div className="mb-3">
                 <label className="form-label">Nom</label>
                 <input
@@ -185,6 +317,8 @@ function Register() {
                   title="Seulement des lettres et espaces"
                 />
               </div>
+
+              {/* Email */}
               <div className="mb-3">
                 <label className="form-label">Email</label>
                 <input
@@ -197,6 +331,8 @@ function Register() {
                   title="Veuillez entrer une adresse email valide"
                 />
               </div>
+
+              {/* Mot de passe */}
               <div className="mb-3">
                 <label className="form-label">Mot de passe</label>
                 <input
@@ -209,6 +345,8 @@ function Register() {
                   title="Min 8 caractères avec majuscule, minuscule, chiffre et caractère spécial"
                 />
               </div>
+
+              {/* Confirmation */}
               <div className="mb-3">
                 <label className="form-label">Confirmer le mot de passe</label>
                 <input
@@ -222,23 +360,26 @@ function Register() {
                 />
               </div>
 
-              {/* Sélection rôle */}
+              {/* Rôle */}
               <div className="mb-3">
                 <label className="form-label">Votre rôle :</label><br />
-                <div className="form-check form-check-inline">
-                  <input className="form-check-input" type="radio" name="role" value="apprenant" onChange={handleChange} />
-                  <label className="form-check-label">Apprenant</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input className="form-check-input" type="radio" name="role" value="formateur" onChange={handleChange} />
-                  <label className="form-check-label">Formateur</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input className="form-check-input" type="radio" name="role" value="recruteur" onChange={handleChange} />
-                  <label className="form-check-label">Recruteur</label>
+                <div className="d-flex gap-3">
+                  <div className="form-check">
+                    <input className="form-check-input" type="radio" name="role" value="apprenant" onChange={handleChange} />
+                    <label className="form-check-label">Apprenant</label>
+                  </div>
+                  <div className="form-check">
+                    <input className="form-check-input" type="radio" name="role" value="formateur" onChange={handleChange} />
+                    <label className="form-check-label">Formateur</label>
+                  </div>
+                  <div className="form-check">
+                    <input className="form-check-input" type="radio" name="role" value="recruteur" onChange={handleChange} />
+                    <label className="form-check-label">Recruteur</label>
+                  </div>
                 </div>
               </div>
 
+              {/* Champs dynamiques */}
               {formData.role === "apprenant" && (
                 <div className="mb-3">
                   <label className="form-label">Niveau d'étude</label>
@@ -256,7 +397,7 @@ function Register() {
                     <label className="form-label">Biographie</label>
                     <textarea className="form-control" name="bio" rows="3" onChange={handleChange} required></textarea>
                   </div>
-                  <div className="mb-3 text-start">
+                  <div className="mb-3">
                     <label className="form-label">CV (PDF/DOC)</label>
                     <input type="file" className="form-control" name="cv" accept=".pdf,.doc,.docx"
                       onChange={(e) => setFormData({ ...formData, cv: e.target.files[0] })} />
@@ -271,34 +412,23 @@ function Register() {
                 </div>
               )}
 
-              <button type="submit" className="btn btn-primary w-100">S'inscrire</button>
+              {/* Bouton */}
+              <button type="submit" className="btn btn-primary">
+                S'inscrire
+              </button>
 
               <p className="mt-3 text-center">
-                Déjà un compte ? <Link to="/login" className="text-primary">Connectez-vous</Link>
+                Déjà un compte ?{" "}
+                <Link to="/login" className="text-primary">
+                  Connectez-vous
+                </Link>
               </p>
             </form>
           </div>
         </div>
       </div>
+    </LayoutPublic>
 
-      {/* Footer */}
-      <footer className="footer bg-dark text-white text-center p-3 mt-5">
-        <div className="d-flex justify-content-between align-items-center">
-          <p className="mb-0">© 2025 DreamLearn. Tous droits réservés.</p>
-          <div className="social-icons">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-              <i className="fab fa-facebook-f fa-2x"></i>
-            </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <i className="fab fa-instagram fa-2x"></i>
-            </a>
-            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-              <i className="fab fa-youtube fa-2x"></i>
-            </a>
-          </div>
-        </div>
-      </footer>
-    </div>
   );
 }
 

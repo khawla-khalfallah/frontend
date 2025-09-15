@@ -1,0 +1,83 @@
+/* --- Header futuriste comme Home.js --- */
+.apropos-header {
+   position: relative;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  background-size: 200% 200%;
+  animation: gradientMove 8s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.header-overlay h1,
+.header-overlay p {
+  color: #fff;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+/* --- Sections avec cartes blanches --- */
+.apropos-section {
+  padding: 60px 15px;
+}
+
+.apropos-card {
+  background: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  max-width: 1000px;
+  margin: auto;
+}
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #4f46e5;
+  font-size: 1.8rem;
+}
+
+.section-subtitle {
+  color: #6b7280;
+  margin-bottom: 30px;
+}
+
+/* --- Bouton moderne --- */
+.btn-modern {
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  color: #fff;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-modern:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(79,70,229,0.4);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .apropos-header {
+    height: 220px;
+  }
+  .section-title {
+    font-size: 1.5rem;
+  }
+  .apropos-card {
+    padding: 20px;
+  }
+}

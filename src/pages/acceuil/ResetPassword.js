@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";
+import LayoutPublic from "../../layouts/LayoutPublic"; // ✅ Import du layout
+import "./ResetPassword.css"; // ✅ Import du style
+
+
 
 function ResetPassword() {
   const { token } = useParams();
@@ -22,16 +26,60 @@ function ResetPassword() {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Réinitialiser le mot de passe</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="email" className="form-control" placeholder="Email" name="email" onChange={handleChange} required />
-        <input type="password" className="form-control mt-2" placeholder="Nouveau mot de passe" name="password" onChange={handleChange} required />
-        <input type="password" className="form-control mt-2" placeholder="Confirmez le mot de passe" name="password_confirmation" onChange={handleChange} required />
-        <button className="btn btn-success mt-3" type="submit">Réinitialiser</button>
-      </form>
-      {message && <p className="mt-3">{message}</p>}
-    </div>
+      <LayoutPublic>
+      <div className="container d-flex align-items-center justify-content-center min-vh-100">
+        <div className="reset-container p-5">
+          <h1 className="text-center mb-3">Réinitialiser le mot de passe</h1>
+          <p className="text-muted text-center mb-4">
+            Entrez votre email et votre nouveau mot de passe 🔐
+          </p>
+
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label">Adresse email</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                placeholder="exemple@mail.com"
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Nouveau mot de passe</label>
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                placeholder="********"
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Confirmer le mot de passe</label>
+              <input
+                type="password"
+                className="form-control"
+                name="password_confirmation"
+                placeholder="********"
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <button className="btn btn-primary w-100" type="submit">
+              Réinitialiser
+            </button>
+          </form>
+
+          {message && <div className="alert alert-info mt-3">{message}</div>}
+        </div>
+      </div>
+    </LayoutPublic>
   );
 }
 

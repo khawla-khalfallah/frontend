@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from '../../api';
+import LayoutPublic from "../../layouts/LayoutPublic"; // ✅ Import du layout
 // import axiosInstance from '../config/axios';
+import './Login.css';
 
 function Login() {
   const navigate = useNavigate();
@@ -65,33 +67,7 @@ function Login() {
 
 
   return (
-    <div>
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
-          <img src="/images/logo.jpg" alt="DreamLearn Logo" style={{ height: '50px' }} />
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/">ACCUEIL</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/apropos">À PROPOS</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">CONNEXION</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">S'INSCRIRE</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
+   <LayoutPublic>
       {/* Section Connexion */}
       <div className="container d-flex align-items-center justify-content-center vh-100">
         <div className="row shadow-lg p-4 rounded bg-light login-container">
@@ -134,25 +110,7 @@ function Login() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="footer bg-dark text-white text-center p-3 mt-5">
-        <div className="d-flex justify-content-between align-items-center">
-          <p className="mb-0">© 2025 DreamLearn. Tous droits réservés.</p>
-
-          <div className="social-icons">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">
-              <i className="fab fa-facebook-f fa-2x"></i>
-            </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">
-              <i className="fab fa-instagram fa-2x"></i>
-            </a>
-            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">
-              <i className="fab fa-youtube fa-2x"></i>
-            </a>
-          </div>
-        </div>
-      </footer>
-    </div>
+   </LayoutPublic>
   );
 }
 
