@@ -30,7 +30,9 @@ const AjoutInscritForm = ({ onSuccess }) => {
         setErrors(err.response.data.errors);
       } else if (err.response?.status === 409) {
         alert("⚠️ L'apprenant est déjà inscrit à cette formation.");
-      } else {
+      } else if (err.response?.status === 400) {
+      alert("⛔ Impossible : la formation est expirée.");
+      }else {
         alert("Erreur lors de l'ajout.");
       }
     }
@@ -55,7 +57,6 @@ const AjoutInscritForm = ({ onSuccess }) => {
         ))}
       </select>
       {errors.formation_id && <div className="text-danger">{errors.formation_id[0]}</div>}
-
       <button type="submit" className="btn btn-success">✅ Inscrire</button>
     </form>
   );

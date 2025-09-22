@@ -142,7 +142,7 @@ function ToutesLesFormations() {
         const res = await axios.get("http://localhost:8000/api/inscrits/moi", {
           headers: { Authorization: `Bearer ${token}` },
         });
-         // extraire les IDs des formations
+        // extraire les IDs des formations
         const inscritsIds = res.data.map((i) => i.formation.id);
         setInscriptions(inscritsIds);
       } catch (err) {
@@ -167,6 +167,11 @@ function ToutesLesFormations() {
       console.error(err);
       alert(err.response?.data?.message || "Erreur d'inscription");
     }
+    };
+    // Vérifie si la date de fin est expirée
+    const isExpired = (dateFin) => {
+      const today = new Date();
+      return new Date(dateFin) < today;
   };
 
   return (
@@ -195,17 +200,25 @@ function ToutesLesFormations() {
                       ? formation.description.slice(0, 120) + "..."
                       : formation.description}
                   </p>
+                   {/* Bouton inscription avec vérification de date */}
                   <button
                     onClick={() => handleInscription(formation.id)}
                     className={`btn ${
                       inscriptions.includes(formation.id)
                         ? "btn-inscrit"
+                        : isExpired(formation.date_fin)
+                        ? "btn-expire"
                         : "btn-inscrire"
                     }`}
-                    disabled={inscriptions.includes(formation.id)} // désactiver si déjà inscrit
+                    disabled={
+                      inscriptions.includes(formation.id) ||
+                      isExpired(formation.date_fin)
+                    } // désactiver si déjà inscrit OU expirée
                   >
                     {inscriptions.includes(formation.id)
                       ? "✅ Déjà inscrit"
+                      : isExpired(formation.date_fin)
+                      ? "⛔ Expirée"
                       : "S'inscrire"}
                   </button>
                 </div>

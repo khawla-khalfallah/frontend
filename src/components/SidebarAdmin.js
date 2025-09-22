@@ -77,6 +77,12 @@ const tabs = [
   { key: 'formateurs', label: 'Formateurs', icon: '👨‍🏫' },
   { key: 'recruteurs', label: 'Recruteurs', icon: '👨‍💼' },
   { key: 'contacts', label: 'Contacts', icon: '📩' },
+  { key: 'formations', label: 'Formations', icon: '📚' },
+  { key: 'examens', label: 'Examens', icon: '📑' },
+  { key: 'inscrits', label: 'Inscriptions', icon: '📌' },
+  { key: 'pdfs', label: 'PDFs', icon: '📄' },
+  { key: 'seances', label: 'Séances', icon: '🎥' },
+  { key: 'videos', label: 'Vidéos', icon: '🎬' },
 ];
 
 const SidebarAdmin = ({ setActiveTab }) => {
