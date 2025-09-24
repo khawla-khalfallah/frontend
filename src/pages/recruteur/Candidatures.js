@@ -105,6 +105,7 @@ const Candidatures = () => {
                 <th>Prénom</th>
                 <th>Email</th>
                 <th>Niveau</th>
+                <th>Note</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -123,6 +124,8 @@ const Candidatures = () => {
                   <td>{u.user?.prenom}</td>
                   <td>{u.user?.email}</td>
                   <td>{u.niveau_etude}</td>
+                  <td>{u.note_examen !== null ? u.note_examen : "Examen non passé"}</td>
+
                   <td>
                     <button
                       className="btn btn-info btn-sm"

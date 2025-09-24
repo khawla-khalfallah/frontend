@@ -9,6 +9,9 @@ const MesFormationsFormateur = () => {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
 
+  const [apprenants, setApprenants] = useState([]);
+
+
   const [selectedFormation, setSelectedFormation] = useState(null);
   const [formValues, setFormValues] = useState({
     titre: "",
@@ -67,6 +70,14 @@ const MesFormationsFormateur = () => {
   // ✅ Ajouter une nouvelle formation
   const handleAddFormation = async (e) => {
     e.preventDefault();
+
+     // Vérification côté frontend : date_fin > aujourd'hui
+  const today = new Date().toISOString().split("T")[0]; // format yyyy-mm-dd
+  if (newFormation.date_fin < today) {
+     alert("❌ La date de fin doit être supérieure ou égale à aujourd'hui.");
+    return;
+  }
+
     try {
       const res = await axios.post(
         "http://localhost:8000/api/formations",
@@ -102,6 +113,13 @@ const MesFormationsFormateur = () => {
 
   // ✅ Sauvegarder modification
   const handleEditSave = async () => {
+    // Vérification côté frontend : date_fin > aujourd'hui
+  const today = new Date().toISOString().split("T")[0]; // yyyy-mm-dd
+  if (formValues.date_fin < today) {
+    alert("❌ La date de fin doit être supérieure ou égale à aujourd'hui.");
+    return;
+  }
+
     try {
       const { titre, description, prix, date_debut, date_fin } = formValues;
       await axios.put(
@@ -137,6 +155,24 @@ const MesFormationsFormateur = () => {
         console.error("Erreur suppression :", error);
         alert("Erreur lors de la suppression.");
       }
+    }
+  };
+
+  //Fonction pour charger les apprenants 
+  const handleViewApprenants = async (formationId) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/formations/${formationId}/apprenants`,
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+      );
+      setApprenants(res.data);
+
+      // ouvrir la modale
+      const modal = new bootstrap.Modal(document.getElementById("apprenantsModal"));
+      modal.show();
+    } catch (error) {
+      console.error("Erreur lors du chargement des apprenants", error);
+      alert("Impossible de charger les apprenants.");
     }
   };
 
@@ -190,6 +226,13 @@ const MesFormationsFormateur = () => {
                       >
                         🗑️ Supprimer
                       </button>
+                      <button
+                        className="btn btn-outline-info btn-sm"
+                        onClick={() => handleViewApprenants(formation.id)}
+                      >
+                        👥 Voir apprenants
+                      </button>
+
                     </div>
                   </div>
                 </div>
@@ -344,6 +387,43 @@ const MesFormationsFormateur = () => {
                 <button type="button" className="btn btn-primary" onClick={handleEditSave}>
                   Enregistrer les modifications
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* ✅ Modale pour afficher les apprenants avec leur note*/}
+        <div className="modal fade" id="apprenantsModal" tabIndex="-1" aria-hidden="true">
+          <div className="modal-dialog modal-lg modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header bg-info text-white">
+                <h5 className="modal-title">👥 Liste des apprenants</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div className="modal-body">
+                {apprenants.length === 0 ? (
+                  <div className="alert alert-warning">Aucun apprenant inscrit.</div>
+                ) : (
+                  <table className="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Note</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {apprenants.map((a) => (
+                        <tr key={a.id}>
+                          <td>{a.nom}</td>
+                          <td>{a.prenom}</td>
+                          <td>{a.email}</td>
+                          <td>{a.note !== null ? a.note : "—"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
             </div>
           </div>

@@ -8,6 +8,9 @@ const FormationsList = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingFormation, setEditingFormation] = useState(null);
 
+  const [apprenants, setApprenants] = useState([]);
+  const [selectedFormation, setSelectedFormation] = useState(null);
+
   const fetchFormations = () => {
     axios.get('http://localhost:8000/api/formations')
       .then(res => setFormations(res.data))
@@ -29,7 +32,15 @@ const FormationsList = () => {
       alert("Erreur lors de la suppression.");
     }
   };
-
+  // un état pour stocker les apprenants
+  const fetchApprenants = (formationId, formationTitle) => {
+    axios.get(`http://localhost:8000/api/formations/${formationId}/apprenants`)
+      .then(res => {
+        setApprenants(res.data);
+        setSelectedFormation(formationTitle);
+      })
+      .catch(err => console.error(err));
+  };
   return (
     <div>
       <h2>📚 Liste des Formations</h2>
@@ -54,7 +65,6 @@ const FormationsList = () => {
           }}
         />
       )}
-
       <table className="table table-striped">
         <thead>
           <tr>
@@ -80,6 +90,12 @@ const FormationsList = () => {
               <td>{f.date_fin}</td>
               <td>
                 <button
+                  className="btn btn-info btn-sm me-2"
+                  onClick={() => fetchApprenants(f.id, f.titre)}
+                >
+                  👀 Voir Apprenants
+                </button>
+                <button
                   className="btn btn-warning btn-sm me-2"
                   onClick={() => setEditingFormation(f)}
                 >
@@ -96,6 +112,38 @@ const FormationsList = () => {
           ))}
         </tbody>
       </table>
+      {selectedFormation && (
+        <div className="mt-4">
+          <h3>👩‍🎓 Apprenants inscrits à la formation {selectedFormation}</h3>
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              {apprenants.length > 0 ? (
+                apprenants.map(a => (
+                  <tr key={a.id}>
+                    <td>{a.nom}</td>
+                    <td>{a.prenom}</td>
+                    <td>{a.email}</td>
+                    <td>{a.note ?? "—"}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4">Aucun apprenant inscrit</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+
     </div>
   );
 };

@@ -27,6 +27,20 @@ const EditFormationForm = ({ formation, onSuccess }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
+    const today = new Date().toISOString().split("T")[0];
+
+    // 🚨 Vérification côté front
+    if (formData.date_fin && formData.date_fin < today) {
+      alert("❌ La date de fin doit être supérieure ou égale à aujourd’hui.");
+      return;
+    }
+
+    if (formData.date_debut && formData.date_fin && formData.date_fin < formData.date_debut) {
+      alert("❌ La date de fin doit être après ou égale à la date de début.");
+      return;
+    }
+
     try {
       await axios.put(`http://localhost:8000/api/formations/${formation.id}`, formData);
       alert("Formation modifiée !");
@@ -76,6 +90,8 @@ const EditFormationForm = ({ formation, onSuccess }) => {
         className="form-control mb-2"
         value={formData.date_debut}
         onChange={handleChange}
+        min={new Date().toISOString().split("T")[0]} // empêche date début passée
+
       />
 
       <input
@@ -84,6 +100,7 @@ const EditFormationForm = ({ formation, onSuccess }) => {
         className="form-control mb-2"
         value={formData.date_fin}
         onChange={handleChange}
+        min={formData.date_debut || new Date().toISOString().split("T")[0]} // empêche date fin < date_debut
       />
 
       <button className="btn btn-warning me-2" type="submit">✅ Modifier</button>

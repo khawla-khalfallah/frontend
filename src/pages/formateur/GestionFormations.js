@@ -365,6 +365,7 @@ const GestionFormations = () => {
               {editingSeance ? (
                 <EditSeanceForm
                   seance={editingSeance}
+                  formateurId={formateurId}
                   token={token}
                   formations={formations}
                   onSuccess={() => { fetchData(); setEditingSeance(null); }}

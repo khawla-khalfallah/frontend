@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./CreateSeance.css";
 
-const CreateSeance = ({ token, onSuccess }) => {
+const CreateSeance = ({formateurId,token, onSuccess }) => {
   const [titreSeance, setTitreSeance] = useState("");
   const [date, setDate] = useState("");
   const [heureDebut, setHeureDebut] = useState("");
@@ -12,19 +12,35 @@ const CreateSeance = ({ token, onSuccess }) => {
   const [formations, setFormations] = useState([]);
   const [message, setMessage] = useState("");
 
+  // useEffect(() => {
+  //   const fetchFormations = async () => {
+  //     try {
+  //       const res = await axios.get("http://localhost:8000/api/formations", {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       });
+  //       setFormations(res.data);
+  //     } catch (err) {
+  //       console.error("❌ Erreur chargement formations :", err);
+  //     }
+  //   };
+  //   fetchFormations();
+  // }, [token]);
+  // Charger uniquement les formations du formateur connecté
   useEffect(() => {
     const fetchFormations = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/formations", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `http://localhost:8000/api/formateurs/${formateurId}/formations`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         setFormations(res.data);
       } catch (err) {
         console.error("❌ Erreur chargement formations :", err);
+        setMessage("❌ Impossible de charger vos formations.");
       }
     };
-    fetchFormations();
-  }, [token]);
+    if (formateurId) fetchFormations();
+  }, [formateurId, token]);
   const formatTime = (time) => {
     if (time && time.length === 5) {
       return time + ":00"; // 14:30 → 14:30:00

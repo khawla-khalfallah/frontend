@@ -160,7 +160,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./EditSeanceForm.css";
 
-const EditSeanceForm = ({ seance, token, formations = [], onSuccess, onCancel }) => {
+const EditSeanceForm = ({ seance, formateurId, token, formations = [], onSuccess, onCancel }) => {
   const [titreSeance, setTitreSeance] = useState("");
   const [date, setDate] = useState("");
   const [heureDebut, setHeureDebut] = useState("");
@@ -188,22 +188,38 @@ const EditSeanceForm = ({ seance, token, formations = [], onSuccess, onCancel })
   }, [seance]);
 
   // Si la liste des formations n'a pas été fournie, tenter de la récupérer
+  // useEffect(() => {
+  //   const fetchFormations = async () => {
+  //     if (!formationsList || formationsList.length === 0) {
+  //       try {
+  //         const res = await axios.get("http://localhost:8000/api/formations", {
+  //           headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+  //         });
+  //         setFormationsList(res.data || []);
+  //       } catch (err) {
+  //         console.error("Erreur chargement formations :", err.response?.data || err.message);
+  //       }
+  //     }
+  //   };
+  //   fetchFormations();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [token]);
+   // Charger uniquement les formations du formateur connecté
   useEffect(() => {
     const fetchFormations = async () => {
-      if (!formationsList || formationsList.length === 0) {
-        try {
-          const res = await axios.get("http://localhost:8000/api/formations", {
-            headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
-          });
-          setFormationsList(res.data || []);
-        } catch (err) {
-          console.error("Erreur chargement formations :", err.response?.data || err.message);
-        }
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/formateurs/${formateurId}/formations`,
+          { headers: { Authorization: `Bearer ${token}`, Accept: "application/json" } }
+        );
+        setFormationsList(res.data || []);
+      } catch (err) {
+        console.error("Erreur chargement formations :", err.response?.data || err.message);
+        setMessage("❌ Impossible de charger vos formations.");
       }
     };
-    fetchFormations();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+    if (formateurId) fetchFormations();
+  }, [formateurId, token]);
 
   const formatTime = (time) => {
   if (time && time.length === 5) {

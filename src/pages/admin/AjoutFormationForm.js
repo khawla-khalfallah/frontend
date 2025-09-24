@@ -35,6 +35,14 @@ const AjoutFormationForm = ({ onSuccess }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
+     const today = new Date().toISOString().split("T")[0];
+
+  if (formData.date_fin && formData.date_fin < today) {
+    alert("❌ La date de fin doit être supérieure ou égale à aujourd’hui.");
+    return;
+  }
+  
     try {
       await axios.post('http://localhost:8000/api/formations', formData);
       alert("Formation ajoutée !");
@@ -86,6 +94,7 @@ const AjoutFormationForm = ({ onSuccess }) => {
         className="form-control mb-2"
         value={formData.date_debut}
         onChange={handleChange}
+        min={new Date().toISOString().split("T")[0]} // empêche date avant aujourd’hui
       />
 
       <input
@@ -94,6 +103,8 @@ const AjoutFormationForm = ({ onSuccess }) => {
         className="form-control mb-2"
         value={formData.date_fin}
         onChange={handleChange}
+        // date_fin doit être >= aujourd’hui ET >= date_debut
+        min={formData.date_debut || new Date().toISOString().split("T")[0]}
       />
 
       <select
