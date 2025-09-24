@@ -418,7 +418,7 @@ const MesFormationsFormateur = () => {
                           <td>{a.nom}</td>
                           <td>{a.prenom}</td>
                           <td>{a.email}</td>
-                          <td>{a.note !== null ? a.note : "—"}</td>
+                          <td>{a.note !== null ? a.note : "Examen non passé"}</td>
                         </tr>
                       ))}
                     </tbody>

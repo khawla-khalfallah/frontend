@@ -13,22 +13,46 @@ const Candidatures = () => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
-
-  useEffect(() => {
-    handleSearch();
+  
+// ✅ Charger tous les apprenants avec moyennes au départ
+ useEffect(() => {
+    fetchAll();
   }, []);
+ const fetchAll = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/apprenants/search?q=");
+      setUsers(res.data); // backend retourne déjà les moyennes si pas de recherche
+    } catch (err) {
+      console.error("Erreur chargement apprenants", err);
+    }
+  };
+  
 
-  const handleSearch = async () => {
+  // const handleSearch = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `http://localhost:8000/api/apprenants/search?q=${query}`
+  //     );
+  //     setUsers(res.data);
+  //     setSelectedIds([]); // reset
+  //   } catch (err) {
+  //     console.error("Erreur lors de la recherche", err);
+  //   }
+  // };
+ 
+
+const handleSearch = async () => {
     try {
       const res = await axios.get(
         `http://localhost:8000/api/apprenants/search?q=${query}`
       );
       setUsers(res.data);
-      setSelectedIds([]); // reset
+      setSelectedIds([]);
     } catch (err) {
       console.error("Erreur lors de la recherche", err);
     }
   };
+
 
   const handleListFormations = async (user) => {
     try {
@@ -71,7 +95,13 @@ const Candidatures = () => {
     setEmailMessage("");
     setSelectedIds([]);
   };
-
+const noteColumns = query.trim()
+  ? Array.from(
+      new Set(
+        users.flatMap(u => Object.keys(u.notes || {}))
+      )
+    )
+  : [];
   return (
     <div>
       <NavbarMinimal />
@@ -105,7 +135,9 @@ const Candidatures = () => {
                 <th>Prénom</th>
                 <th>Email</th>
                 <th>Niveau</th>
-                <th>Note</th>
+   {query.trim()
+      ? noteColumns.map(col => <th key={col}>{col}</th>)
+      : <th>Moyenne des notes</th>}
                 <th>Actions</th>
               </tr>
             </thead>
@@ -120,12 +152,28 @@ const Candidatures = () => {
                     />
                   </td>
                   <td>{u.user_id}</td>
-                  <td>{u.user?.nom}</td>
-                  <td>{u.user?.prenom}</td>
-                  <td>{u.user?.email}</td>
-                  <td>{u.niveau_etude}</td>
-                  <td>{u.note_examen !== null ? u.note_examen : "Examen non passé"}</td>
-
+                   <td>{u.nom}</td>
+        <td>{u.prenom}</td>
+        <td>{u.email}</td>
+        <td>{u.niveau_etude}</td>
+   {query.trim()
+        ? noteColumns.map(col => (
+            <td key={col}>
+              {u.notes?.[col] ?? "Examen non passé"}
+            </td>
+          ))
+        : (
+            <td>
+              {(() => {
+                const values = Object.values(u.notes || {});
+                return values.length > 0
+                  ? (
+                      values.reduce((a, b) => a + (b || 0), 0) / values.length
+                    ).toFixed(2)
+                  : "Aucune note";
+              })()}
+            </td>
+          )}
                   <td>
                     <button
                       className="btn btn-info btn-sm"
