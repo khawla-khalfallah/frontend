@@ -246,7 +246,7 @@ const AjouterExamen = () => {
         <SidebarFormateur />
         <div className="container-fluid mt-4">
           <h2 className="text-primary fw-bold mb-4">
-            {isEditing ? '✏️ Modifier l\'Examen' : '➕ Créer un Nouvel Examen'}
+            {isEditing ? '✏️ Modifier l\'Examen' : '➕ Créer un nouvel Examen'}
           </h2>
 
           {message.text && (

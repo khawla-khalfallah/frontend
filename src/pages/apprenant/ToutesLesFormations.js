@@ -167,11 +167,11 @@ function ToutesLesFormations() {
       console.error(err);
       alert(err.response?.data?.message || "Erreur d'inscription");
     }
-    };
-    // Vérifie si la date de fin est expirée
-    const isExpired = (dateFin) => {
-      const today = new Date();
-      return new Date(dateFin) < today;
+  };
+  // Vérifie si la date de fin est expirée
+  const isExpired = (dateFin) => {
+    const today = new Date();
+    return new Date(dateFin) < today;
   };
 
   return (
@@ -195,21 +195,37 @@ function ToutesLesFormations() {
                 </div>
                 <div className="card-body">
                   <h5 className="card-title">{formation.titre}</h5>
-                  <p className="card-description">
+                  {/* <p className="card-description">
                     {formation.description.length > 120
                       ? formation.description.slice(0, 120) + "..."
                       : formation.description}
+                  </p> */}
+                  {/* 🔹 nom et prénom */}
+                  <p className="formateur-name">
+                    👤 Formateur :{" "}
+                    {formation.formateur?.user
+                      ? `${formation.formateur.user.prenom} ${formation.formateur.user.nom}`
+                      : "Nom non disponible"}
                   </p>
-                   {/* Bouton inscription avec vérification de date */}
+                  {/* 🔹 Prix */}
+                  <p className="formation-price">
+                    💰 Prix : {formation.prix ? formation.prix + " TND" : "Gratuite"}
+                  </p>
+
+                  {/* 🔹 Dates */}
+                  <p className="formation-dates">
+                    📅 Du {formation.date_debut} au {formation.date_fin}
+                  </p>
+
+                  {/* Bouton inscription avec vérification de date */}
                   <button
                     onClick={() => handleInscription(formation.id)}
-                    className={`btn ${
-                      inscriptions.includes(formation.id)
+                    className={`btn ${inscriptions.includes(formation.id)
                         ? "btn-inscrit"
                         : isExpired(formation.date_fin)
-                        ? "btn-expire"
-                        : "btn-inscrire"
-                    }`}
+                          ? "btn-expire"
+                          : "btn-inscrire"
+                      }`}
                     disabled={
                       inscriptions.includes(formation.id) ||
                       isExpired(formation.date_fin)
@@ -218,8 +234,8 @@ function ToutesLesFormations() {
                     {inscriptions.includes(formation.id)
                       ? "✅ Déjà inscrit"
                       : isExpired(formation.date_fin)
-                      ? "⛔ Expirée"
-                      : "S'inscrire"}
+                        ? "⛔ Expirée"
+                        : "S'inscrire"}
                   </button>
                 </div>
               </div>

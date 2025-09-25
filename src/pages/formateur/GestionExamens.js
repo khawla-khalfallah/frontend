@@ -63,7 +63,7 @@ function GestionExamens() {
                   className="btn btn-success"
                   onClick={() => navigate('/formateur/AjouterExamen')}
                 >
-                  ➕ Créer un Nouvel Examen
+                  ➕ Créer un nouvel Examen
                 </button>
               </div>
 
