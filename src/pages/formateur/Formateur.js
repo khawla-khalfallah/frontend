@@ -80,7 +80,7 @@ function FormateurDashboard() {
             <Link to="/formateur/MesFormationsFormateur" className="dashboard-card card-blue">
               <div className="card-icon">📘</div>
               <h3>Mes Formations</h3>
-              <p>Consultez et gérez vos cours en cours.</p>
+              <p>Consultez et gérez vos formations en cours.</p>
             </Link>
 
             <Link to="/formateur/GestionExamens" className="dashboard-card card-green">
@@ -92,13 +92,13 @@ function FormateurDashboard() {
             <Link to="/formateur/BayesianRanking" className="dashboard-card card-yellow">
               <div className="card-icon">🏆</div>
               <h3>Classement</h3>
-              <p>Consultez le classement des formations et étudiants.</p>
+              <p>Consultez le classement des formations.</p>
             </Link>
 
             <Link to="/formateur/SettingsFormateur" className="dashboard-card card-purple">
               <div className="card-icon">⚙️</div>
               <h3>Paramètres</h3>
-              <p>Gérez vos informations et préférences.</p>
+              <p>Gérez vos données.</p>
             </Link>
           </div>
         </div>

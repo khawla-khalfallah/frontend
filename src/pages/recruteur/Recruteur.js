@@ -96,13 +96,13 @@ function Recruteur() {
             <Link to="/recruteur/candidatures" className="dashboard-card card-green">
               <div className="card-icon">📄</div>
               <h3>Candidatures</h3>
-              <p>Consultez et gérez les candidatures reçues.</p>
+              <p> Gérez les candidatures reçues.</p>
             </Link>
 
             <Link to="/recruteur/paramètres" className="dashboard-card card-purple">
               <div className="card-icon">⚙️</div>
               <h3>Paramètres</h3>
-              <p>Gérez vos préférences et notifications.</p>
+              <p>Gérez vos données.</p>
             </Link>
           </div>
         </div>

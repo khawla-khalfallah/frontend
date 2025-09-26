@@ -78,13 +78,13 @@ function Apprenant() {
             <Link to="/apprenant/formations" className="dashboard-card card-blue">
               <div className="card-icon">📚</div>
               <h3>Mes Formations</h3>
-              <p>Consultez et continuez vos formations en cours.</p>
+              <p>Consultez vos formations en cours.</p>
             </Link>
 
             <Link to="/apprenant/examens" className="dashboard-card card-green">
               <div className="card-icon">📝</div>
               <h3>Mes Examens</h3>
-              <p>Testez vos connaissances et suivez vos résultats.</p>
+              <p>Testez vos connaissances.</p>
             </Link>
 
             <Link to="/formations/ranking" className="dashboard-card card-yellow">
