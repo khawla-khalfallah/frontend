@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./CreateSeance.css";
 
-const CreateSeance = ({formateurId,token, onSuccess }) => {
+const CreateSeance = ({ formateurId, token, onSuccess }) => {
   const [titreSeance, setTitreSeance] = useState("");
   const [date, setDate] = useState("");
   const [heureDebut, setHeureDebut] = useState("");
@@ -80,6 +80,8 @@ const CreateSeance = ({formateurId,token, onSuccess }) => {
   };
 
   return (
+    <div className="seance-form-card">
+            <h5 className="form-title"> 💻 Ajouter une Séance</h5>
     <form onSubmit={handleSubmit} className="seance-form-card">
       <div className="mb-3">
         <label>Titre de la séance</label>
@@ -152,13 +154,14 @@ const CreateSeance = ({formateurId,token, onSuccess }) => {
           ))}
         </select>
       </div>
-
-      <button type="submit" className="btn-orange">
-        Ajouter
-      </button>
-
+      <div className="d-grid">
+        <button type="submit" className="btn btn-warning">
+          ➕  Ajouter Séance
+        </button>
+      </div>
       {message && <p className="form-message">{message}</p>}
     </form>
+    </div>
   );
 };
 

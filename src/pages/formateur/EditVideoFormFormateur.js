@@ -260,7 +260,7 @@ const EditVideoFormFormateur = ({ video, token, formateurId, onSuccess, onCancel
 
       <div className="d-flex gap-2">
         <button type="submit" className="btn-orange" disabled={loading}>
-          {loading ? "En cours..." : "Modifier Vidéo"}
+          {loading ? "En cours..." : "Modifier"}
         </button>
         <button type="button" className="btn-secondary" onClick={onCancel}>
           Annuler

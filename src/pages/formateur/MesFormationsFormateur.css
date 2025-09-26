@@ -116,6 +116,8 @@ h2.text-primary {
 .modal-footer .btn {
   border-radius: 12px;
   font-weight: 600;
+  flex: 1;           /* Tous les boutons prennent la même largeur */
+  margin: 0 5px;     /* Petit espace entre les boutons */
 }
 
 /* ================== Spinner loader ================== */

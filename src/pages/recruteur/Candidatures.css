@@ -1,0 +1,172 @@
+/* =======================
+   Recruteur - Candidatures (Full Page)
+   ======================= */
+
+.recruteur-candidatures-container {
+  width: 100%;              /* ✅ prend toute la largeur */
+  min-height: 100vh;        /* ✅ occupe toute la hauteur de l'écran */
+  background-color: #f9fafb;
+  font-family: "Segoe UI", sans-serif;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Titre */
+.recruteur-candidatures-container h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 1.5rem;
+  text-align: center;       /* ✅ titre centré */
+}
+
+/* Barre de recherche */
+.recruteur-search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;       /* ✅ centrée */
+}
+
+.recruteur-search-bar input {
+  flex: 1;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+}
+
+.recruteur-search-bar button {
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.recruteur-search-bar button:hover {
+  background-color: #1e40af;
+}
+
+/* Table */
+.recruteur-table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.recruteur-table {
+  width: 100%;              /* ✅ prend toute la largeur */
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* En-têtes */
+.recruteur-table th {
+  background-color: #1e3a8a;
+  color: white;
+  font-weight: 600;
+  padding: 1rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Cellules */
+.recruteur-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+/* Hover */
+.recruteur-table tr:hover {
+  background-color: #f1f5f9;
+  transition: background 0.2s ease-in-out;
+}
+
+/* Boutons */
+.btn {
+  border-radius: 8px;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-info {
+  background-color: #2563eb;
+  border: none;
+  color: white;
+}
+.btn-info:hover {
+  background-color: #1e40af;
+}
+
+.btn-success {
+  background-color: #10b981;
+  border: none;
+  color: white;
+}
+.btn-success:hover {
+  background-color: #047857;
+}
+
+/* Modale */
+.recruteur-modal .modal-content {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.recruteur-modal .modal-header {
+  background-color: #1e3a8a;
+  color: white;
+  border-bottom: none;
+}
+
+.recruteur-modal .modal-footer {
+  border-top: none;
+}
+
+.recruteur-modal textarea {
+  border-radius: 8px;
+  resize: none;
+  padding: 0.8rem;
+  font-size: 0.95rem;
+  border: 1px solid #d1d5db;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .recruteur-candidatures-container {
+    padding: 1rem;
+  }
+
+  .recruteur-candidatures-container h2 {
+    font-size: 1.6rem;
+  }
+
+  .recruteur-search-bar {
+    flex-direction: column;
+  }
+
+  .recruteur-table th,
+  .recruteur-table td {
+    font-size: 0.85rem;
+    padding: 0.6rem;
+  }
+
+  .btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.7rem;
+  }
+}

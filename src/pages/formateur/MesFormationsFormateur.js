@@ -385,7 +385,7 @@ const MesFormationsFormateur = () => {
                   Annuler
                 </button>
                 <button type="button" className="btn btn-primary" onClick={handleEditSave}>
-                  Enregistrer les modifications
+                  ✏️ Modifier
                 </button>
               </div>
             </div>

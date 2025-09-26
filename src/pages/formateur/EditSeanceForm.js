@@ -358,10 +358,10 @@ const handleSubmit = async (e) => {
 
   <div className="d-flex gap-2 mt-3">
     <button type="submit" className="btn-orange" disabled={loading}>
-      {loading ? "Enregistrement..." : "💾 Sauvegarder"}
+      {loading ? "Enregistrement..." : "Modifier"}
     </button>
     <button type="button" className="btn-secondary-uniform" onClick={onCancel}>
-      ❌ Annuler
+       Annuler
     </button>
   </div>
 </form>

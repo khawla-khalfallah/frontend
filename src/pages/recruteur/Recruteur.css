@@ -1,0 +1,75 @@
+/* =======================
+   Recruteur Dashboard
+   ======================= */
+
+.recruteur-dashboard-container {
+  padding: 2rem;
+  background-color: #f5f7fa; /* fond clair */
+  min-height: 100vh;
+}
+
+.recruteur-dashboard-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a8a; /* bleu professionnel */
+  margin-bottom: 0.5rem;
+}
+
+.recruteur-dashboard-header p {
+  color: #4b5563; /* gris subtil */
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Cartes */
+.recruteur-dashboard-cards {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.recruteur-card {
+  background: #ffffff;
+  flex: 1 1 250px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.recruteur-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.recruteur-card-icon {
+  font-size: 2rem;
+  color: #2563eb; /* bleu icône */
+}
+
+.recruteur-card h3 {
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.recruteur-card p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* Section texte */
+.recruteur-dashboard-welcome {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1.6;
+}

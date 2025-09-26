@@ -252,10 +252,10 @@ const EditPdfFormFormateur = ({ pdf, token, formateurId, onSuccess, onCancel }) 
         {/* Boutons */}
         <div className="button-group">
           <button type="submit" className="btn-uniform btn-warning-uniform" disabled={loading}>
-            {loading ? "⏳ En cours..." : "✅ Sauvegarder"}
+            {loading ? "⏳ En cours..." : "Modifier"}
           </button>
           <button type="button" className="btn-uniform btn-secondary-uniform" onClick={onCancel}>
-            ❌ Annuler
+            Annuler
           </button>
         </div>
       </form>

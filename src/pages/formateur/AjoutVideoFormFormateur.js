@@ -264,10 +264,10 @@ const AjoutVideoFormFormateur = ({ formateurId, token, onSuccess }) => {
         <div className="d-grid">
           <button
             type="submit"
-            className="btn btn-orange"
+            className="btn btn-warning"
             disabled={loading}
           >
-            {loading ? "⏳ En cours..." : "➕ Ajouter Vidéo"}
+            {loading ? "⏳ Ajout en cours..." : "➕ Ajouter Vidéo"}
           </button>
         </div>
       </form>

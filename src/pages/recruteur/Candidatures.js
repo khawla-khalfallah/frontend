@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from '../../config/axios';
 import NavbarMinimal from "../../components/NavbarMinimal";
 import SidebarRecruteur from "../../components/SidebarRecruteur";
+import "./Candidatures.css";
 
 const Candidatures = () => {
   const [users, setUsers] = useState([]);
@@ -102,42 +103,211 @@ const noteColumns = query.trim()
       )
     )
   : [];
+  // return (
+  //   <div>
+  //     <NavbarMinimal />
+  //     <div className="d-flex">
+  //       <SidebarRecruteur />
+  //       <div className="container-fluid p-4">
+  //         <h2>👥 Liste des Candidatures</h2>
+
+  //         {/* Barre de recherche */}
+  //         <div className="mb-3 d-flex">
+  //           <input
+  //             type="text"
+  //             className="form-control me-2"
+  //             placeholder="Rechercher par formation (ex: Angular)"
+  //             value={query}
+  //             onChange={(e) => setQuery(e.target.value)}
+  //           />
+  //           <button className="btn btn-primary" onClick={handleSearch}>
+  //             Rechercher
+  //           </button>
+  //         </div>
+
+  //         <table className="table table-striped mt-4">
+  //           <thead>
+  //             <tr>
+  //               <th>
+  //                 {/* Colonne checkbox */}
+  //               </th>
+  //               <th>ID</th>
+  //               <th>Nom</th>
+  //               <th>Prénom</th>
+  //               <th>Email</th>
+  //               <th>Niveau</th>
+  //  {query.trim()
+  //     ? noteColumns.map(col => <th key={col}>{col}</th>)
+  //     : <th>Moyenne des notes</th>}
+  //               <th>Actions</th>
+  //             </tr>
+  //           </thead>
+  //           <tbody>
+  //             {users.map((u) => (
+  //               <tr key={u.user_id}>
+  //                 <td>
+  //                   <input
+  //                     type="checkbox"
+  //                     checked={selectedIds.includes(u.user_id)}
+  //                     onChange={() => toggleSelect(u.user_id)}
+  //                   />
+  //                 </td>
+  //                 <td>{u.user_id}</td>
+  //                  <td>{u.nom}</td>
+  //       <td>{u.prenom}</td>
+  //       <td>{u.email}</td>
+  //       <td>{u.niveau_etude}</td>
+  //  {query.trim()
+  //       ? noteColumns.map(col => (
+  //           <td key={col}>
+  //             {u.notes?.[col] ?? "Examen non passé"}
+  //           </td>
+  //         ))
+  //       : (
+  //           <td>
+  //             {(() => {
+  //               const values = Object.values(u.notes || {});
+  //               return values.length > 0
+  //                 ? (
+  //                     values.reduce((a, b) => a + (b || 0), 0) / values.length
+  //                   ).toFixed(2)
+  //                 : "Aucune note";
+  //             })()}
+  //           </td>
+  //         )}
+  //                 <td>
+  //                   <button
+  //                     className="btn btn-info btn-sm"
+  //                     onClick={() => handleListFormations(u)}
+  //                   >
+  //                     📚 Lister les formations
+  //                   </button>
+  //                 </td>
+  //               </tr>
+  //             ))}
+  //           </tbody>
+  //         </table>
+
+  //         {/* Bouton envoyer email */}
+  //         <button
+  //           className="btn btn-success"
+  //           disabled={selectedIds.length === 0}
+  //           onClick={handleSendEmail}
+  //         >
+  //           ✉ Envoyer un email
+  //         </button>
+
+  //         {/* Modal formations */}
+  //         {selectedUser && (
+  //           <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+  //             <div className="modal-dialog" role="document">
+  //               <div className="modal-content">
+  //                 <div className="modal-header">
+  //                   <h5 className="modal-title">
+  //                     Formations de {selectedUser.user?.nom} {selectedUser.user?.prenom}
+  //                   </h5>
+  //                   <button
+  //                     type="button"
+  //                     className="btn-close"
+  //                     onClick={() => setSelectedUser(null)}
+  //                   ></button>
+  //                 </div>
+  //                 <div className="modal-body">
+  //                   {formations.length === 0 ? (
+  //                     <p>Aucune formation trouvée.</p>
+  //                   ) : (
+  //                     <ul>
+  //                       {formations.map((f, idx) => (
+  //                         <li key={idx}>{f.formation?.titre}</li>
+  //                       ))}
+  //                     </ul>
+  //                   )}
+  //                 </div>
+  //               </div>
+  //             </div>
+  //           </div>
+  //         )}
+
+  //         {/* Modal email */}
+  //         {showEmailModal && (
+  //           <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+  //             <div className="modal-dialog" role="document">
+  //               <div className="modal-content">
+  //                 <div className="modal-header">
+  //                   <h5 className="modal-title">Envoyer un email</h5>
+  //                   <button
+  //                     type="button"
+  //                     className="btn-close"
+  //                     onClick={() => setShowEmailModal(false)}
+  //                   ></button>
+  //                 </div>
+  //                 <div className="modal-body">
+  //                   <textarea
+  //                     className="form-control"
+  //                     rows="5"
+  //                     placeholder="Tapez votre message ici..."
+  //                     value={emailMessage}
+  //                     onChange={(e) => setEmailMessage(e.target.value)}
+  //                   ></textarea>
+  //                 </div>
+  //                 <div className="modal-footer">
+  //                   <button
+  //                     className="btn btn-secondary"
+  //                     onClick={() => setShowEmailModal(false)}
+  //                   >
+  //                     Annuler
+  //                   </button>
+  //                   <button
+  //                     className="btn btn-primary"
+  //                     onClick={handleConfirmSend}
+  //                   >
+  //                     Envoyer
+  //                   </button>
+  //                 </div>
+  //               </div>
+  //             </div>
+  //           </div>
+  //         )}
+
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
   return (
-    <div>
-      <NavbarMinimal />
-      <div className="d-flex">
-        <SidebarRecruteur />
-        <div className="container-fluid p-4">
-          <h2>👥 Liste des Candidatures</h2>
+  <div>
+    <NavbarMinimal />
+    <div className="d-flex">
+      <SidebarRecruteur />
+      <div className="recruteur-candidatures-container">
+        <h2>👥 Liste des Candidatures</h2>
 
-          {/* Barre de recherche */}
-          <div className="mb-3 d-flex">
-            <input
-              type="text"
-              className="form-control me-2"
-              placeholder="Rechercher par formation (ex: Angular)"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <button className="btn btn-primary" onClick={handleSearch}>
-              Rechercher
-            </button>
-          </div>
+        {/* Barre de recherche */}
+        <div className="recruteur-search-bar">
+          <input
+            type="text"
+            placeholder="Rechercher par formation (ex: Angular)"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button className="btn btn-primary" onClick={handleSearch}>
+            Rechercher
+          </button>
+        </div>
 
-          <table className="table table-striped mt-4">
+        {/* Table responsive */}
+        <div className="recruteur-table-wrapper">
+          <table className="recruteur-table">
             <thead>
               <tr>
-                <th>
-                  {/* Colonne checkbox */}
-                </th>
+                <th></th>
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Email</th>
                 <th>Niveau</th>
-   {query.trim()
-      ? noteColumns.map(col => <th key={col}>{col}</th>)
-      : <th>Moyenne des notes</th>}
+                {query.trim()
+                  ? noteColumns.map((col) => <th key={col}>{col}</th>)
+                  : <th>Moyenne des notes</th>}
                 <th>Actions</th>
               </tr>
             </thead>
@@ -152,28 +322,28 @@ const noteColumns = query.trim()
                     />
                   </td>
                   <td>{u.user_id}</td>
-                   <td>{u.nom}</td>
-        <td>{u.prenom}</td>
-        <td>{u.email}</td>
-        <td>{u.niveau_etude}</td>
-   {query.trim()
-        ? noteColumns.map(col => (
-            <td key={col}>
-              {u.notes?.[col] ?? "Examen non passé"}
-            </td>
-          ))
-        : (
-            <td>
-              {(() => {
-                const values = Object.values(u.notes || {});
-                return values.length > 0
-                  ? (
-                      values.reduce((a, b) => a + (b || 0), 0) / values.length
-                    ).toFixed(2)
-                  : "Aucune note";
-              })()}
-            </td>
-          )}
+                  <td>{u.nom}</td>
+                  <td>{u.prenom}</td>
+                  <td>{u.email}</td>
+                  <td>{u.niveau_etude}</td>
+                  {query.trim()
+                    ? noteColumns.map((col) => (
+                        <td key={col}>
+                          {u.notes?.[col] ?? "Examen non passé"}
+                        </td>
+                      ))
+                    : (
+                        <td>
+                          {(() => {
+                            const values = Object.values(u.notes || {});
+                            return values.length > 0
+                              ? (
+                                  values.reduce((a, b) => a + (b || 0), 0) / values.length
+                                ).toFixed(2)
+                              : "Aucune note";
+                          })()}
+                        </td>
+                      )}
                   <td>
                     <button
                       className="btn btn-info btn-sm"
@@ -186,92 +356,93 @@ const noteColumns = query.trim()
               ))}
             </tbody>
           </table>
-
-          {/* Bouton envoyer email */}
-          <button
-            className="btn btn-success"
-            disabled={selectedIds.length === 0}
-            onClick={handleSendEmail}
-          >
-            ✉ Envoyer un email
-          </button>
-
-          {/* Modal formations */}
-          {selectedUser && (
-            <div className="modal fade show d-block" tabIndex="-1" role="dialog">
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title">
-                      Formations de {selectedUser.user?.nom} {selectedUser.user?.prenom}
-                    </h5>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      onClick={() => setSelectedUser(null)}
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    {formations.length === 0 ? (
-                      <p>Aucune formation trouvée.</p>
-                    ) : (
-                      <ul>
-                        {formations.map((f, idx) => (
-                          <li key={idx}>{f.formation?.titre}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Modal email */}
-          {showEmailModal && (
-            <div className="modal fade show d-block" tabIndex="-1" role="dialog">
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title">Envoyer un email</h5>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      onClick={() => setShowEmailModal(false)}
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <textarea
-                      className="form-control"
-                      rows="5"
-                      placeholder="Tapez votre message ici..."
-                      value={emailMessage}
-                      onChange={(e) => setEmailMessage(e.target.value)}
-                    ></textarea>
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => setShowEmailModal(false)}
-                    >
-                      Annuler
-                    </button>
-                    <button
-                      className="btn btn-primary"
-                      onClick={handleConfirmSend}
-                    >
-                      Envoyer
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
         </div>
+
+        {/* Bouton envoyer email */}
+        <button
+          className="btn btn-success mt-3"
+          disabled={selectedIds.length === 0}
+          onClick={handleSendEmail}
+        >
+          ✉ Envoyer un email
+        </button>
+
+        {/* Modal formations */}
+        {selectedUser && (
+          <div className="modal fade show d-block recruteur-modal" tabIndex="-1" role="dialog">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">
+                    Formations de {selectedUser?.nom} {selectedUser?.prenom}
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={() => setSelectedUser(null)}
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  {formations.length === 0 ? (
+                    <p>Aucune formation trouvée.</p>
+                  ) : (
+                    <ul>
+                      {formations.map((f, idx) => (
+                        <li key={idx}>{f.formation?.titre}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal email */}
+        {showEmailModal && (
+          <div className="modal fade show d-block recruteur-modal" tabIndex="-1" role="dialog">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Envoyer un email</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={() => setShowEmailModal(false)}
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <textarea
+                    className="form-control"
+                    rows="5"
+                    placeholder="Tapez votre message ici..."
+                    value={emailMessage}
+                    onChange={(e) => setEmailMessage(e.target.value)}
+                  ></textarea>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => setShowEmailModal(false)}
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleConfirmSend}
+                  >
+                    Envoyer
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Candidatures;

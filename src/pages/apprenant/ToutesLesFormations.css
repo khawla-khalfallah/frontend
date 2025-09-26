@@ -1,31 +1,43 @@
+/* Container neutre (blanc) */
 .toutes-formations-container {
-  padding: 2rem;
-  background-color: #f8f9fc;
-  min-height: 100vh;
+  padding: 1rem;
+  background: #fff;
+  min-height: auto;
+  max-width: 1200px;
+  margin: 1rem auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06);
 }
 
-/* Header */
-.toutes-formations-container .header {
-  display: flex;
+/* header avec petit ruban violet */
+.toutes-formations-container .header{
+  display:flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
+  align-items:center;
+  padding: 0.45rem 0.75rem; 
+  margin-bottom: 0.9rem;
+  background: linear-gradient(135deg,#6366f1,#4f46e5); /* petit dégradé */
+  color: #fff;
+  border-radius: 10px;
+  height: auto;
 }
 
-.toutes-formations-container .title {
+/* titre dans le ruban */
+.toutes-formations-container .title{
+  font-size: 1rem;
   font-weight: 700;
-  color: #111827;
-  font-size: 1.8rem;
+  margin: 0;
 }
 
-.toutes-formations-container .badge {
-  background: #3b82f6;
-  color: white;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
+/* badge transformée en pill claire */
+.toutes-formations-container .badge{
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
   font-weight: 600;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+  box-shadow: none;
 }
 
 /* Grille responsive */

@@ -102,7 +102,7 @@ function ProfilApprenant() {
     <LayoutApprenant>
       <div className="profile-content">
         <div className="profile-card">
-          <h2 className="profile-title">Mon Profil</h2>
+          <h2 className="profile-title"> 👤 Mon Profil</h2>
 
           {user ? (
             <div className="profile-details">
