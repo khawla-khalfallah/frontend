@@ -13,9 +13,10 @@ import MesExamens from "./pages/apprenant/MesExamens";
 import PasserExamen from "./pages/apprenant/PasserExamen";
 // import Progres from "./pages/apprenant/Progres";
 // import Visio from "./pages/apprenant/Visio";
-// import Certifications from "./pages/apprenant/Certifications";
+import Certifications from "./pages/apprenant/Certifications";
 import SettingsApprenant from "./pages/apprenant/SettingsApprenant";
 import Formateur from "./pages/formateur/Formateur";
+import FormateurCertifications from "./pages/formateur/Certifications";
 import ProfilFormateur from "./pages/formateur/ProfilFormateur";
 import MesFormationsFormateur from "./pages/formateur/MesFormationsFormateur";
 import GestionExamens from "./pages/formateur/GestionExamens";
@@ -64,7 +65,7 @@ function App() {
         <Route path="/apprenant/examens/:id/passer" element={<PasserExamen />} />
         {/* <Route path="/apprenant/progres" element={<Progres />} />
         <Route path="/apprenant/visio" element={<Visio />} /> */}
-        {/* <Route path="/apprenant/certifications" element={<Certifications />} /> */}
+        <Route path="/apprenant/certifications" element={<Certifications />} />
         <Route path="/apprenant/settingsApprenant" element={<SettingsApprenant />} />
         <Route path="/formateur/Formateur" element={<Formateur />} />
         <Route path="/formateur/ProfilFormateur" element={<ProfilFormateur />} />
@@ -76,6 +77,7 @@ function App() {
         <Route path="/formateur/MesEtudiants" element={<MesEtudiants />} />
         <Route path="/formateur/Evaluations" element={<Evaluations />} /> */}
         <Route path="/formateur/SettingsFormateur" element={<SettingsFormateur />} />
+        <Route path="/formateur/Certifications" element={<FormateurCertifications />} />
         <Route path="/recruteur" element={<Recruteur />} />
         <Route path="/recruteur/profil" element={<Profil />} />
         <Route path="/recruteur/candidatures" element={<Candidatures />} />

@@ -101,7 +101,7 @@
 // export default SidebarFormateur;
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBook, FaUser, FaCog, FaTrophy, FaList, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaBook, FaUser, FaCog, FaTrophy, FaList, FaChevronDown, FaChevronUp, FaCertificate } from "react-icons/fa";
 import './SidebarFormateur.css';
 
 function SidebarFormateur() {
@@ -155,6 +155,13 @@ function SidebarFormateur() {
             </li>
           </ul>
         )}
+
+        {/* Certifications */}
+        <li>
+          <Link className="sidebar-btn" to="/formateur/Certifications">
+            <FaCertificate className="tab-icon" /> Certifications
+          </Link>
+        </li>
 
         {/* Classement */}
         <li>

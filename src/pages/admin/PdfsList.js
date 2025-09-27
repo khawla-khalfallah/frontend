@@ -18,6 +18,27 @@ const PdfsList = () => {
     fetchPdfs();
   }, []);
 
+  const handleDownload = async (id, titre) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/pdfs/${id}/download`, {
+        responseType: 'blob',
+      });
+      
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${titre}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      
+    } catch (err) {
+      console.error('Erreur lors du téléchargement:', err);
+      alert('Erreur lors du téléchargement du PDF');
+    }
+  };
+
   const handleDelete = async (id) => {
     if (!window.confirm("Supprimer ce PDF ?")) return;
     try {
@@ -71,13 +92,12 @@ const PdfsList = () => {
               <td>{pdf.id}</td>
               <td>{pdf.titre}</td>
               <td>
-              <a
-                href={`http://dreamlearn.local/storage/${pdf.fichier}`}
-                download
-                className="btn btn-outline-primary btn-sm">
+                <button
+                  onClick={() => handleDownload(pdf.id, pdf.titre)}
+                  className="btn btn-outline-primary btn-sm"
+                >
                   📥 Télécharger
-              </a>
-
+                </button>
               </td>
               <td>{pdf.formation?.titre}</td>
               <td>

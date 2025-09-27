@@ -78,7 +78,7 @@ const EditPdfForm = ({ pdf, onSuccess }) => {
       {pdf.fichier && (
         <div className="mb-2">
           📎 Fichier actuel : 
-          <a href={`http://dreamlearn.local/storage/${pdf.fichier}`} 
+          <a href={`http://localhost:8000/storage/${pdf.fichier}`} 
           target="_blank" rel="noopener noreferrer">
             Voir le PDF</a>
         </div>
