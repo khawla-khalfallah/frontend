@@ -243,7 +243,7 @@ const AjoutPdfFormFormateur = ({ formateurId, token, onSuccess }) => {
         <div className="d-grid">
           <button
             type="submit"
-            className="btn btn-warning"
+            className="btn btn-warning-uniform"
             disabled={loading}
           >
             {loading ? "⏳ Ajout en cours..." : "➕ Ajouter PDF"}

@@ -155,7 +155,7 @@ const CreateSeance = ({ formateurId, token, onSuccess }) => {
         </select>
       </div>
       <div className="d-grid">
-        <button type="submit" className="btn btn-warning">
+        <button type="submit" className="btn btn-warning-uniform">
           ➕  Ajouter Séance
         </button>
       </div>

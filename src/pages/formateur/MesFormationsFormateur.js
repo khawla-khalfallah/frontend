@@ -205,8 +205,8 @@ const MesFormationsFormateur = () => {
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title text-orange fw-bold">{formation.titre}</h5>
                     <p className="card-text fw-bold text-dark">{formation.description}</p>
-                    <div className="mb-2">
-                      <span className="badge bg-success me-2">
+                    <div className="mb-2 d-flex justify-content-start gap-2">
+                      <span className="badge bg-success">
                         Prix : {formation.prix} DT
                       </span>
                       <span className="badge bg-secondary">

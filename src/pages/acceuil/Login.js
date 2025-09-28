@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from '../../api';
 import LayoutPublic from "../../layouts/LayoutPublic"; // ✅ Import du layout
+import ElearningImage from '../../assets/e-learning-platform-development.jpg'; // adapte le chemin et l'extension
 // import axiosInstance from '../config/axios';
 import './Login.css';
 
@@ -73,7 +74,7 @@ function Login() {
         <div className="row shadow-lg p-4 rounded bg-light login-container">
           {/* Image DreamLearn */}
           <div className="col-md-6 d-none d-md-flex align-items-center">
-            <img src="/images/about.jpg" alt="DreamLearn Login" className="img-fluid rounded" />
+            <img src={ElearningImage} alt="DreamLearn Login" className="img-fluid rounded" style={{ maxWidth: '100%', height: 'auto' }} />
           </div>
 
           {/* Formulaire de connexion */}

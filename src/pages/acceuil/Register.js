@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LayoutPublic from "../../layouts/LayoutPublic"; // ✅ Import du layout
+import ElearningImage from '../../assets/e-learning-platform-development.jpg'; // adapte le chemin et l'extension
 import "./Register.css";
 
 
@@ -271,12 +272,8 @@ function Register() {
         <div className="register-wrapper row">
 
           {/* ✅ Image à gauche */}
-          <div className="col-lg-6 d-none d-lg-flex p-0">
-            <img
-              src="/images/about.jpg"
-              alt="Inscription DreamLearn"
-              className="w-100 h-100"
-            />
+          <div className="col-md-6 d-none d-md-flex align-items-center">
+            <img src={ElearningImage} alt="DreamLearn Login" className="img-fluid rounded" style={{ maxWidth: '105%', height:'auto' }} />
           </div>
 
           {/* ✅ Formulaire */}

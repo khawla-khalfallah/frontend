@@ -472,7 +472,7 @@ const BayesianRankingDashboard = () => {
                                             </div>
                                         </td>
                                         <td className="align-middle text-center">
-                                            <Badge bg={formation.evaluations_count > 0 ? 'success' : 'secondary'} className="fs-6">
+                                            <Badge bg={formation.evaluations_count > 0 ? 'success' : 'secondary'} className="fs-6 text-white">
                                                 {formation.evaluations_count || 0}
                                             </Badge>
                                         </td>
