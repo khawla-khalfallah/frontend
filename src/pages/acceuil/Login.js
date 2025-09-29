@@ -10,65 +10,67 @@ import './Login.css';
 function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleLogin = async () => {
-  if (!formData.email || !formData.password) {
-    alert("Veuillez entrer votre email et mot de passe.");
-    return;
-  }
+    if (!formData.email || !formData.password) {
+      alert("Veuillez entrer votre email et mot de passe.");
+      return;
+    }
 
-  try {
-    const response = await api.post('/login', formData);
-    const { token, user } = response.data;
+    try {
+      const response = await api.post('/login', formData);
+      const { token, user } = response.data;
 
-    // 🔹 Vérifier si c'est un formateur non validé
-    if (user.role === "formateur") {
-      if (user.status === "en attente") {
-        alert("⏳ Votre compte est en attente de validation par l’administrateur.");
-        return;
+      // 🔹 Vérifier si c'est un formateur non validé
+      if (user.role === "formateur") {
+        if (user.status === "en attente") {
+          alert("⏳ Votre compte est en attente de validation par l’administrateur.");
+          return;
+        }
+        if (user.status === "refuse") {
+          alert("❌ Votre compte formateur a été refusé. Contactez l’administrateur.");
+          return;
+        }
       }
-      if (user.status === "refuse") {
-        alert("❌ Votre compte formateur a été refusé. Contactez l’administrateur.");
-        return;
+
+      // ✅ Si validé → on continue la connexion
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      // Redirection selon le rôle
+      if (user.role === "admin") {
+        navigate("/admin");
+      } else if (user.role === "formateur") {
+        navigate("/formateur/Formateur");
+      } else if (user.role === "apprenant") {
+        navigate("/apprenant");
+      } else if (user.role === "recruteur") {
+        navigate("/recruteur");
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      if (error.response) {
+        // 🔹 Cas refusé → afficher la remarque si dispo
+        if (error.response.data.remarque) {
+          alert(`❌ Votre inscription a été refusée.\n\nRaison : ${error.response.data.remarque}`);
+        } else {
+          alert(error.response.data.message || "Identifiants invalides.");
+        }
+      } else {
+        alert("Erreur réseau ou serveur.");
       }
     }
+  };
 
-    // ✅ Si validé → on continue la connexion
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
-
-    // Redirection selon le rôle
-    if (user.role === "admin") {
-      navigate("/admin");
-    } else if (user.role === "formateur") {
-      navigate("/formateur/Formateur");
-    } else if (user.role === "apprenant") {
-      navigate("/apprenant");
-    } else if (user.role === "recruteur") {
-      navigate("/recruteur");
-    } else {
-      navigate("/");
-    }
-  } catch (error) {
-  if (error.response) {
-    // 🔹 Cas refusé → afficher la remarque si dispo
-    if (error.response.data.remarque) {
-      alert(`❌ Votre inscription a été refusée.\n\nRaison : ${error.response.data.remarque}`);
-    } else {
-      alert(error.response.data.message || "Identifiants invalides.");
-    }
-  } else {
-    alert("Erreur réseau ou serveur.");
-  }
-}
-};
-
+  const toggleShowPassword = () => setShowPassword(s => !s);
 
   return (
-   <LayoutPublic>
+    <LayoutPublic>
       {/* Section Connexion */}
       <div className="container d-flex align-items-center justify-content-center vh-100">
         <div className="row shadow-lg p-4 rounded bg-light login-container">
@@ -87,10 +89,49 @@ function Login() {
               <input type="email" className="form-control" name="email" onChange={handleChange} required />
             </div>
 
-            <div className="mb-3 text-start">
+            {/* <div className="mb-3 text-start">
               <label className="form-label">Mot de passe</label>
               <input type="password" className="form-control" name="password" onChange={handleChange} required />
+            </div> */}
+            {/* Champ mot de passe avec toggle */}
+            <div className="mb-3 text-start">
+              <label className="form-label">Mot de passe</label>
+              <div className="input-group">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="form-control"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  aria-label="Mot de passe"
+                  required
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={toggleShowPassword}
+                  aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                  title={showPassword ? "Masquer" : "Afficher"}
+                >
+                  {/* Icônes SVG (œil / œil barré) */}
+                  {showPassword ? (
+                    // eye (afficher)
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  ) : (
+                    // eye slash (masquer)
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.36 18.36 0 0 1 5.06-5.94"></path>
+                      <path d="M1 1l22 22"></path>
+                      <path d="M9.88 9.88A3 3 0 0 0 14.12 14.12"></path>
+                    </svg>
+                  )}
+                </button>
+              </div>
             </div>
+
 
             {/* Boutons de connexion directs */}
             <div className="text-center">
@@ -111,7 +152,7 @@ function Login() {
         </div>
       </div>
 
-   </LayoutPublic>
+    </LayoutPublic>
   );
 }
 

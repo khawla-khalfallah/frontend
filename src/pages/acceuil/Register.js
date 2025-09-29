@@ -25,6 +25,8 @@ function Register() {
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Gestion des inputs
   const handleChange = (e) => {
@@ -130,150 +132,18 @@ function Register() {
       }
     }
   };
+  const toggleShowPassword = () => setShowPassword(!showPassword);
+  const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   return (
-//    <LayoutPublic>
-//       {/* Formulaire */}
-//       <div className="container d-flex align-items-center justify-content-center vh-100">
-//         <div className="row shadow-lg p-4 rounded bg-light register-container">
-//           <div className="col-md-6 d-none d-md-flex align-items-center">
-//             <img src="/images/about.jpg" alt="Inscription DreamLearn" className="img-fluid rounded" />
-//           </div>
 
-//           <div className="col-md-6 p-4">
-//             <h1 className="text-primary fw-bold text-center">DreamLearn</h1>
-//             <p className="text-muted text-center">Inscrivez-vous et commencez à apprendre</p>
-//             {message && <div className="alert alert-success">{message}</div>}
-//             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-
-//             <form onSubmit={handleSubmit}>
-//               <div className="mb-3">
-//                 <label className="form-label">Prénom</label>
-//                 <input
-//                   type="text"
-//                   className="form-control"
-//                   name="prenom"
-//                   onChange={handleChange}
-//                   required
-//                   pattern="^[a-zA-ZÀ-ÿ\s]+$"
-//                   title="Seulement des lettres et espaces"
-//                 />
-//               </div>
-//               <div className="mb-3">
-//                 <label className="form-label">Nom</label>
-//                 <input
-//                   type="text"
-//                   className="form-control"
-//                   name="nom"
-//                   onChange={handleChange}
-//                   required
-//                   pattern="^[a-zA-ZÀ-ÿ\s]+$"
-//                   title="Seulement des lettres et espaces"
-//                 />
-//               </div>
-//               <div className="mb-3">
-//                 <label className="form-label">Email</label>
-//                 <input
-//                   type="email"
-//                   className="form-control"
-//                   name="email"
-//                   onChange={handleChange}
-//                   required
-//                   pattern="^[\w\.-]+@([\w-]+\.)+[a-zA-Z]{2,}$"
-//                   title="Veuillez entrer une adresse email valide"
-//                 />
-//               </div>
-//               <div className="mb-3">
-//                 <label className="form-label">Mot de passe</label>
-//                 <input
-//                   type="password"
-//                   className="form-control"
-//                   name="password"
-//                   onChange={handleChange}
-//                   required
-//                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
-//                   title="Min 8 caractères avec majuscule, minuscule, chiffre et caractère spécial"
-//                 />
-//               </div>
-//               <div className="mb-3">
-//                 <label className="form-label">Confirmer le mot de passe</label>
-//                 <input
-//                   type="password"
-//                   className="form-control"
-//                   name="password_confirmation"
-//                   onChange={handleChange}
-//                   required
-//                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
-//                   title="Doit correspondre au mot de passe"
-//                 />
-//               </div>
-
-//               {/* Sélection rôle */}
-//               <div className="mb-3">
-//                 <label className="form-label">Votre rôle :</label><br />
-//                 <div className="form-check form-check-inline">
-//                   <input className="form-check-input" type="radio" name="role" value="apprenant" onChange={handleChange} />
-//                   <label className="form-check-label">Apprenant</label>
-//                 </div>
-//                 <div className="form-check form-check-inline">
-//                   <input className="form-check-input" type="radio" name="role" value="formateur" onChange={handleChange} />
-//                   <label className="form-check-label">Formateur</label>
-//                 </div>
-//                 <div className="form-check form-check-inline">
-//                   <input className="form-check-input" type="radio" name="role" value="recruteur" onChange={handleChange} />
-//                   <label className="form-check-label">Recruteur</label>
-//                 </div>
-//               </div>
-
-//               {formData.role === "apprenant" && (
-//                 <div className="mb-3">
-//                   <label className="form-label">Niveau d'étude</label>
-//                   <input type="text" className="form-control" name="niveau_etude" onChange={handleChange} required />
-//                 </div>
-//               )}
-
-//               {formData.role === "formateur" && (
-//                 <>
-//                   <div className="mb-3">
-//                     <label className="form-label">Spécialité</label>
-//                     <input type="text" className="form-control" name="specialite" onChange={handleChange} required />
-//                   </div>
-//                   <div className="mb-3">
-//                     <label className="form-label">Biographie</label>
-//                     <textarea className="form-control" name="bio" rows="3" onChange={handleChange} required></textarea>
-//                   </div>
-//                   <div className="mb-3 text-start">
-//                     <label className="form-label">CV (PDF/DOC)</label>
-//                     <input type="file" className="form-control" name="cv" accept=".pdf,.doc,.docx"
-//                       onChange={(e) => setFormData({ ...formData, cv: e.target.files[0] })} />
-//                   </div>
-//                 </>
-//               )}
-
-//               {formData.role === "recruteur" && (
-//                 <div className="mb-3">
-//                   <label className="form-label">Entreprise</label>
-//                   <input type="text" className="form-control" name="entreprise" onChange={handleChange} required />
-//                 </div>
-//               )}
-
-//               <button type="submit" className="btn btn-primary w-100">S'inscrire</button>
-
-//               <p className="mt-3 text-center">
-//                 Déjà un compte ? <Link to="/login" className="text-primary">Connectez-vous</Link>
-//               </p>
-//             </form>
-//           </div>
-//         </div>
-//       </div>
-// </LayoutPublic>
- <LayoutPublic>
+    <LayoutPublic>
       <div className="container d-flex align-items-center justify-content-center min-vh-100">
         <div className="register-wrapper row">
 
           {/* ✅ Image à gauche */}
           <div className="col-md-6 d-none d-md-flex align-items-center">
-            <img src={ElearningImage} alt="DreamLearn Login" className="img-fluid rounded" style={{ maxWidth: '105%', height:'auto' }} />
+            <img src={ElearningImage} alt="DreamLearn Login" className="img-fluid rounded" style={{ maxWidth: '105%', height: 'auto' }} />
           </div>
 
           {/* ✅ Formulaire */}
@@ -330,7 +200,7 @@ function Register() {
               </div>
 
               {/* Mot de passe */}
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <label className="form-label">Mot de passe</label>
                 <input
                   type="password"
@@ -341,21 +211,93 @@ function Register() {
                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
                   title="Min 8 caractères avec majuscule, minuscule, chiffre et caractère spécial"
                 />
+              </div> */}
+              <div className="mb-3 text-start">
+                <label className="form-label">Mot de passe</label>
+                <div className="input-group">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="form-control"
+                    name="password"
+                    value={formData.password || ""}
+                    onChange={handleChange}
+                    required
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+                    title="Min 8 caractères avec majuscule, minuscule, chiffre et caractère spécial"
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={toggleShowPassword}
+                    aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                    title={showPassword ? "Masquer" : "Afficher"}
+                  >
+                    {showPassword ? (
+                      // œil (afficher)
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    ) : (
+                      // œil barré (masquer)
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.36 18.36 0 0 1 5.06-5.94"></path>
+                        <path d="M1 1l22 22"></path>
+                        <path d="M9.88 9.88A3 3 0 0 0 14.12 14.12"></path>
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
 
+
               {/* Confirmation */}
-              <div className="mb-3">
+              <div className="mb-3 text-start">
                 <label className="form-label">Confirmer le mot de passe</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="password_confirmation"
-                  onChange={handleChange}
-                  required
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
-                  title="Doit correspondre au mot de passe"
-                />
+                <div className="input-group">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    className="form-control"
+                    name="password_confirmation"
+                    value={formData.password_confirmation || ""}
+                    onChange={handleChange}
+                    required
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+                    title="Doit correspondre au mot de passe"
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={toggleShowConfirmPassword}
+                    aria-label={showConfirmPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                    title={showConfirmPassword ? "Masquer" : "Afficher"}
+                  >
+                    {showConfirmPassword ? (
+                      // œil (afficher)
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    ) : (
+                      // œil barré (masquer)
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.36 18.36 0 0 1 5.06-5.94"></path>
+                        <path d="M1 1l22 22"></path>
+                        <path d="M9.88 9.88A3 3 0 0 0 14.12 14.12"></path>
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
+
 
               {/* Rôle */}
               <div className="mb-3">
