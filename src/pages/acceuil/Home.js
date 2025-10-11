@@ -87,7 +87,6 @@ function Home() {
        <LayoutPublic>
       {/* Section d'accueil accessible */}
       <header className="header position-relative text-white text-center">
-        {/* <img src={image} alt="Illustration représentant l'apprentissage en ligne" className="img-fluid w-100" /> */}
         <div className="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
         <div className="header-content position-absolute top-50 start-50 translate-middle">
           <h1 className="fw-bold">Avec DreamLearn, le savoir est à portée de clic !</h1>
