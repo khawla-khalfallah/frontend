@@ -200,18 +200,6 @@ function Register() {
               </div>
 
               {/* Mot de passe */}
-              {/* <div className="mb-3">
-                <label className="form-label">Mot de passe</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  onChange={handleChange}
-                  required
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
-                  title="Min 8 caractères avec majuscule, minuscule, chiffre et caractère spécial"
-                />
-              </div> */}
               <div className="mb-3 text-start">
                 <label className="form-label">Mot de passe</label>
                 <div className="input-group">

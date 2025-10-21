@@ -88,11 +88,6 @@ function Login() {
               <label className="form-label">Email</label>
               <input type="email" className="form-control" name="email" onChange={handleChange} required />
             </div>
-
-            {/* <div className="mb-3 text-start">
-              <label className="form-label">Mot de passe</label>
-              <input type="password" className="form-control" name="password" onChange={handleChange} required />
-            </div> */}
             {/* Champ mot de passe avec toggle */}
             <div className="mb-3 text-start">
               <label className="form-label">Mot de passe</label>

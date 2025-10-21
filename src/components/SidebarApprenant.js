@@ -1,4 +1,3 @@
-// Previous code commented out for reference
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaCertificate, FaCog, FaUser, FaBook, FaTrophy } from "react-icons/fa";

@@ -11,20 +11,6 @@ const CreateSeance = ({ formateurId, token, onSuccess }) => {
   const [formationId, setFormationId] = useState("");
   const [formations, setFormations] = useState([]);
   const [message, setMessage] = useState("");
-
-  // useEffect(() => {
-  //   const fetchFormations = async () => {
-  //     try {
-  //       const res = await axios.get("http://localhost:8000/api/formations", {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       });
-  //       setFormations(res.data);
-  //     } catch (err) {
-  //       console.error("❌ Erreur chargement formations :", err);
-  //     }
-  //   };
-  //   fetchFormations();
-  // }, [token]);
   // Charger uniquement les formations du formateur connecté
   useEffect(() => {
     const fetchFormations = async () => {
@@ -81,86 +67,86 @@ const CreateSeance = ({ formateurId, token, onSuccess }) => {
 
   return (
     <div className="seance-form-card">
-            <h5 className="form-title"> 💻 Ajouter une Séance</h5>
-    <form onSubmit={handleSubmit} className="seance-form-card">
-      <div className="mb-3">
-        <label>Titre de la séance</label>
-        <input
-          type="text"
-          className="form-control"
-          value={titreSeance}
-          onChange={(e) => setTitreSeance(e.target.value)}
-          required
-        />
-      </div>
+      <h5 className="form-title"> 💻 Ajouter une Séance</h5>
+      <form onSubmit={handleSubmit} className="seance-form-card">
+        <div className="mb-3">
+          <label>Titre de la séance</label>
+          <input
+            type="text"
+            className="form-control"
+            value={titreSeance}
+            onChange={(e) => setTitreSeance(e.target.value)}
+            required
+          />
+        </div>
 
-      <div className="mb-3">
-        <label>Date</label>
-        <input
-          type="date"
-          className="form-control"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
-      </div>
+        <div className="mb-3">
+          <label>Date</label>
+          <input
+            type="date"
+            className="form-control"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            required
+          />
+        </div>
 
-      <div className="mb-3">
-        <label>Heure début</label>
-        <input
-          type="time"
-          className="form-control"
-          value={heureDebut}
-          onChange={(e) => setHeureDebut(e.target.value)}
-          required
-        />
-      </div>
+        <div className="mb-3">
+          <label>Heure début</label>
+          <input
+            type="time"
+            className="form-control"
+            value={heureDebut}
+            onChange={(e) => setHeureDebut(e.target.value)}
+            required
+          />
+        </div>
 
-      <div className="mb-3">
-        <label>Heure fin</label>
-        <input
-          type="time"
-          className="form-control"
-          value={heureFin}
-          onChange={(e) => setHeureFin(e.target.value)}
-          required
-        />
-      </div>
+        <div className="mb-3">
+          <label>Heure fin</label>
+          <input
+            type="time"
+            className="form-control"
+            value={heureFin}
+            onChange={(e) => setHeureFin(e.target.value)}
+            required
+          />
+        </div>
 
-      <div className="mb-3">
-        <label>Lien (Google Meet, Zoom...)</label>
-        <input
-          type="url"
-          className="form-control"
-          value={lienRoom}
-          onChange={(e) => setLienRoom(e.target.value)}
-          required
-        />
-      </div>
+        <div className="mb-3">
+          <label>Lien (Google Meet, Zoom...)</label>
+          <input
+            type="url"
+            className="form-control"
+            value={lienRoom}
+            onChange={(e) => setLienRoom(e.target.value)}
+            required
+          />
+        </div>
 
-      <div className="mb-3">
-        <label>Formation</label>
-        <select
-          className="form-select"
-          value={formationId}
-          onChange={(e) => setFormationId(e.target.value)}
-          required
-        >
-          <option value="">-- Sélectionner une formation --</option>
-          {formations.map((f) => (
-            <option key={f.id} value={f.id}>
-              {f.titre}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="d-grid">
-        <button type="submit" className="btn btn-warning-uniform">
-          ➕  Ajouter Séance
-        </button>
-      </div>
-      {message && <p className="form-message">{message}</p>}
-    </form>
+        <div className="mb-3">
+          <label>Formation</label>
+          <select
+            className="form-select"
+            value={formationId}
+            onChange={(e) => setFormationId(e.target.value)}
+            required
+          >
+            <option value="">-- Sélectionner une formation --</option>
+            {formations.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.titre}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="d-grid">
+          <button type="submit" className="btn btn-warning-uniform">
+            ➕  Ajouter Séance
+          </button>
+        </div>
+        {message && <p className="form-message">{message}</p>}
+      </form>
     </div>
   );
 };

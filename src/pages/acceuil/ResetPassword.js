@@ -53,31 +53,7 @@ function ResetPassword() {
                 required
               />
             </div>
-
-            {/* <div className="mb-3">
-              <label className="form-label">Nouveau mot de passe</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                placeholder="********"
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Confirmer le mot de passe</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password_confirmation"
-                placeholder="********"
-                onChange={handleChange}
-                required
-              />
-            </div> */}
-             {/* Champ nouveau mot de passe */}
+            {/* Champ nouveau mot de passe */}
             <div className="mb-3 text-start">
               <label className="form-label">Nouveau mot de passe</label>
               <div className="input-group">
